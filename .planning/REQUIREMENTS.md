@@ -87,31 +87,31 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CORP-01 | — | Pending |
-| CORP-02 | — | Pending |
-| CORP-03 | — | Pending |
-| CORP-04 | — | Pending |
-| CORP-05 | — | Pending |
-| READ-01 | — | Pending |
-| READ-02 | — | Pending |
-| READ-03 | — | Pending |
-| READ-04 | — | Pending |
-| ANNO-01 | — | Pending |
-| ANNO-02 | — | Pending |
-| ANNO-03 | — | Pending |
-| ANNO-04 | — | Pending |
-| ANNO-05 | — | Pending |
-| MODL-01 | — | Pending |
-| MODL-02 | — | Pending |
-| MODL-03 | — | Pending |
-| ANLY-01 | — | Pending |
-| EXPO-01 | — | Pending |
+| CORP-01 | Phase 1 | Pending |
+| CORP-02 | Phase 1 | Pending |
+| CORP-03 | Phase 1 | Pending |
+| CORP-04 | Phase 1 | Pending |
+| CORP-05 | Phase 1 | Pending |
+| MODL-01 | Phase 2 | Pending |
+| MODL-02 | Phase 2 | Pending |
+| MODL-03 | Phase 2 | Pending |
+| READ-01 | Phase 3 | Pending |
+| READ-02 | Phase 3 | Pending |
+| READ-03 | Phase 3 | Pending |
+| READ-04 | Phase 3 | Pending |
+| ANNO-01 | Phase 4 | Pending |
+| ANNO-02 | Phase 4 | Pending |
+| ANNO-03 | Phase 4 | Pending |
+| ANNO-04 | Phase 4 | Pending |
+| ANNO-05 | Phase 4 | Pending |
+| ANLY-01 | Phase 5 | Pending |
+| EXPO-01 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 19 total
-- Mapped to phases: 0
-- Unmapped: 19 (pending roadmap creation)
+- Mapped to phases: 19 (100% coverage)
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-04*
-*Last updated: 2026-02-04 after initial definition*
+*Last updated: 2026-02-04 after roadmap creation*
