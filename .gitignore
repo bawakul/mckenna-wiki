@@ -41,5 +41,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# scraping samples
+# scraping samples and output
 /scripts/scrape/samples/
+/corpus/
