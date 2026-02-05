@@ -236,7 +236,8 @@ function analyzeTranscriptPage(html: string, url: string): void {
       console.log(`  Text: "${firstP.text().trim().substring(0, 150)}..."`);
 
       // Check for data attributes
-      const attrs = firstP.get(0)?.attribs || {};
+      const firstPElement = firstP[0];
+      const attrs = (firstPElement && 'attribs' in firstPElement) ? firstPElement.attribs : {};
       if (Object.keys(attrs).length > 0) {
         console.log(`  Attributes: ${JSON.stringify(attrs)}`);
       }
