@@ -31,10 +31,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Full-text search across entire corpus returns relevant passages in under 200ms
   4. Content hashes stored per transcript enable change detection on future re-scrapes
   5. Corpus data lives in separate repository and can be imported by app
-**Plans**: TBD
+**Plans:** 4 plans
 
 Plans:
-- [ ] 01-01: TBD during planning
+- [ ] 01-01-PLAN.md -- Project setup and organism.earth HTML structure exploration
+- [ ] 01-02-PLAN.md -- Scraper pipeline (types, parser, orchestrator) with test scrape
+- [ ] 01-03-PLAN.md -- Supabase schema with full-text search and seed script
+- [ ] 01-04-PLAN.md -- Full scrape, corpus repo, database import, and verification
 
 ### Phase 2: Module System
 **Goal**: Working module taxonomy for tagging passages
@@ -111,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Corpus Foundation | 0/TBD | Not started | - |
+| 1. Corpus Foundation | 0/4 | Planned | - |
 | 2. Module System | 0/TBD | Not started | - |
 | 3. Reading Interface | 0/TBD | Not started | - |
 | 4. Annotation Engine | 0/TBD | Not started | - |
