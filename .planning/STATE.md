@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 Phase: 1 of 6 (Corpus Foundation)
 Plan: 3 of TBD in current phase
 Status: In progress
-Last activity: 2026-02-05 — Completed 01-03-PLAN.md (database schema & seed script)
+Last activity: 2026-02-05 — Completed 01-02-PLAN.md (scraper pipeline implementation)
 
 Progress: [██░░░░░░░░] ~10% (estimated - plan count TBD)
 
@@ -30,9 +30,9 @@ Progress: [██░░░░░░░░] ~10% (estimated - plan count TBD)
 | 01-corpus-foundation | 3 | 11 min | 3.7 min |
 
 **Recent Trend:**
-- Last plan: 01-03 (1 min)
-- Previous: 01-02 (1 min), 01-01 (9 min)
-- Trend: Accelerating (plans 02-03 were fast implementation tasks)
+- Last plan: 01-02 (3 min)
+- Previous: 01-03 (1 min), 01-01 (9 min)
+- Trend: Fast implementation phase (plans 02-03 average ~2 min)
 
 *Updated after each plan completion*
 
@@ -58,6 +58,13 @@ Recent decisions affecting current work:
 - 3-second delay between requests for polite scraping (no blocks observed)
 - 105 McKenna transcripts discovered (exceeds 90 required for v1)
 
+**From 01-02 (scraper pipeline):**
+- Use Zod for runtime validation of scraped data
+- SHA-256 hashing for content deduplication (16 chars for paragraphs, 64 for transcripts)
+- Default speaker to 'Terence McKenna' for all paragraphs (monologue format)
+- 2.5-second delays between requests for polite scraping
+- Sequential scraping (concurrency 1) with exponential backoff retry
+
 **From 01-03 (database schema):**
 - Use generated tsvector columns (STORED) for automatic full-text search index updates
 - Weighted search vectors (A=title, B=description, C=tags/authors) for relevance ranking
@@ -73,12 +80,12 @@ None yet.
 
 **Phase 1 (Corpus Foundation):**
 - ~~Organism.earth scraping terms need verification before building scraper~~ ✅ Resolved: Polite scraping works without blocks (3s delays, descriptive User-Agent)
-- Test scraping with 5-10 transcripts before scaling to all 90 (research recommendation) — Still applicable
-- Longest transcript is 87K words — performance testing needed early
-- Date extraction will require parsing from title/URL (not in structured metadata)
-- No speaker markup in HTML (confirmed monologue format - all content is McKenna)
-- **NEW: User must complete Supabase setup (01-USER-SETUP.md) before plan 01-04**
-- **NEW: SQL migrations must be applied manually before seed script can run**
+- ~~Test scraping with 5-10 transcripts before scaling to all 90~~ ✅ Resolved: 10 transcripts scraped successfully (100% success rate, 191K words)
+- ~~Longest transcript is 87K words — performance testing needed early~~ ✅ Resolved: 85K word transcript processed successfully
+- Date extraction will require parsing from title/URL (not in structured metadata) — Acceptable for v1 (not blocking)
+- No speaker markup in HTML (confirmed monologue format - all content is McKenna) — Handled with default speaker
+- **User must complete Supabase setup (01-USER-SETUP.md) before plan 01-04**
+- **SQL migrations must be applied manually before seed script can run**
 
 **Phase 3 (Reading Interface):**
 - Virtualization CRITICAL for 87K word transcript performance (research flag)
@@ -93,7 +100,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-05 (plan 01-03 execution)
-Stopped at: Completed 01-03-PLAN.md - database schema and seed script ready
+Last session: 2026-02-05 (plan 01-02 execution)
+Stopped at: Completed 01-02-PLAN.md - scraper pipeline built and tested
 Resume file: None
-Next: User setup required (01-USER-SETUP.md), then plan 01-04 (scraper and corpus generation)
+Next: Full corpus scrape, then seeding to database (requires Supabase setup from 01-USER-SETUP.md)
