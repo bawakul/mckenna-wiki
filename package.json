@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "scrape:explore": "npx tsx scripts/scrape/explore.ts"
+    "scrape": "npx tsx scripts/scrape/scraper.ts",
+    "scrape:test": "npx tsx scripts/scrape/scraper.ts --limit 10",
+    "scrape:explore": "npx tsx scripts/scrape/explore.ts",
+    "seed": "npx tsx scripts/seed/import-corpus.ts",
+    "seed:dry-run": "npx tsx scripts/seed/import-corpus.ts --dry-run"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.0",
