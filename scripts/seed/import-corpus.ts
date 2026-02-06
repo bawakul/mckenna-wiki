@@ -12,6 +12,11 @@
  *   npm run seed:dry-run                          # Validate without writing to DB
  */
 
+import { config as loadEnv } from 'dotenv';
+// Load .env.local (Next.js convention) then fall back to .env
+loadEnv({ path: '.env.local' });
+loadEnv({ path: '.env' });
+
 import { createClient } from '@supabase/supabase-js';
 import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
@@ -189,7 +194,7 @@ async function main() {
           date: transcript.date || null,
           location: transcript.location || null,
           speakers: transcript.speakers || [],
-          duration_minutes: transcript.durationMinutes || null,
+          duration_minutes: transcript.durationMinutes ? Math.round(transcript.durationMinutes) : null,
           word_count: transcript.wordCount || null,
           topic_tags: transcript.topicTags || [],
           referenced_authors: transcript.referencedAuthors || [],
@@ -244,11 +249,14 @@ async function main() {
       }
 
     } catch (error) {
-      console.error(`  ✗ Failed: ${error}`);
+      const errorMessage = error instanceof Error
+        ? error.message
+        : (error as { message?: string })?.message || JSON.stringify(error);
+      console.error(`  ✗ Failed: ${errorMessage}`);
       stats.failed++;
       stats.errors.push({
         file,
-        error: error instanceof Error ? error.message : String(error),
+        error: errorMessage,
       });
     }
   }
