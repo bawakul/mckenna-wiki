@@ -12,7 +12,7 @@ This roadmap delivers a personal web app for qualitative analysis of Terence McK
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Corpus Foundation** - Scrape and store 90 transcripts with full metadata
+- [x] **Phase 1: Corpus Foundation** - Scrape and store 90 transcripts with full metadata
 - [ ] **Phase 2: Module System** - Create and manage thematic module taxonomy
 - [ ] **Phase 3: Reading Interface** - Clean transcript reading with navigation and search
 - [ ] **Phase 4: Annotation Engine** - Highlight passages and tag with modules
@@ -34,10 +34,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans:** 4 plans
 
 Plans:
-- [ ] 01-01-PLAN.md -- Project setup and organism.earth HTML structure exploration
-- [ ] 01-02-PLAN.md -- Scraper pipeline (types, parser, orchestrator) with test scrape
-- [ ] 01-03-PLAN.md -- Supabase schema with full-text search and seed script
-- [ ] 01-04-PLAN.md -- Full scrape, corpus repo, database import, and verification
+- [x] 01-01-PLAN.md -- Project setup and organism.earth HTML structure exploration
+- [x] 01-02-PLAN.md -- Scraper pipeline (types, parser, orchestrator) with test scrape
+- [x] 01-03-PLAN.md -- Supabase schema with full-text search and seed script
+- [x] 01-04-PLAN.md -- Full scrape, corpus repo, database import, and verification
 
 ### Phase 2: Module System
 **Goal**: Working module taxonomy for tagging passages
@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Corpus Foundation | 0/4 | Planned | - |
+| 1. Corpus Foundation | 4/4 | ✓ Complete | 2026-02-06 |
 | 2. Module System | 0/TBD | Not started | - |
 | 3. Reading Interface | 0/TBD | Not started | - |
 | 4. Annotation Engine | 0/TBD | Not started | - |

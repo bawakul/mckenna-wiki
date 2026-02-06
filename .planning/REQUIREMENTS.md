@@ -9,11 +9,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Corpus Ingestion
 
-- [ ] **CORP-01**: Scrape ~90 transcripts from organism.earth with full metadata (title, date, location, speakers, duration, word count, topic tags, referenced authors)
-- [ ] **CORP-02**: Store transcripts as structured paragraphs with timestamps and speaker identification
-- [ ] **CORP-03**: Index transcripts for full-text search across the entire corpus
-- [ ] **CORP-04**: Store content hashes per transcript for change detection on re-scrape
-- [ ] **CORP-05**: Corpus stored as separate reusable dataset (own repo, importable by app)
+- [x] **CORP-01**: Scrape ~90 transcripts from organism.earth with full metadata (title, date, location, speakers, duration, word count, topic tags, referenced authors)
+- [x] **CORP-02**: Store transcripts as structured paragraphs with timestamps and speaker identification
+- [x] **CORP-03**: Index transcripts for full-text search across the entire corpus
+- [x] **CORP-04**: Store content hashes per transcript for change detection on re-scrape
+- [x] **CORP-05**: Corpus stored as separate reusable dataset (own repo, importable by app)
 
 ### Reading Interface
 
@@ -87,11 +87,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CORP-01 | Phase 1 | Pending |
-| CORP-02 | Phase 1 | Pending |
-| CORP-03 | Phase 1 | Pending |
-| CORP-04 | Phase 1 | Pending |
-| CORP-05 | Phase 1 | Pending |
+| CORP-01 | Phase 1 | Complete |
+| CORP-02 | Phase 1 | Complete |
+| CORP-03 | Phase 1 | Complete |
+| CORP-04 | Phase 1 | Complete |
+| CORP-05 | Phase 1 | Complete |
 | MODL-01 | Phase 2 | Pending |
 | MODL-02 | Phase 2 | Pending |
 | MODL-03 | Phase 2 | Pending |
