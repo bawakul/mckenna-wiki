@@ -92,9 +92,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CORP-03 | Phase 1 | Complete |
 | CORP-04 | Phase 1 | Complete |
 | CORP-05 | Phase 1 | Complete |
-| MODL-01 | Phase 2 | Pending |
-| MODL-02 | Phase 2 | Pending |
-| MODL-03 | Phase 2 | Pending |
+| MODL-01 | Phase 2 | Complete |
+| MODL-02 | Phase 2 | Deferred (organic creation during reading) |
+| MODL-03 | Phase 2 | Complete |
 | READ-01 | Phase 3 | Pending |
 | READ-02 | Phase 3 | Pending |
 | READ-03 | Phase 3 | Pending |
