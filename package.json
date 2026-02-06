@@ -11,7 +11,8 @@
     "scrape:test": "npx tsx scripts/scrape/scraper.ts --limit 10",
     "scrape:explore": "npx tsx scripts/scrape/explore.ts",
     "seed": "npx tsx scripts/seed/import-corpus.ts",
-    "seed:dry-run": "npx tsx scripts/seed/import-corpus.ts --dry-run"
+    "seed:dry-run": "npx tsx scripts/seed/import-corpus.ts --dry-run",
+    "verify:corpus": "npx tsx scripts/verify-corpus.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.0",
@@ -26,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.2.4",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "p-limit": "^7.3.0",
