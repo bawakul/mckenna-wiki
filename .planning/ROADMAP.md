@@ -44,14 +44,17 @@ Plans:
 **Depends on**: Phase 1 (needs database schema in place)
 **Requirements**: MODL-01, MODL-02, MODL-03
 **Success Criteria** (what must be TRUE):
-  1. User can create new modules with name, description, and color
+  1. User can create new modules with name, notes, and color
   2. User can edit or delete existing modules
-  3. App pre-seeds taxonomy with 8 known McKenna modules on first setup
-  4. User can quickly select modules via keyboard shortcuts or fast buttons during reading
-**Plans**: TBD
+  3. User creates the 8 seed modules manually through the UI (not DB seed)
+  4. User can quickly select modules via floating selector during reading
+**Plans:** 4 plans
 
 Plans:
-- [ ] 02-01: TBD during planning
+- [ ] 02-01-PLAN.md -- Database schema, Supabase server client, Module types
+- [ ] 02-02-PLAN.md -- Module CRUD Server Actions with validation
+- [ ] 02-03-PLAN.md -- Modules list/create/edit pages with delete confirmation
+- [ ] 02-04-PLAN.md -- Floating module selector component for reading interface
 
 ### Phase 3: Reading Interface
 **Goal**: Clean, performant reading experience for transcripts up to 87K words
@@ -115,7 +118,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Corpus Foundation | 4/4 | ✓ Complete | 2026-02-06 |
-| 2. Module System | 0/TBD | Not started | - |
+| 2. Module System | 0/4 | In progress | - |
 | 3. Reading Interface | 0/TBD | Not started | - |
 | 4. Annotation Engine | 0/TBD | Not started | - |
 | 5. Analysis Views | 0/TBD | Not started | - |
