@@ -5,33 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-04)
 
 **Core value:** The ability to tag passages in McKenna transcripts with thematic modules and see how those modules appear across the corpus
-**Current focus:** Phase 1 complete, ready for Phase 2
+**Current focus:** Phase 2 - Module System (in progress)
 
 ## Current Position
 
-Phase: 1 of 6 (Corpus Foundation) — COMPLETE
-Plan: 4 of 4 in phase 1 (all complete)
-Status: Phase 1 verified and complete
-Last activity: 2026-02-06 — Completed Phase 1 execution and verification
+Phase: 2 of 6 (Module System)
+Plan: 1 of 3 in phase 2 (02-01 complete)
+Status: In progress
+Last activity: 2026-02-06 — Completed 02-01-PLAN.md (Module Foundation)
 
-Progress: [██████████] Phase 1: 100%
+Progress: [████████████░░░░░░░░] Phase 1: 100% | Phase 2: 33%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: 6.25 min
-- Total execution time: 0.42 hours
+- Total plans completed: 5
+- Average duration: 5.4 min
+- Total execution time: 0.45 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-corpus-foundation | 4 | 25 min | 6.25 min |
+| 02-module-system | 1 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last plan: 01-04 (15 min) — integration and verification
-- Previous: 01-03 (1 min), 01-02 (3 min), 01-01 (9 min)
+- Last plan: 02-01 (2 min) — module foundation
+- Previous: 01-04 (15 min), 01-03 (1 min), 01-02 (3 min)
 
 *Updated after each plan completion*
 
@@ -59,6 +60,12 @@ Recent decisions affecting current work:
 - Weighted search vectors (A=title, B=description, C=tags/authors) for relevance ranking
 - Service role key for seed script (admin-level access for batch operations)
 - Batch paragraph inserts (50 per batch) to avoid payload size limits
+
+**From Phase 2 Plan 1 (Module Foundation):**
+- Support both NEXT_PUBLIC_ and non-prefixed env vars in server client for backward compatibility
+- Zod moved to dependencies for runtime validation in Server Actions/API routes
+- Server Supabase client pattern: async createClient() with cookie-based auth
+- Zod schemas named *InputSchema for form/API input validation
 
 ### Phase 1 Results
 
@@ -95,7 +102,7 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-06 (Phase 1 complete)
-Stopped at: Phase 1 verified and complete
+Last session: 2026-02-06
+Stopped at: Completed 02-01-PLAN.md (Module Foundation)
 Resume file: None
-Next: Phase 2 (Module System) planning
+Next: 02-02-PLAN.md (Module CRUD Operations)
