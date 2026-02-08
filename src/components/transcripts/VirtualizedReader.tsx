@@ -8,15 +8,19 @@ import { ParagraphView, shouldShowSpeaker } from './ParagraphView'
 interface VirtualizedReaderProps {
   paragraphs: TranscriptParagraph[]
   searchQuery?: string
+  currentSearchParagraphIndex?: number
   hasTimestamps?: boolean
   onVisibleRangeChange?: (startIndex: number, endIndex: number) => void
+  onScrollToIndexReady?: (fn: (index: number) => void) => void
 }
 
 export function VirtualizedReader({
   paragraphs,
   searchQuery,
+  currentSearchParagraphIndex,
   hasTimestamps = false,
   onVisibleRangeChange,
+  onScrollToIndexReady,
 }: VirtualizedReaderProps) {
   const parentRef = useRef<HTMLDivElement>(null)
 
@@ -38,6 +42,16 @@ export function VirtualizedReader({
   })
 
   const virtualItems = virtualizer.getVirtualItems()
+
+  // Provide scroll function to parent
+  useEffect(() => {
+    onScrollToIndexReady?.((index: number) => {
+      virtualizer.scrollToIndex(index, {
+        align: 'start',
+        behavior: 'auto',
+      })
+    })
+  }, [virtualizer, onScrollToIndexReady])
 
   // Notify parent of visible range changes (for position memory)
   useEffect(() => {
@@ -67,6 +81,7 @@ export function VirtualizedReader({
         {virtualItems.map((virtualItem) => {
           const paragraph = paragraphs[virtualItem.index]
           const showSpeaker = speakerVisibility[virtualItem.index]
+          const isCurrentMatch = currentSearchParagraphIndex === virtualItem.index
 
           return (
             <div
@@ -85,6 +100,7 @@ export function VirtualizedReader({
                 paragraph={paragraph}
                 showSpeaker={showSpeaker}
                 searchQuery={searchQuery}
+                isCurrentMatch={isCurrentMatch}
                 hasTimestamps={hasTimestamps}
               />
             </div>
@@ -93,18 +109,4 @@ export function VirtualizedReader({
       </div>
     </div>
   )
-}
-
-/**
- * Scroll to a specific paragraph by index
- */
-export function useScrollToIndex(
-  virtualizerRef: React.RefObject<ReturnType<typeof useVirtualizer> | null>
-) {
-  return (index: number) => {
-    virtualizerRef.current?.scrollToIndex(index, {
-      align: 'start',
-      behavior: 'auto', // Instant scroll (smooth not supported with dynamic heights)
-    })
-  }
 }
