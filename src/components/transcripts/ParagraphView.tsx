@@ -1,9 +1,11 @@
+import Highlighter from 'react-highlight-words'
 import type { TranscriptParagraph } from '@/lib/types/transcript'
 
 interface ParagraphViewProps {
   paragraph: TranscriptParagraph
   showSpeaker: boolean
-  searchQuery?: string // For future search highlighting
+  searchQuery?: string
+  isCurrentMatch?: boolean // Highlight the current search result
   hasTimestamps?: boolean // Whether any paragraph in transcript has timestamps
 }
 
@@ -20,13 +22,17 @@ export function ParagraphView({
   paragraph,
   showSpeaker,
   searchQuery,
+  isCurrentMatch = false,
   hasTimestamps = false,
 }: ParagraphViewProps) {
   const formattedTimestamp = formatTimestamp(paragraph.timestamp)
 
   return (
     <div
-      className={`relative py-2 ${hasTimestamps ? 'pl-20' : ''}`}
+      className={`
+        relative py-2 ${hasTimestamps ? 'pl-20' : ''} transition-colors duration-200
+        ${isCurrentMatch ? 'bg-yellow-50' : ''}
+      `}
       data-paragraph-id={paragraph.id}
       data-paragraph-position={paragraph.position}
     >
@@ -44,9 +50,19 @@ export function ParagraphView({
         </div>
       )}
 
-      {/* Paragraph text */}
+      {/* Paragraph text with optional highlighting */}
       <p className="text-base leading-relaxed text-gray-900">
-        {paragraph.text}
+        {searchQuery ? (
+          <Highlighter
+            searchWords={[searchQuery]}
+            autoEscape={true}
+            textToHighlight={paragraph.text}
+            highlightClassName="bg-yellow-200 rounded px-0.5"
+            caseSensitive={false}
+          />
+        ) : (
+          paragraph.text
+        )}
       </p>
     </div>
   )
@@ -62,4 +78,15 @@ export function shouldShowSpeaker(
   if (!current.speaker) return false
   if (!previous) return true // First paragraph
   return current.speaker !== previous.speaker
+}
+
+/**
+ * Check if paragraph contains search query
+ */
+export function paragraphMatchesSearch(
+  paragraph: TranscriptParagraph,
+  query: string
+): boolean {
+  if (!query || query.length < 2) return false
+  return paragraph.text.toLowerCase().includes(query.toLowerCase())
 }
