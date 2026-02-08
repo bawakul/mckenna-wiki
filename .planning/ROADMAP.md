@@ -13,6 +13,7 @@ This roadmap delivers a personal web app for qualitative analysis of Terence McK
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Corpus Foundation** - Scrape and store 90 transcripts with full metadata
+- [ ] **Phase 1.1: Corpus Data Fixes** - Fix missing dates and topic tags (INSERTED)
 - [x] **Phase 2: Module System** - Create and manage thematic module taxonomy
 - [ ] **Phase 3: Reading Interface** - Clean transcript reading with navigation and search
 - [ ] **Phase 4: Annotation Engine** - Highlight passages and tag with modules
@@ -38,6 +39,27 @@ Plans:
 - [x] 01-02-PLAN.md -- Scraper pipeline (types, parser, orchestrator) with test scrape
 - [x] 01-03-PLAN.md -- Supabase schema with full-text search and seed script
 - [x] 01-04-PLAN.md -- Full scrape, corpus repo, database import, and verification
+
+### Phase 1.1: Corpus Data Fixes (INSERTED)
+**Goal**: Fix missing dates and topic tags in scraped corpus data
+**Depends on**: Phase 1 (fixes issues discovered during Phase 3 UAT)
+**Requirements**: CORP-01 (full metadata)
+**Success Criteria** (what must be TRUE):
+  1. Dates are extracted from organism.earth pages and stored in database
+  2. Topic tags are extracted from organism.earth pages and stored in database
+  3. Transcript list sorts chronologically by actual dates
+  4. Topic tag filters appear on transcript list page
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 1.1 to break down)
+
+**Details:**
+Issues discovered during Phase 3 UAT:
+- parser.ts line 108: `const date: string | null = null` — date extraction not implemented
+- parser.ts line 111: `const topicTags: string[] = []` — tag extraction not implemented
+- Need to investigate organism.earth HTML structure for date/tag locations
+- Re-scrape and re-seed database after fixes
 
 ### Phase 2: Module System
 **Goal**: Working module taxonomy for tagging passages

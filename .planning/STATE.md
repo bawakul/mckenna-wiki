@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 3 of 6 (Reading Interface)
-Plan: 2 of 4 in phase 3
-Status: In progress
-Last activity: 2026-02-08 — Completed 03-02-PLAN.md (Transcript Reader)
+Plan: 4 of 4 in phase 3
+Status: Complete - pending phase verification
+Last activity: 2026-02-08 — Completed 03-04-PLAN.md (Search + Position Memory)
 
-Progress: [████████████████████████] Phase 1: 100% | Phase 2: 100% | Phase 3: 50%
+Progress: [████████████████████████] Phase 1: 100% | Phase 2: 100% | Phase 3: 100%
 
 ## Performance Metrics
 
@@ -38,6 +38,10 @@ Progress: [███████████████████████
 *Updated after each plan completion*
 
 ## Accumulated Context
+
+### Roadmap Evolution
+
+- Phase 1.1 inserted after Phase 1: Corpus Data Fixes (INSERTED) — dates and tags not extracted by scraper, discovered during Phase 3 UAT
 
 ### Decisions
 
@@ -117,11 +121,24 @@ Recent decisions affecting current work:
 
 None.
 
+### Known Issues (Non-blocking)
+
+**Corpus/Scraper Issues (fix in future re-scrape):**
+- [ ] "Man and Woman at the End of History" paragraph 134 is abnormally long (paragraph breaks not detected)
+- [ ] Speaker labels concatenated ("Terence McKennaRalph Abraham") in some multi-speaker transcripts
+- [ ] Some transcripts missing timestamps even when source has them
+
+**UI Polish (defer to later):**
+- [ ] Reading area padding may need adjustment (currently px-8 py-8)
+- [ ] Timestamp gutter shows when no timestamps exist (unnecessary left padding)
+
+*These issues are logged but not blocking Phase 3 completion or Phase 4 start.*
+
 ### Blockers/Concerns
 
 **Phase 3 (Reading Interface):**
-- Virtualization CRITICAL for 87K word transcript performance (research flag)
-- Must test with longest transcript + 100 mock annotations in Phase 3
+- ✅ Virtualization implemented with TanStack Virtual
+- Performance testing with longest transcript still needed
 
 **Phase 4 (Annotation Engine):**
 - Custom Selection API vs @recogito/react-text-annotator library decision needed during planning
@@ -133,18 +150,15 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-08
-Stopped at: Phase 3 Plan 4 - layout refactor in progress
-Resume file: .planning/phases/03-reading-interface/03-02-FEEDBACK.md
+Stopped at: Phase 3 complete - ready for phase verification
 
 **Current state:**
-- Plans 03-01, 03-02, 03-03: Complete
-- Plan 03-04: In progress (5/6 tasks done, layout refactored)
-- Left sidebar layout implemented but needs padding polish
+- Plans 03-01, 03-02, 03-03, 03-04: Complete
+- Phase 3 reading interface fully implemented
+- Search + position memory integrated
+- Left sidebar layout with metadata and search
 
-**Remaining for 03-04:**
-1. Adjust padding in reading area (paragraphs need more breathing room)
-2. Verify search + position memory work
-3. Create 03-04-SUMMARY.md
-4. Run phase verification
-
-**Resume command:** `/gsd:execute-phase 3` (will pick up from 03-04)
+**Next steps:**
+1. Manual verification of search and position memory
+2. Run phase verification
+3. Proceed to Phase 4 (Annotation Engine)
