@@ -26,15 +26,15 @@ const POSITION_KEY_PREFIX = 'reading-position-'
 /**
  * Debounce function for position saving
  */
-function debounce<T extends (...args: unknown[]) => void>(
+function debounce<T extends (...args: never[]) => void>(
   fn: T,
   delay: number
-): (...args: Parameters<T>) => void {
+): T {
   let timeoutId: ReturnType<typeof setTimeout>
-  return (...args: Parameters<T>) => {
+  return ((...args: Parameters<T>) => {
     clearTimeout(timeoutId)
     timeoutId = setTimeout(() => fn(...args), delay)
-  }
+  }) as T
 }
 
 export function useReadingPosition({
