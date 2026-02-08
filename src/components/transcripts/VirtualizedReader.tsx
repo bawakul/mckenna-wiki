@@ -66,7 +66,7 @@ export function VirtualizedReader({
     <div
       ref={parentRef}
       data-virtualized-container
-      className="h-[calc(100vh-200px)] overflow-auto"
+      className="h-full overflow-auto"
       style={{
         contain: 'strict', // Performance optimization
       }}

@@ -65,10 +65,13 @@ Plans:
   2. User can browse transcript list and filter/sort by date, title, and topic tags
   3. Longest transcript (87K words) scrolls smoothly at 30+ fps via virtualization
   4. User can search within current transcript to find specific text
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 03-01: TBD during planning
+- [ ] 03-01-PLAN.md -- Transcript list page with search and tag filtering
+- [ ] 03-02-PLAN.md -- Basic transcript reading view with paragraph rendering
+- [ ] 03-03-PLAN.md -- Virtualization with TanStack Virtual for large transcripts
+- [ ] 03-04-PLAN.md -- In-transcript search and reading position memory
 
 ### Phase 4: Annotation Engine
 **Goal**: Robust highlighting and module tagging that survives transcript changes
@@ -119,7 +122,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Corpus Foundation | 4/4 | ✓ Complete | 2026-02-06 |
 | 2. Module System | 4/4 | ✓ Complete | 2026-02-06 |
-| 3. Reading Interface | 0/TBD | Not started | - |
+| 3. Reading Interface | 0/4 | Not started | - |
 | 4. Annotation Engine | 0/TBD | Not started | - |
 | 5. Analysis Views | 0/TBD | Not started | - |
 | 6. Export & Polish | 0/TBD | Not started | - |

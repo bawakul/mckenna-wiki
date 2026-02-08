@@ -1,6 +1,6 @@
 # User Setup Required: Supabase Configuration
 
-**Status:** ⏳ Incomplete
+**Status:** ✅ Complete (2026-02-06)
 
 This plan requires manual setup of external services before execution can proceed.
 
@@ -30,7 +30,7 @@ This plan requires manual setup of external services before execution can procee
 ## Step 2: Get API Credentials
 
 1. In your new project, go to: **Project Settings** (gear icon in sidebar)
-2. Navigate to: **API** section
+2. Navigate to: **API Keys** section (in left sidebar)
 3. Copy the following values:
 
 ### Environment Variables Required
@@ -39,9 +39,11 @@ Add these to `.env.local` in project root:
 
 | Variable | Source | Description |
 |----------|--------|-------------|
-| `SUPABASE_URL` | Project Settings → API → Project URL | Your project's API endpoint (e.g., `https://abc123.supabase.co`) |
-| `SUPABASE_ANON_KEY` | Project Settings → API → Project API keys → `anon` `public` | Public/anonymous key (safe for client-side use) |
-| `SUPABASE_SERVICE_KEY` | Project Settings → API → Project API keys → `service_role` `secret` | Service role key (admin access, **keep secret**) |
+| `SUPABASE_URL` | Project Settings → Data API → Project URL | Your project's API endpoint (e.g., `https://abc123.supabase.co`) |
+| `SUPABASE_ANON_KEY` | Project Settings → API Keys → Publishable key (or Legacy tab → `anon`) | Public key (safe for client-side use) |
+| `SUPABASE_SERVICE_KEY` | Project Settings → API Keys → Secret key (or Legacy tab → `service_role`) | Admin access key (**keep secret**) |
+
+> **Note:** Supabase now uses "Publishable" and "Secret" keys. Legacy `anon` and `service_role` keys are available under the "Legacy keys" tab. Either set works.
 
 **Example `.env.local`:**
 ```bash
@@ -147,10 +149,15 @@ Transcripts table exists and is empty
 
 ## Troubleshooting
 
+### "generation expression is not immutable" (SQL migration error)
+- This occurs if the migration uses `GENERATED ALWAYS AS` with `to_tsvector()`
+- Supabase's hosted Postgres requires immutable expressions for generated columns
+- **Fix:** The migration has been updated to use triggers instead of generated columns
+
 ### "Missing required environment variables"
+- The seed script auto-loads `.env.local` via dotenv
 - Check that `.env.local` exists in project root
 - Verify variable names match exactly (no typos)
-- Restart your terminal/editor to reload environment
 
 ### "relation 'transcripts' does not exist"
 - SQL migrations not applied yet

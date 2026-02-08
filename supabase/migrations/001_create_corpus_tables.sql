@@ -18,13 +18,8 @@ CREATE TABLE transcripts (
   scraped_at TIMESTAMPTZ NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
-  -- Generated tsvector for full-text search (weighted by importance)
-  search_vector tsvector GENERATED ALWAYS AS (
-    setweight(to_tsvector('english', COALESCE(title, '')), 'A') ||
-    setweight(to_tsvector('english', COALESCE(description, '')), 'B') ||
-    setweight(to_tsvector('english', COALESCE(array_to_string(topic_tags, ' '), '')), 'C') ||
-    setweight(to_tsvector('english', COALESCE(array_to_string(referenced_authors, ' '), '')), 'C')
-  ) STORED
+  -- tsvector column for full-text search (populated by trigger)
+  search_vector tsvector
 );
 
 -- Transcript paragraphs table (paragraph-level content)
@@ -36,10 +31,8 @@ CREATE TABLE transcript_paragraphs (
   timestamp TEXT,             -- NULL if not available; stored as-is from source
   text TEXT NOT NULL,
   content_hash TEXT NOT NULL, -- First 16 hex chars of SHA-256 for stable anchoring
-  -- Generated tsvector for full-text search
-  search_vector tsvector GENERATED ALWAYS AS (
-    to_tsvector('english', COALESCE(text, ''))
-  ) STORED,
+  -- tsvector column for full-text search (populated by trigger)
+  search_vector tsvector,
   UNIQUE(transcript_id, position)
 );
 
@@ -65,3 +58,37 @@ CREATE TRIGGER update_transcripts_updated_at
   BEFORE UPDATE ON transcripts
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
+
+-- Trigger function to update transcripts search_vector
+CREATE OR REPLACE FUNCTION update_transcripts_search_vector()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.search_vector :=
+    setweight(to_tsvector('english', COALESCE(NEW.title, '')), 'A') ||
+    setweight(to_tsvector('english', COALESCE(NEW.description, '')), 'B') ||
+    setweight(to_tsvector('english', COALESCE(array_to_string(NEW.topic_tags, ' '), '')), 'C') ||
+    setweight(to_tsvector('english', COALESCE(array_to_string(NEW.referenced_authors, ' '), '')), 'C');
+  RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- Attach search vector trigger to transcripts
+CREATE TRIGGER update_transcripts_search_vector_trigger
+  BEFORE INSERT OR UPDATE ON transcripts
+  FOR EACH ROW
+  EXECUTE FUNCTION update_transcripts_search_vector();
+
+-- Trigger function to update transcript_paragraphs search_vector
+CREATE OR REPLACE FUNCTION update_paragraphs_search_vector()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.search_vector := to_tsvector('english', COALESCE(NEW.text, ''));
+  RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- Attach search vector trigger to paragraphs
+CREATE TRIGGER update_paragraphs_search_vector_trigger
+  BEFORE INSERT OR UPDATE ON transcript_paragraphs
+  FOR EACH ROW
+  EXECUTE FUNCTION update_paragraphs_search_vector();

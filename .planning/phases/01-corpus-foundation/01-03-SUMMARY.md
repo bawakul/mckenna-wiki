@@ -107,7 +107,9 @@ Each task was committed atomically:
 
 ## Deviations from Plan
 
-None - plan executed exactly as written.
+**Post-execution fixes (2026-02-06):**
+1. SQL migration updated from `GENERATED ALWAYS AS` columns to trigger-based tsvector updates. Supabase's hosted Postgres requires immutable expressions for generated columns, and `to_tsvector('english', ...)` doesn't qualify. The trigger approach is functionally equivalent but compatible with Supabase.
+2. Added `dotenv` package and updated seed script to auto-load `.env.local` (Next.js convention) since Node/tsx doesn't load it automatically.
 
 ## Issues Encountered
 
