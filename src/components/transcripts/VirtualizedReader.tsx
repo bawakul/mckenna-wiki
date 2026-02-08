@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useEffect } from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import type { TranscriptParagraph } from '@/lib/types/transcript'
 import { ParagraphView, shouldShowSpeaker } from './ParagraphView'
@@ -40,7 +40,7 @@ export function VirtualizedReader({
   const virtualItems = virtualizer.getVirtualItems()
 
   // Notify parent of visible range changes (for position memory)
-  useMemo(() => {
+  useEffect(() => {
     if (onVisibleRangeChange && virtualItems.length > 0) {
       const startIndex = virtualItems[0]?.index ?? 0
       const endIndex = virtualItems[virtualItems.length - 1]?.index ?? 0
