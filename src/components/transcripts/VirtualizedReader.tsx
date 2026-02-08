@@ -8,12 +8,14 @@ import { ParagraphView, shouldShowSpeaker } from './ParagraphView'
 interface VirtualizedReaderProps {
   paragraphs: TranscriptParagraph[]
   searchQuery?: string
+  hasTimestamps?: boolean
   onVisibleRangeChange?: (startIndex: number, endIndex: number) => void
 }
 
 export function VirtualizedReader({
   paragraphs,
   searchQuery,
+  hasTimestamps = false,
   onVisibleRangeChange,
 }: VirtualizedReaderProps) {
   const parentRef = useRef<HTMLDivElement>(null)
@@ -83,6 +85,7 @@ export function VirtualizedReader({
                 paragraph={paragraph}
                 showSpeaker={showSpeaker}
                 searchQuery={searchQuery}
+                hasTimestamps={hasTimestamps}
               />
             </div>
           )

@@ -4,6 +4,7 @@ interface ParagraphViewProps {
   paragraph: TranscriptParagraph
   showSpeaker: boolean
   searchQuery?: string // For future search highlighting
+  hasTimestamps?: boolean // Whether any paragraph in transcript has timestamps
 }
 
 /**
@@ -19,12 +20,13 @@ export function ParagraphView({
   paragraph,
   showSpeaker,
   searchQuery,
+  hasTimestamps = false,
 }: ParagraphViewProps) {
   const formattedTimestamp = formatTimestamp(paragraph.timestamp)
 
   return (
     <div
-      className="relative py-2 pl-20"
+      className={`relative py-2 ${hasTimestamps ? 'pl-20' : ''}`}
       data-paragraph-id={paragraph.id}
       data-paragraph-position={paragraph.position}
     >

@@ -18,6 +18,11 @@ export function TranscriptReader({ transcript }: TranscriptReaderProps) {
     return [...transcript.transcript_paragraphs].sort((a, b) => a.position - b.position)
   }, [transcript.transcript_paragraphs])
 
+  // Check if any paragraph has a timestamp (for gutter display)
+  const hasTimestamps = useMemo(() => {
+    return paragraphs.some(p => p.timestamp !== null && p.timestamp !== '')
+  }, [paragraphs])
+
   const handleVisibleRangeChange = useCallback((startIndex: number, _endIndex: number) => {
     setFirstVisibleIndex(startIndex)
   }, [])
@@ -43,6 +48,7 @@ export function TranscriptReader({ transcript }: TranscriptReaderProps) {
         <article className="pb-8">
           <VirtualizedReader
             paragraphs={paragraphs}
+            hasTimestamps={hasTimestamps}
             onVisibleRangeChange={handleVisibleRangeChange}
           />
         </article>
