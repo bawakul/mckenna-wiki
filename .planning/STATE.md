@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-04)
 
 **Core value:** The ability to tag passages in McKenna transcripts with thematic modules and see how those modules appear across the corpus
-**Current focus:** Phase 4 - Annotation Engine (next)
+**Current focus:** Phase 4 - Annotation Engine (in progress)
 
 ## Current Position
 
-Phase: 1.1 of 6 (Corpus Data Fixes - COMPLETE)
-Plan: 2 of 2 in phase 1.1
-Status: Phase complete
-Last activity: 2026-02-09 — Completed 01.1-02-PLAN.md (Database Re-seed and Verification)
+Phase: 4 of 6 (Annotation Engine)
+Plan: 1 of 4 in phase 4
+Status: In progress
+Last activity: 2026-02-09 — Completed 04-01-PLAN.md (Annotation Foundation)
 
-Progress: [████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100%
+Progress: [████████████████████████░░░░░░] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 25%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 4.25 min
-- Total execution time: 0.85 hours
+- Total plans completed: 13
+- Average duration: 4.15 min
+- Total execution time: 0.90 hours
 
 **By Phase:**
 
@@ -31,10 +31,11 @@ Progress: [███████████████████████
 | 01.1-corpus-data-fixes | 2 | 19 min | 9.5 min |
 | 02-module-system | 4 | 10 min | 2.5 min |
 | 03-reading-interface | 2 | 3 min | 1.5 min |
+| 04-annotation-engine | 1 | 3 min | 3 min |
 
 **Recent Trend:**
-- Last plan: 01.1-02 (11 min) — database re-seed and verification
-- Previous: 01.1-01 (8 min), 03-02 (1 min), 03-01 (2 min)
+- Last plan: 04-01 (3 min) — annotation foundation
+- Previous: 01.1-02 (11 min), 01.1-01 (8 min), 03-02 (1 min)
 
 *Updated after each plan completion*
 
@@ -113,6 +114,13 @@ Recent decisions affecting current work:
 - 4 transcripts without dates accepted as source limitation (not extraction failure)
 - 37 unique topic tags catalogued with frequency counts
 
+**From Phase 4 Plan 1 (Annotation Foundation):**
+- JSONB for selector column - allows evolving selector strategy without migrations
+- ON DELETE SET NULL for module_id - highlights persist without module tag
+- ON DELETE CASCADE for paragraph FKs - annotations removed if paragraph deleted
+- 32-char prefix/suffix for TextQuoteSelector (SELECTOR_CONTEXT_LENGTH constant)
+- W3C RangeSelector with refinedBy array for fallback anchoring strategies
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -153,8 +161,9 @@ None.
 - Performance testing with longest transcript still needed
 
 **Phase 4 (Annotation Engine):**
-- Custom Selection API vs @recogito/react-text-annotator library decision needed during planning
-- Hybrid selector implementation (paragraph ID + text quote + offset) to prevent orphaned annotations (27% orphan rate in research)
+- ✅ Custom Selection API chosen (tight virtualization integration, no library conflicts)
+- ✅ Hybrid selector implementation complete (paragraph ID + text quote + offset)
+- Annotation CRUD and UI components remaining (plans 02-04)
 
 **Phase 5 (Analysis Views):**
 - Materialized views needed for <200ms query performance at 1000+ annotations (research recommendation)
@@ -162,15 +171,15 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 01.1-02-PLAN.md (Database Re-seed and Verification)
+Stopped at: Completed 04-01-PLAN.md (Annotation Foundation)
 
 **Current state:**
-- Phase 1.1 complete (2 plans)
-- Database has dates (96%) and topic tags (96%)
-- 37 unique topic tags catalogued
-- Ready for Phase 4 (Annotation Engine)
+- Phase 4 in progress (1/4 plans complete)
+- Annotations table created with W3C hybrid selector schema
+- TypeScript types and selector utilities ready
+- Ready for annotation CRUD operations (04-02)
 
 **Next steps:**
-1. Begin Phase 4 planning (Annotation Engine)
-2. Research: Custom Selection API vs @recogito/react-text-annotator
-3. Implement hybrid selector pattern (paragraph ID + text quote + offset)
+1. Execute 04-02-PLAN.md (Annotation CRUD Operations)
+2. Execute 04-03-PLAN.md (Selection UI)
+3. Execute 04-04-PLAN.md (Annotation Sidebar)
