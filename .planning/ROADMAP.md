@@ -99,10 +99,16 @@ Plans:
   3. User can assign at most one module per highlight
   4. Highlights remain anchored correctly when transcript text changes (via hybrid selectors: paragraph ID + text quote + character offset)
   5. Annotation list sidebar shows all highlights in current transcript with ability to jump to passage
-**Plans**: TBD
+**Plans**: 7 plans
 
 Plans:
-- [ ] 04-01: TBD during planning
+- [ ] 04-01-PLAN.md -- Database schema, annotation types, and W3C selector utilities
+- [ ] 04-02-PLAN.md -- Annotation CRUD Server Actions
+- [ ] 04-03-PLAN.md -- Text selection hook and floating toolbar
+- [ ] 04-04-PLAN.md -- Highlight rendering in paragraph view
+- [ ] 04-05-PLAN.md -- Highlight popover and annotation sidebar
+- [ ] 04-06-PLAN.md -- Integration into transcript reader
+- [ ] 04-07-PLAN.md -- Human verification of annotation workflow
 
 ### Phase 5: Analysis Views
 **Goal**: Cross-corpus pattern discovery through module tracing
@@ -140,6 +146,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1.1 Corpus Data Fixes | 2/2 | ✓ Complete | 2026-02-09 |
 | 2. Module System | 4/4 | ✓ Complete | 2026-02-06 |
 | 3. Reading Interface | 4/4 | ✓ Complete | 2026-02-08 |
-| 4. Annotation Engine | 0/TBD | Not started | - |
+| 4. Annotation Engine | 0/7 | Planned | - |
 | 5. Analysis Views | 0/TBD | Not started | - |
 | 6. Export & Polish | 0/TBD | Not started | - |
