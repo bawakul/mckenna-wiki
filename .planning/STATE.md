@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 4 of 6 (Annotation Engine)
-Plan: 1 of 4 in phase 4
+Plan: 2 of 4 in phase 4
 Status: In progress
-Last activity: 2026-02-09 — Completed 04-01-PLAN.md (Annotation Foundation)
+Last activity: 2026-02-09 — Completed 04-02-PLAN.md (Annotation CRUD Operations)
 
-Progress: [████████████████████████░░░░░░] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 25%
+Progress: [█████████████████████████░░░░░] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 50%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
-- Average duration: 4.15 min
-- Total execution time: 0.90 hours
+- Total plans completed: 14
+- Average duration: 4.07 min
+- Total execution time: 0.95 hours
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [███████████████████████
 | 01.1-corpus-data-fixes | 2 | 19 min | 9.5 min |
 | 02-module-system | 4 | 10 min | 2.5 min |
 | 03-reading-interface | 2 | 3 min | 1.5 min |
-| 04-annotation-engine | 1 | 3 min | 3 min |
+| 04-annotation-engine | 2 | 6 min | 3 min |
 
 **Recent Trend:**
-- Last plan: 04-01 (3 min) — annotation foundation
-- Previous: 01.1-02 (11 min), 01.1-01 (8 min), 03-02 (1 min)
+- Last plan: 04-02 (3 min) — annotation CRUD operations
+- Previous: 04-01 (3 min), 01.1-02 (11 min), 01.1-01 (8 min)
 
 *Updated after each plan completion*
 
@@ -121,6 +121,11 @@ Recent decisions affecting current work:
 - 32-char prefix/suffix for TextQuoteSelector (SELECTOR_CONTEXT_LENGTH constant)
 - W3C RangeSelector with refinedBy array for fallback anchoring strategies
 
+**From Phase 4 Plan 2 (Annotation CRUD Operations):**
+- Inline annotation count query in modules/actions.ts to avoid circular imports
+- getAnnotationsForParagraphs uses OR filter for viewport queries
+- Module joins in annotation queries use modules(id, name, color) subset
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -163,7 +168,8 @@ None.
 **Phase 4 (Annotation Engine):**
 - ✅ Custom Selection API chosen (tight virtualization integration, no library conflicts)
 - ✅ Hybrid selector implementation complete (paragraph ID + text quote + offset)
-- Annotation CRUD and UI components remaining (plans 02-04)
+- ✅ Annotation CRUD Server Actions complete
+- UI components remaining (plans 03-04)
 
 **Phase 5 (Analysis Views):**
 - Materialized views needed for <200ms query performance at 1000+ annotations (research recommendation)
@@ -171,15 +177,14 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 04-01-PLAN.md (Annotation Foundation)
+Stopped at: Completed 04-02-PLAN.md (Annotation CRUD Operations)
 
 **Current state:**
-- Phase 4 in progress (1/4 plans complete)
+- Phase 4 in progress (2/4 plans complete)
 - Annotations table created with W3C hybrid selector schema
-- TypeScript types and selector utilities ready
-- Ready for annotation CRUD operations (04-02)
+- Server Actions ready for annotation CRUD
+- Module usage count now queries real annotation data
 
 **Next steps:**
-1. Execute 04-02-PLAN.md (Annotation CRUD Operations)
-2. Execute 04-03-PLAN.md (Selection UI)
-3. Execute 04-04-PLAN.md (Annotation Sidebar)
+1. Execute 04-03-PLAN.md (Selection UI)
+2. Execute 04-04-PLAN.md (Annotation Sidebar)
