@@ -3,21 +3,41 @@
 import { useMemo, useState, useCallback, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import type { TranscriptWithParagraphs } from '@/lib/types/transcript'
+import type { AnnotationWithModule } from '@/lib/types/annotation'
 import { formatTranscriptDate, formatWordCount } from '@/lib/types/transcript'
 import { VirtualizedReader } from './VirtualizedReader'
 import { ResumePrompt } from './ResumePrompt'
 import { useTranscriptSearch, type SearchResult } from './TranscriptSearch'
 import { useReadingPosition } from '@/hooks/useReadingPosition'
+import { AnnotationSidebar, scrollToAnnotation, useVisibleAnnotations } from '@/components/annotations/AnnotationSidebar'
+import { HighlightPopover } from '@/components/annotations/HighlightPopover'
+import { getAnnotationsForTranscript } from '@/app/annotations/actions'
 import Highlighter from 'react-highlight-words'
 
 interface TranscriptReaderProps {
   transcript: TranscriptWithParagraphs
+  initialAnnotations?: AnnotationWithModule[]
 }
 
-export function TranscriptReader({ transcript }: TranscriptReaderProps) {
+export function TranscriptReader({ transcript, initialAnnotations = [] }: TranscriptReaderProps) {
   const [currentSearchResult, setCurrentSearchResult] = useState<number | undefined>()
   const scrollToIndexRef = useRef<((index: number) => void) | null>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
+
+  // Annotations state (can be refreshed after mutations)
+  const [annotations, setAnnotations] = useState<AnnotationWithModule[]>(initialAnnotations)
+
+  // Sidebar state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  // Popover state
+  const [selectedAnnotation, setSelectedAnnotation] = useState<{
+    annotation: AnnotationWithModule
+    anchorElement: HTMLElement
+  } | null>(null)
+
+  // Track visible annotations for sidebar highlighting
+  const visibleAnnotationIds = useVisibleAnnotations(annotations, isSidebarOpen)
 
   const paragraphs = useMemo(() => {
     return [...transcript.transcript_paragraphs].sort((a, b) => a.position - b.position)
@@ -39,6 +59,27 @@ export function TranscriptReader({ transcript }: TranscriptReaderProps) {
     savePosition,
     resumePosition,
   } = useReadingPosition({ transcriptId: transcript.id })
+
+  // Refresh annotations after create/update/delete
+  const refreshAnnotations = useCallback(async () => {
+    const result = await getAnnotationsForTranscript(transcript.id)
+    if (result.success) {
+      setAnnotations(result.data)
+    }
+  }, [transcript.id])
+
+  // Handle highlight click (show popover)
+  const handleHighlightClick = useCallback((annotationId: string, element: HTMLElement) => {
+    const annotation = annotations.find((a) => a.id === annotationId)
+    if (annotation) {
+      setSelectedAnnotation({ annotation, anchorElement: element })
+    }
+  }, [annotations])
+
+  // Handle sidebar annotation click (scroll to it)
+  const handleSidebarAnnotationClick = useCallback((annotation: AnnotationWithModule) => {
+    scrollToAnnotation(annotation.id)
+  }, [])
 
   // Handle visible range changes for position memory
   const handleVisibleRangeChange = useCallback(
@@ -204,10 +245,11 @@ export function TranscriptReader({ transcript }: TranscriptReaderProps) {
       </aside>
 
       {/* Main reading area */}
-      <main className="flex-1 min-w-0">
+      <main className={`flex-1 min-w-0 transition-all duration-200 ${isSidebarOpen ? 'mr-80' : ''}`}>
         <div className="h-screen">
           <VirtualizedReader
             paragraphs={paragraphs}
+            transcriptId={transcript.id}
             searchQuery={query}
             hasTimestamps={hasTimestamps}
             currentSearchParagraphIndex={
@@ -217,9 +259,32 @@ export function TranscriptReader({ transcript }: TranscriptReaderProps) {
             }
             onVisibleRangeChange={handleVisibleRangeChange}
             onScrollToIndexReady={handleScrollToIndex}
+            annotations={annotations}
+            onAnnotationCreated={refreshAnnotations}
+            onHighlightClick={handleHighlightClick}
           />
         </div>
       </main>
+
+      {/* Annotation sidebar */}
+      <AnnotationSidebar
+        annotations={annotations}
+        isOpen={isSidebarOpen}
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        onAnnotationClick={handleSidebarAnnotationClick}
+        visibleAnnotationIds={visibleAnnotationIds}
+      />
+
+      {/* Highlight popover */}
+      {selectedAnnotation && (
+        <HighlightPopover
+          annotation={selectedAnnotation.annotation}
+          anchorElement={selectedAnnotation.anchorElement}
+          isOpen={true}
+          onClose={() => setSelectedAnnotation(null)}
+          onUpdated={refreshAnnotations}
+        />
+      )}
 
       {/* Resume prompt */}
       {showResumePrompt && savedPosition && (
