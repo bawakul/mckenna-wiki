@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { TranscriptReader } from '@/components/transcripts/TranscriptReader'
+import { getAnnotationsForTranscript } from '@/app/annotations/actions'
 import type { TranscriptWithParagraphs } from '@/lib/types/transcript'
 
 interface TranscriptPageProps {
@@ -52,5 +53,14 @@ export default async function TranscriptPage({ params }: TranscriptPageProps) {
     notFound()
   }
 
-  return <TranscriptReader transcript={transcript as TranscriptWithParagraphs} />
+  // Fetch annotations for server-side rendering
+  const annotationsResult = await getAnnotationsForTranscript(id)
+  const annotations = annotationsResult.success ? annotationsResult.data : []
+
+  return (
+    <TranscriptReader
+      transcript={transcript as TranscriptWithParagraphs}
+      initialAnnotations={annotations}
+    />
+  )
 }
