@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 4 of 6 (Annotation Engine)
-Plan: 2 of 4 in phase 4
+Plan: 3 of 4 in phase 4
 Status: In progress
-Last activity: 2026-02-09 — Completed 04-02-PLAN.md (Annotation CRUD Operations)
+Last activity: 2026-02-09 — Completed 04-03-PLAN.md (Selection UI)
 
-Progress: [█████████████████████████░░░░░] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 50%
+Progress: [██████████████████████████░░░░] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 75%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
-- Average duration: 4.07 min
-- Total execution time: 0.95 hours
+- Total plans completed: 15
+- Average duration: 3.93 min
+- Total execution time: 0.98 hours
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [███████████████████████
 | 01.1-corpus-data-fixes | 2 | 19 min | 9.5 min |
 | 02-module-system | 4 | 10 min | 2.5 min |
 | 03-reading-interface | 2 | 3 min | 1.5 min |
-| 04-annotation-engine | 2 | 6 min | 3 min |
+| 04-annotation-engine | 3 | 8 min | 2.67 min |
 
 **Recent Trend:**
-- Last plan: 04-02 (3 min) — annotation CRUD operations
-- Previous: 04-01 (3 min), 01.1-02 (11 min), 01.1-01 (8 min)
+- Last plan: 04-03 (2 min) — selection UI
+- Previous: 04-02 (3 min), 04-01 (3 min), 01.1-02 (11 min)
 
 *Updated after each plan completion*
 
@@ -126,6 +126,12 @@ Recent decisions affecting current work:
 - getAnnotationsForParagraphs uses OR filter for viewport queries
 - Module joins in annotation queries use modules(id, name, color) subset
 
+**From Phase 4 Plan 3 (Selection UI):**
+- containerRef pattern to scope selection detection to transcript reader
+- Automatic word boundary snapping via snapToWordBoundaries (no user config)
+- Virtual reference element pattern for Floating UI positioning over selections
+- Amber/yellow theme for highlight button to match highlighting concept
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -169,7 +175,8 @@ None.
 - ✅ Custom Selection API chosen (tight virtualization integration, no library conflicts)
 - ✅ Hybrid selector implementation complete (paragraph ID + text quote + offset)
 - ✅ Annotation CRUD Server Actions complete
-- UI components remaining (plans 03-04)
+- ✅ Selection UI components complete (useTextSelection hook, SelectionToolbar)
+- Integration and sidebar remaining (plan 04)
 
 **Phase 5 (Analysis Views):**
 - Materialized views needed for <200ms query performance at 1000+ annotations (research recommendation)
@@ -177,14 +184,13 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 04-02-PLAN.md (Annotation CRUD Operations)
+Stopped at: Completed 04-03-PLAN.md (Selection UI)
 
 **Current state:**
-- Phase 4 in progress (2/4 plans complete)
-- Annotations table created with W3C hybrid selector schema
-- Server Actions ready for annotation CRUD
-- Module usage count now queries real annotation data
+- Phase 4 in progress (3/4 plans complete)
+- Annotations table and CRUD operations ready
+- useTextSelection hook and SelectionToolbar component ready
+- Selection detection with word boundary snapping working
 
 **Next steps:**
-1. Execute 04-03-PLAN.md (Selection UI)
-2. Execute 04-04-PLAN.md (Annotation Sidebar)
+1. Execute 04-04-PLAN.md (Annotation Sidebar and Integration)
