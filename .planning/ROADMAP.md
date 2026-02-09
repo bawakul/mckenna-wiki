@@ -13,9 +13,9 @@ This roadmap delivers a personal web app for qualitative analysis of Terence McK
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Corpus Foundation** - Scrape and store 90 transcripts with full metadata
-- [ ] **Phase 1.1: Corpus Data Fixes** - Fix missing dates and topic tags (INSERTED)
+- [x] **Phase 1.1: Corpus Data Fixes** - Fix missing dates and topic tags (INSERTED)
 - [x] **Phase 2: Module System** - Create and manage thematic module taxonomy
-- [ ] **Phase 3: Reading Interface** - Clean transcript reading with navigation and search
+- [x] **Phase 3: Reading Interface** - Clean transcript reading with navigation and search
 - [ ] **Phase 4: Annotation Engine** - Highlight passages and tag with modules
 - [ ] **Phase 5: Analysis Views** - Module tracing across corpus
 - [ ] **Phase 6: Export & Polish** - Export tagged passages and refinements
@@ -49,17 +49,11 @@ Plans:
   2. Topic tags are extracted from organism.earth pages and stored in database
   3. Transcript list sorts chronologically by actual dates
   4. Topic tag filters appear on transcript list page
-**Plans:** 0 plans
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 1.1 to break down)
-
-**Details:**
-Issues discovered during Phase 3 UAT:
-- parser.ts line 108: `const date: string | null = null` — date extraction not implemented
-- parser.ts line 111: `const topicTags: string[] = []` — tag extraction not implemented
-- Need to investigate organism.earth HTML structure for date/tag locations
-- Re-scrape and re-seed database after fixes
+- [x] 01.1-01-PLAN.md -- Parser date and topic tag extraction with corpus re-scrape
+- [x] 01.1-02-PLAN.md -- Database re-seed and verification
 
 ### Phase 2: Module System
 **Goal**: Working module taxonomy for tagging passages
@@ -90,10 +84,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 03-01-PLAN.md -- Transcript list page with search and tag filtering
-- [ ] 03-02-PLAN.md -- Basic transcript reading view with paragraph rendering
-- [ ] 03-03-PLAN.md -- Virtualization with TanStack Virtual for large transcripts
-- [ ] 03-04-PLAN.md -- In-transcript search and reading position memory
+- [x] 03-01-PLAN.md -- Transcript list page with search and tag filtering
+- [x] 03-02-PLAN.md -- Basic transcript reading view with paragraph rendering
+- [x] 03-03-PLAN.md -- Virtualization with TanStack Virtual for large transcripts
+- [x] 03-04-PLAN.md -- In-transcript search and reading position memory
 
 ### Phase 4: Annotation Engine
 **Goal**: Robust highlighting and module tagging that survives transcript changes
@@ -143,8 +137,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Corpus Foundation | 4/4 | ✓ Complete | 2026-02-06 |
+| 1.1 Corpus Data Fixes | 2/2 | ✓ Complete | 2026-02-09 |
 | 2. Module System | 4/4 | ✓ Complete | 2026-02-06 |
-| 3. Reading Interface | 0/4 | Not started | - |
+| 3. Reading Interface | 4/4 | ✓ Complete | 2026-02-08 |
 | 4. Annotation Engine | 0/TBD | Not started | - |
 | 5. Analysis Views | 0/TBD | Not started | - |
 | 6. Export & Polish | 0/TBD | Not started | - |
