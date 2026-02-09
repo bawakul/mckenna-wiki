@@ -1,28 +1,51 @@
 'use client'
 
-import { useRef, useMemo, useEffect } from 'react'
+import { useRef, useMemo, useEffect, useCallback } from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import type { TranscriptParagraph } from '@/lib/types/transcript'
+import type { AnnotationWithModule, ParagraphHighlight } from '@/lib/types/annotation'
 import { ParagraphView, shouldShowSpeaker } from './ParagraphView'
+import { useTextSelection } from '@/components/annotations/useTextSelection'
+import { SelectionToolbar } from '@/components/annotations/SelectionToolbar'
+import { createSelectorFromRange } from '@/lib/annotations/selectors'
+import { createAnnotation } from '@/app/annotations/actions'
+import { getHighlightsForParagraph } from '@/components/annotations/HighlightRenderer'
 
 interface VirtualizedReaderProps {
   paragraphs: TranscriptParagraph[]
+  transcriptId: string
   searchQuery?: string
   currentSearchParagraphIndex?: number
   hasTimestamps?: boolean
   onVisibleRangeChange?: (startIndex: number, endIndex: number) => void
   onScrollToIndexReady?: (fn: (index: number) => void) => void
+  // Annotation props
+  annotations?: AnnotationWithModule[]
+  onAnnotationCreated?: () => void
+  onHighlightClick?: (annotationId: string, element: HTMLElement) => void
 }
 
 export function VirtualizedReader({
   paragraphs,
+  transcriptId,
   searchQuery,
   currentSearchParagraphIndex,
   hasTimestamps = false,
   onVisibleRangeChange,
   onScrollToIndexReady,
+  annotations,
+  onAnnotationCreated,
+  onHighlightClick,
 }: VirtualizedReaderProps) {
+  // Ref for virtualizer scroll container
   const parentRef = useRef<HTMLDivElement>(null)
+  // Ref for selection detection (shared with parentRef via callback ref)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Selection handling
+  const { selection, hasSelection, clearSelection } = useTextSelection({
+    containerRef,
+  })
 
   // Memoize speaker visibility calculations
   const speakerVisibility = useMemo(() => {
@@ -30,6 +53,62 @@ export function VirtualizedReader({
       shouldShowSpeaker(para, paragraphs[index - 1])
     )
   }, [paragraphs])
+
+  // Memoize highlights per paragraph
+  const highlightsByParagraph = useMemo(() => {
+    const map = new Map<number, ParagraphHighlight[]>()
+    if (!annotations) return map
+
+    for (const para of paragraphs) {
+      const highlights = getHighlightsForParagraph(annotations, para.id)
+      if (highlights.length > 0) {
+        map.set(para.id, highlights)
+      }
+    }
+    return map
+  }, [paragraphs, annotations])
+
+  // Handle highlight creation
+  const handleCreateHighlight = useCallback(async () => {
+    if (!selection.range) return
+
+    const container = containerRef.current
+    if (!container) return
+
+    const { selector, startParagraphId, endParagraphId } = createSelectorFromRange(
+      selection.range,
+      container
+    )
+
+    const result = await createAnnotation({
+      transcript_id: transcriptId,
+      selector,
+      highlighted_text: selection.text,
+      start_paragraph_id: startParagraphId,
+      end_paragraph_id: endParagraphId,
+    })
+
+    if (result.success) {
+      clearSelection()
+      window.getSelection()?.removeAllRanges()
+      onAnnotationCreated?.()
+    }
+  }, [selection, transcriptId, clearSelection, onAnnotationCreated])
+
+  // Handle clicking on a highlight
+  const handleHighlightClick = useCallback((annotationId: string) => {
+    const element = document.querySelector(`mark[data-annotation-id="${annotationId}"]`) as HTMLElement
+    if (element && onHighlightClick) {
+      onHighlightClick(annotationId, element)
+    }
+  }, [onHighlightClick])
+
+  // Callback ref that assigns to both parentRef (virtualizer) and containerRef (selection)
+  const sharedRef = useCallback((el: HTMLDivElement | null) => {
+    // Update both refs to point to the same element
+    (parentRef as React.MutableRefObject<HTMLDivElement | null>).current = el
+    containerRef.current = el
+  }, [])
 
   const virtualizer = useVirtualizer({
     count: paragraphs.length,
@@ -64,14 +143,22 @@ export function VirtualizedReader({
 
   return (
     <div
-      ref={parentRef}
+      ref={sharedRef}
       data-virtualized-container
-      className="h-full overflow-auto"
+      className="h-full overflow-auto px-8 py-8"
       style={{
         contain: 'strict', // Performance optimization
       }}
     >
+      {/* Selection toolbar */}
+      <SelectionToolbar
+        selectionRect={selection.rect}
+        onHighlight={handleCreateHighlight}
+        isVisible={hasSelection}
+      />
+
       <div
+        className="max-w-2xl mx-auto"
         style={{
           height: `${virtualizer.getTotalSize()}px`,
           width: '100%',
@@ -82,6 +169,7 @@ export function VirtualizedReader({
           const paragraph = paragraphs[virtualItem.index]
           const showSpeaker = speakerVisibility[virtualItem.index]
           const isCurrentMatch = currentSearchParagraphIndex === virtualItem.index
+          const highlights = highlightsByParagraph.get(paragraph.id)
 
           return (
             <div
@@ -102,6 +190,8 @@ export function VirtualizedReader({
                 searchQuery={searchQuery}
                 isCurrentMatch={isCurrentMatch}
                 hasTimestamps={hasTimestamps}
+                highlights={highlights}
+                onHighlightClick={handleHighlightClick}
               />
             </div>
           )
