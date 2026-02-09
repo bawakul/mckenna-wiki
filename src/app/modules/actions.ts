@@ -106,8 +106,8 @@ export async function updateModule(
 }
 
 /**
- * Get module with count of highlights that reference it
- * Used before deletion to warn user of affected highlights
+ * Get module with count of annotations that reference it
+ * Used before deletion to warn user of affected annotations
  */
 export async function getModuleWithUsageCount(
   id: string
@@ -125,18 +125,21 @@ export async function getModuleWithUsageCount(
     return { success: false, error: moduleError.message }
   }
 
-  // Count highlights referencing this module
-  // Note: highlights table doesn't exist yet (Phase 4), so return 0 for now
-  // When highlights table exists, use:
-  // const { count } = await supabase
-  //   .from('highlights')
-  //   .select('*', { count: 'exact', head: true })
-  //   .eq('module_id', id)
-  const highlight_count = 0
+  // Count annotations referencing this module
+  // INLINE query - not imported from annotations/actions.ts to avoid circular imports
+  const { count, error: countError } = await supabase
+    .from('annotations')
+    .select('*', { count: 'exact', head: true })
+    .eq('module_id', id)
+
+  if (countError) {
+    console.error('Failed to count annotations:', countError)
+    // Non-fatal: return 0 on error
+  }
 
   return {
     success: true,
-    data: { ...module, highlight_count },
+    data: { ...module, highlight_count: count ?? 0 },
   }
 }
 
