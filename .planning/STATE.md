@@ -5,35 +5,36 @@
 See: .planning/PROJECT.md (updated 2026-02-04)
 
 **Core value:** The ability to tag passages in McKenna transcripts with thematic modules and see how those modules appear across the corpus
-**Current focus:** Phase 2 - Module System (complete)
+**Current focus:** Phase 1.1 - Corpus Data Fixes (in progress)
 
 ## Current Position
 
-Phase: 3 of 6 (Reading Interface)
-Plan: 4 of 4 in phase 3
-Status: Complete - pending phase verification
-Last activity: 2026-02-08 — Completed 03-04-PLAN.md (Search + Position Memory)
+Phase: 1.1 of 6 (Corpus Data Fixes - inserted phase)
+Plan: 1 of 2 in phase 1.1
+Status: In progress
+Last activity: 2026-02-09 — Completed 01.1-01-PLAN.md (Parser Update and Corpus Re-scrape)
 
-Progress: [████████████████████████] Phase 1: 100% | Phase 2: 100% | Phase 3: 100%
+Progress: [████████████████████████] Phase 1: 100% | Phase 1.1: 50% | Phase 2: 100% | Phase 3: 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
-- Average duration: 3.6 min
-- Total execution time: 0.60 hours
+- Total plans completed: 11
+- Average duration: 4.0 min
+- Total execution time: 0.73 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-corpus-foundation | 4 | 25 min | 6.25 min |
+| 01.1-corpus-data-fixes | 1 | 8 min | 8.0 min |
 | 02-module-system | 4 | 10 min | 2.5 min |
 | 03-reading-interface | 2 | 3 min | 1.5 min |
 
 **Recent Trend:**
-- Last plan: 03-02 (1 min) — transcript reader with paragraph rendering
-- Previous: 03-01 (2 min), 02-03 (4 min), 02-04 (3 min)
+- Last plan: 01.1-01 (8 min) — parser update and corpus re-scrape
+- Previous: 03-02 (1 min), 03-01 (2 min), 02-04 (3 min)
 
 *Updated after each plan completion*
 
@@ -101,6 +102,12 @@ Recent decisions affecting current work:
 - shouldShowSpeaker helper for conditional speaker label rendering
 - Data attributes (data-paragraph-id, data-paragraph-position) for future interaction
 
+**From Phase 1.1 Plan 1 (Parser Update):**
+- Store dates as-is without normalization (March 25, 1994, June 1989, etc.)
+- 4 transcripts legitimately lack topic tags in source (accepted as valid data)
+- Date extracted from h3 tag: $('h3').first()
+- Topic tags extracted from section#topics: $('section#topics a.metadata-label-link')
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -149,16 +156,16 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-08
-Stopped at: Phase 3 complete - ready for phase verification
+Last session: 2026-02-09
+Stopped at: Completed 01.1-01-PLAN.md (Parser Update and Corpus Re-scrape)
 
 **Current state:**
 - Plans 03-01, 03-02, 03-03, 03-04: Complete
-- Phase 3 reading interface fully implemented
-- Search + position memory integrated
-- Left sidebar layout with metadata and search
+- Phase 1.1 Plan 01: Complete (parser updated, corpus re-scraped)
+- Corpus has dates (100%) and topic tags (95.6%)
+- Ready for 01.1-02: Re-seed database
 
 **Next steps:**
-1. Manual verification of search and position memory
-2. Run phase verification
-3. Proceed to Phase 4 (Annotation Engine)
+1. Execute 01.1-02-PLAN.md (re-seed database, verify data)
+2. Complete Phase 1.1 verification
+3. Continue with Phase 4 (Annotation Engine)
