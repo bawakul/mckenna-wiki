@@ -69,6 +69,7 @@ const config = {
   supabaseServiceKey: process.env.SUPABASE_SERVICE_KEY,
   batchSize: 50, // Chunk paragraph inserts to avoid payload size limits
   dryRun: false,
+  forceMetadata: false, // Update metadata even if content_hash unchanged
 };
 
 // ============================================================================
@@ -84,6 +85,8 @@ function parseArgs() {
       i++;
     } else if (args[i] === '--dry-run') {
       config.dryRun = true;
+    } else if (args[i] === '--force-metadata') {
+      config.forceMetadata = true;
     }
   }
 }
@@ -98,7 +101,11 @@ async function main() {
   console.log('McKenna Corpus Import');
   console.log('=====================\n');
   console.log(`Corpus path: ${config.corpusPath}`);
-  console.log(`Mode: ${config.dryRun ? 'DRY RUN (no database writes)' : 'LIVE IMPORT'}\n`);
+  console.log(`Mode: ${config.dryRun ? 'DRY RUN (no database writes)' : 'LIVE IMPORT'}`);
+  if (config.forceMetadata) {
+    console.log(`Force metadata update: ENABLED (will update date/topic_tags even if content unchanged)`);
+  }
+  console.log('');
 
   // Validate environment variables
   if (!config.dryRun) {
@@ -176,7 +183,10 @@ async function main() {
         .eq('id', transcript.id)
         .single();
 
-      if (existing && existing.content_hash === transcript.contentHash) {
+      const contentUnchanged = existing && existing.content_hash === transcript.contentHash;
+
+      // If content unchanged and not forcing metadata update, skip
+      if (contentUnchanged && !config.forceMetadata) {
         console.log(`  → Unchanged, skipping`);
         stats.skipped++;
         continue;
@@ -205,6 +215,14 @@ async function main() {
 
       if (transcriptError) {
         throw transcriptError;
+      }
+
+      // If only updating metadata (content unchanged but force-metadata flag set),
+      // skip paragraph operations
+      if (contentUnchanged && config.forceMetadata) {
+        console.log(`  ✓ Metadata updated (paragraphs unchanged)`);
+        stats.updated++;
+        continue;
       }
 
       // Delete existing paragraphs (if updating)
