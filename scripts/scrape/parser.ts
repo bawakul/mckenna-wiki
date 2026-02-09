@@ -103,12 +103,25 @@ export function parseTranscriptPage(
   const authorName = $('.author-portrait-name').text().trim() || 'Terence McKenna';
   const speakers = [authorName];
 
-  // Date: NOT in structured metadata, set to null
-  // (This could be extracted from title or URL in future enhancement)
-  const date: string | null = null;
+  // Extract date from <h3> tag (appears after h1 title and h2 subtitle)
+  // Format varies: "March 25, 1994", "June 1989", etc.
+  // Store as-is per Phase 1 decision (no normalization)
+  const dateElement = $('h3').first();
+  const date: string | null = dateElement.length > 0
+    ? dateElement.text().trim()
+    : null;
 
-  // Topic tags and referenced authors: NOT reliably available, initialize empty
+  // Extract topic tags from topics section
+  // Structure: <section id="topics"><a class="metadata-label metadata-label-link">Tag Name</a></section>
   const topicTags: string[] = [];
+  $('section#topics a.metadata-label-link').each((_, el) => {
+    const tag = $(el).text().trim();
+    if (tag) {
+      topicTags.push(tag);
+    }
+  });
+
+  // Referenced authors: not required for Phase 1.1
   const referencedAuthors: string[] = [];
 
   // Extract paragraphs with timestamps
