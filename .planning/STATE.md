@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 4 of 6 (Annotation Engine)
-Plan: 5 of 7 in phase 4
+Plan: 6 of 7 in phase 4
 Status: In progress
-Last activity: 2026-02-09 — Completed 04-05-PLAN.md (Annotation Popover and Sidebar)
+Last activity: 2026-02-09 — Completed 04-06-PLAN.md (Full Integration)
 
-Progress: [█████████████████████████░░░░░] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 71%
+Progress: [██████████████████████████░░░░] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 86%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 17
-- Average duration: 3.65 min
-- Total execution time: 1.03 hours
+- Total plans completed: 18
+- Average duration: 3.56 min
+- Total execution time: 1.07 hours
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [███████████████████████
 | 01.1-corpus-data-fixes | 2 | 19 min | 9.5 min |
 | 02-module-system | 4 | 10 min | 2.5 min |
 | 03-reading-interface | 2 | 3 min | 1.5 min |
-| 04-annotation-engine | 5 | 12 min | 2.4 min |
+| 04-annotation-engine | 6 | 14 min | 2.3 min |
 
 **Recent Trend:**
-- Last plan: 04-05 (2 min) — popover and sidebar
-- Previous: 04-04 (2 min), 04-03 (2 min), 04-02 (3 min)
+- Last plan: 04-06 (2 min) — full integration
+- Previous: 04-05 (2 min), 04-04 (2 min), 04-03 (2 min)
 
 *Updated after each plan completion*
 
@@ -146,6 +146,12 @@ Recent decisions affecting current work:
 - scrollToAnnotation utility uses data-annotation-id selector
 - useVisibleAnnotations uses IntersectionObserver with 100ms delay for DOM readiness
 
+**From Phase 4 Plan 6 (Full Integration):**
+- Callback ref pattern shares container element between virtualizer and selection detection
+- SSR annotation fetch in page component eliminates flash of empty state
+- refreshAnnotations callback pattern for coordinating mutations across components
+- Sidebar width transition via CSS transition-all duration-200
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -192,7 +198,8 @@ None.
 - ✅ Selection UI components complete (useTextSelection hook, SelectionToolbar)
 - ✅ Highlight rendering complete (HighlightRenderer, ParagraphView integration)
 - ✅ Popover and sidebar components complete (HighlightPopover, AnnotationSidebar)
-- Integration and UX polish remaining (plans 06-07)
+- ✅ Full integration complete (VirtualizedReader, TranscriptReader, page)
+- UX polish remaining (plan 07)
 
 **Phase 5 (Analysis Views):**
 - Materialized views needed for <200ms query performance at 1000+ annotations (research recommendation)
@@ -200,15 +207,16 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 04-05-PLAN.md (Annotation Popover and Sidebar)
+Stopped at: Completed 04-06-PLAN.md (Full Integration)
 
 **Current state:**
-- Phase 4 in progress (5/7 plans complete)
-- Annotations table and CRUD operations ready
-- useTextSelection hook and SelectionToolbar component ready
-- HighlightRenderer utility and ParagraphView integration ready
-- HighlightPopover and AnnotationSidebar components ready
-- Highlights render with module colors (35% opacity)
+- Phase 4 in progress (6/7 plans complete)
+- Full annotation workflow functional
+- Selection toolbar appears on text selection
+- Clicking Highlight creates annotation and shows it immediately
+- Existing annotations display in paragraph text
+- Clicking annotation shows popover with edit/delete options
+- Sidebar shows all annotations and enables navigation
 
 **Next steps:**
-1. Execute 04-06-PLAN.md (Full Integration)
+1. Execute 04-07-PLAN.md (UX Polish)
