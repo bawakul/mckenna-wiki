@@ -5,36 +5,36 @@
 See: .planning/PROJECT.md (updated 2026-02-04)
 
 **Core value:** The ability to tag passages in McKenna transcripts with thematic modules and see how those modules appear across the corpus
-**Current focus:** Phase 1.1 - Corpus Data Fixes (in progress)
+**Current focus:** Phase 4 - Annotation Engine (next)
 
 ## Current Position
 
-Phase: 1.1 of 6 (Corpus Data Fixes - inserted phase)
-Plan: 1 of 2 in phase 1.1
-Status: In progress
-Last activity: 2026-02-09 — Completed 01.1-01-PLAN.md (Parser Update and Corpus Re-scrape)
+Phase: 1.1 of 6 (Corpus Data Fixes - COMPLETE)
+Plan: 2 of 2 in phase 1.1
+Status: Phase complete
+Last activity: 2026-02-09 — Completed 01.1-02-PLAN.md (Database Re-seed and Verification)
 
-Progress: [████████████████████████] Phase 1: 100% | Phase 1.1: 50% | Phase 2: 100% | Phase 3: 100%
+Progress: [████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
-- Average duration: 4.0 min
-- Total execution time: 0.73 hours
+- Total plans completed: 12
+- Average duration: 4.25 min
+- Total execution time: 0.85 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-corpus-foundation | 4 | 25 min | 6.25 min |
-| 01.1-corpus-data-fixes | 1 | 8 min | 8.0 min |
+| 01.1-corpus-data-fixes | 2 | 19 min | 9.5 min |
 | 02-module-system | 4 | 10 min | 2.5 min |
 | 03-reading-interface | 2 | 3 min | 1.5 min |
 
 **Recent Trend:**
-- Last plan: 01.1-01 (8 min) — parser update and corpus re-scrape
-- Previous: 03-02 (1 min), 03-01 (2 min), 02-04 (3 min)
+- Last plan: 01.1-02 (11 min) — database re-seed and verification
+- Previous: 01.1-01 (8 min), 03-02 (1 min), 03-01 (2 min)
 
 *Updated after each plan completion*
 
@@ -108,6 +108,11 @@ Recent decisions affecting current work:
 - Date extracted from h3 tag: $('h3').first()
 - Topic tags extracted from section#topics: $('section#topics a.metadata-label-link')
 
+**From Phase 1.1 Plan 2 (Database Re-seed):**
+- --force-metadata flag added to import-corpus.ts for metadata-only updates
+- 4 transcripts without dates accepted as source limitation (not extraction failure)
+- 37 unique topic tags catalogued with frequency counts
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -157,15 +162,15 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 01.1-01-PLAN.md (Parser Update and Corpus Re-scrape)
+Stopped at: Completed 01.1-02-PLAN.md (Database Re-seed and Verification)
 
 **Current state:**
-- Plans 03-01, 03-02, 03-03, 03-04: Complete
-- Phase 1.1 Plan 01: Complete (parser updated, corpus re-scraped)
-- Corpus has dates (100%) and topic tags (95.6%)
-- Ready for 01.1-02: Re-seed database
+- Phase 1.1 complete (2 plans)
+- Database has dates (96%) and topic tags (96%)
+- 37 unique topic tags catalogued
+- Ready for Phase 4 (Annotation Engine)
 
 **Next steps:**
-1. Execute 01.1-02-PLAN.md (re-seed database, verify data)
-2. Complete Phase 1.1 verification
-3. Continue with Phase 4 (Annotation Engine)
+1. Begin Phase 4 planning (Annotation Engine)
+2. Research: Custom Selection API vs @recogito/react-text-annotator
+3. Implement hybrid selector pattern (paragraph ID + text quote + offset)
