@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 4 of 6 (Annotation Engine)
-Plan: 4 of 7 in phase 4
+Plan: 5 of 7 in phase 4
 Status: In progress
-Last activity: 2026-02-09 — Completed 04-04-PLAN.md (Highlight Rendering)
+Last activity: 2026-02-09 — Completed 04-05-PLAN.md (Annotation Popover and Sidebar)
 
-Progress: [███████████████████████░░░░░░░] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 57%
+Progress: [█████████████████████████░░░░░] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 71%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
-- Average duration: 3.75 min
-- Total execution time: 1.0 hours
+- Total plans completed: 17
+- Average duration: 3.65 min
+- Total execution time: 1.03 hours
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [███████████████████████
 | 01.1-corpus-data-fixes | 2 | 19 min | 9.5 min |
 | 02-module-system | 4 | 10 min | 2.5 min |
 | 03-reading-interface | 2 | 3 min | 1.5 min |
-| 04-annotation-engine | 4 | 10 min | 2.5 min |
+| 04-annotation-engine | 5 | 12 min | 2.4 min |
 
 **Recent Trend:**
-- Last plan: 04-04 (2 min) — highlight rendering
-- Previous: 04-03 (2 min), 04-02 (3 min), 04-01 (3 min)
+- Last plan: 04-05 (2 min) — popover and sidebar
+- Previous: 04-04 (2 min), 04-03 (2 min), 04-02 (3 min)
 
 *Updated after each plan completion*
 
@@ -138,6 +138,14 @@ Recent decisions affecting current work:
 - Module colors use 35% opacity for text readability
 - Untagged highlights use gray-200 (#e5e7eb) background
 
+**From Phase 4 Plan 5 (Annotation Popover and Sidebar):**
+- Popover anchors to clicked mark element via refs.setReference
+- Delete confirmation inline in popover (not separate dialog)
+- Sidebar uses amber accent to highlight visible annotations
+- Toggle button positioned fixed right-4 top-24 with count badge
+- scrollToAnnotation utility uses data-annotation-id selector
+- useVisibleAnnotations uses IntersectionObserver with 100ms delay for DOM readiness
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -183,7 +191,8 @@ None.
 - ✅ Annotation CRUD Server Actions complete
 - ✅ Selection UI components complete (useTextSelection hook, SelectionToolbar)
 - ✅ Highlight rendering complete (HighlightRenderer, ParagraphView integration)
-- Sidebar, integration, and popover remaining (plans 05-07)
+- ✅ Popover and sidebar components complete (HighlightPopover, AnnotationSidebar)
+- Integration and UX polish remaining (plans 06-07)
 
 **Phase 5 (Analysis Views):**
 - Materialized views needed for <200ms query performance at 1000+ annotations (research recommendation)
@@ -191,14 +200,15 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-09
-Stopped at: Completed 04-04-PLAN.md (Highlight Rendering)
+Stopped at: Completed 04-05-PLAN.md (Annotation Popover and Sidebar)
 
 **Current state:**
-- Phase 4 in progress (4/7 plans complete)
+- Phase 4 in progress (5/7 plans complete)
 - Annotations table and CRUD operations ready
 - useTextSelection hook and SelectionToolbar component ready
 - HighlightRenderer utility and ParagraphView integration ready
+- HighlightPopover and AnnotationSidebar components ready
 - Highlights render with module colors (35% opacity)
 
 **Next steps:**
-1. Execute 04-05-PLAN.md (Annotation Sidebar)
+1. Execute 04-06-PLAN.md (Full Integration)
