@@ -1,5 +1,7 @@
 import Highlighter from 'react-highlight-words'
 import type { TranscriptParagraph } from '@/lib/types/transcript'
+import type { ParagraphHighlight } from '@/lib/types/annotation'
+import { renderTextWithHighlights } from '@/components/annotations/HighlightRenderer'
 
 interface ParagraphViewProps {
   paragraph: TranscriptParagraph
@@ -7,6 +9,8 @@ interface ParagraphViewProps {
   searchQuery?: string
   isCurrentMatch?: boolean // Highlight the current search result
   hasTimestamps?: boolean // Whether any paragraph in transcript has timestamps
+  highlights?: ParagraphHighlight[] // Annotation highlights for this paragraph
+  onHighlightClick?: (annotationId: string) => void // Called when a highlight is clicked
 }
 
 /**
@@ -24,14 +28,16 @@ export function ParagraphView({
   searchQuery,
   isCurrentMatch = false,
   hasTimestamps = false,
+  highlights = [],
+  onHighlightClick,
 }: ParagraphViewProps) {
   const formattedTimestamp = formatTimestamp(paragraph.timestamp)
 
   return (
     <div
       className={`
-        relative py-2 ${hasTimestamps ? 'pl-20' : ''} transition-colors duration-200
-        ${isCurrentMatch ? 'bg-yellow-50' : ''}
+        relative py-3 ${hasTimestamps ? 'pl-20' : ''} transition-colors duration-200
+        ${isCurrentMatch ? 'bg-yellow-50 -mx-4 px-4 rounded-lg' : ''}
       `}
       data-paragraph-id={paragraph.id}
       data-paragraph-position={paragraph.position}
@@ -51,6 +57,9 @@ export function ParagraphView({
       )}
 
       {/* Paragraph text with optional highlighting */}
+      {/* Priority: 1. Search highlighting (temporary navigation mode) */}
+      {/*           2. Annotation highlights (persistent markup) */}
+      {/*           3. Plain text */}
       <p className="text-base leading-relaxed text-gray-900">
         {searchQuery ? (
           <Highlighter
@@ -60,6 +69,8 @@ export function ParagraphView({
             highlightClassName="bg-yellow-200 rounded px-0.5"
             caseSensitive={false}
           />
+        ) : highlights.length > 0 ? (
+          renderTextWithHighlights(paragraph.text, highlights, onHighlightClick)
         ) : (
           paragraph.text
         )}
