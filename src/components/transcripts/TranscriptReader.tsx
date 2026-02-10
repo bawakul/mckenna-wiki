@@ -76,10 +76,32 @@ export function TranscriptReader({ transcript, initialAnnotations = [] }: Transc
     }
   }, [annotations])
 
-  // Handle sidebar annotation click (scroll to it)
+  // Handle sidebar annotation click (scroll to it and open popover)
   const handleSidebarAnnotationClick = useCallback((annotation: AnnotationWithModule) => {
-    scrollToAnnotation(annotation.id)
-  }, [])
+    // Find the paragraph index for this annotation
+    const paragraphIndex = paragraphs.findIndex(
+      (p) => p.id === annotation.start_paragraph_id
+    )
+
+    if (paragraphIndex >= 0 && scrollToIndexRef.current) {
+      // Scroll the virtualizer to the paragraph first
+      scrollToIndexRef.current(paragraphIndex)
+
+      // After scrolling, find the mark element and open the popover
+      // Use a timeout to allow the virtualizer to render the paragraph
+      setTimeout(() => {
+        const mark = document.querySelector(
+          `[data-annotation-id="${annotation.id}"]`
+        ) as HTMLElement | null
+
+        if (mark) {
+          mark.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          // Open the popover anchored to this mark
+          setSelectedAnnotation({ annotation, anchorElement: mark })
+        }
+      }, 150)
+    }
+  }, [paragraphs])
 
   // Handle visible range changes for position memory
   const handleVisibleRangeChange = useCallback(
