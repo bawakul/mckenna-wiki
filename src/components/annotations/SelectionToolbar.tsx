@@ -54,6 +54,11 @@ export function SelectionToolbar({
     <div
       ref={refs.setFloating}
       style={floatingStyles}
+      data-selection-toolbar
+      onMouseDown={(e) => {
+        // Prevent losing the text selection when clicking the toolbar
+        e.preventDefault()
+      }}
       className="
         z-50 bg-white rounded-lg shadow-lg border border-gray-200
         px-2 py-1.5 flex items-center gap-2

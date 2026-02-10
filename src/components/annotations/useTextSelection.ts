@@ -39,7 +39,13 @@ export function useTextSelection({ containerRef, onSelectionClear }: UseTextSele
     // Capture container in closure for callbacks
     const containerElement = container
 
-    function handleMouseUp() {
+    function handleMouseUp(event: MouseEvent) {
+      // Don't clear selection if clicking on a toolbar button
+      const target = event.target as HTMLElement
+      if (target.closest('[data-selection-toolbar]')) {
+        return
+      }
+
       // Small delay to let browser finalize selection
       requestAnimationFrame(() => {
         const sel = window.getSelection()

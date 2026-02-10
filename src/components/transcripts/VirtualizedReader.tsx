@@ -75,23 +75,34 @@ export function VirtualizedReader({
     const container = containerRef.current
     if (!container) return
 
-    const { selector, startParagraphId, endParagraphId } = createSelectorFromRange(
-      selection.range,
-      container
-    )
+    try {
+      const { selector, startParagraphId, endParagraphId } = createSelectorFromRange(
+        selection.range,
+        container
+      )
 
-    const result = await createAnnotation({
-      transcript_id: transcriptId,
-      selector,
-      highlighted_text: selection.text,
-      start_paragraph_id: startParagraphId,
-      end_paragraph_id: endParagraphId,
-    })
+      if (startParagraphId === 0 || endParagraphId === 0) {
+        console.error('Failed to find paragraph IDs for highlight')
+        return
+      }
 
-    if (result.success) {
-      clearSelection()
-      window.getSelection()?.removeAllRanges()
-      onAnnotationCreated?.()
+      const result = await createAnnotation({
+        transcript_id: transcriptId,
+        selector,
+        highlighted_text: selection.text,
+        start_paragraph_id: startParagraphId,
+        end_paragraph_id: endParagraphId,
+      })
+
+      if (result.success) {
+        clearSelection()
+        window.getSelection()?.removeAllRanges()
+        onAnnotationCreated?.()
+      } else {
+        console.error('Failed to create annotation:', result.error)
+      }
+    } catch (error) {
+      console.error('Error creating highlight:', error)
     }
   }, [selection, transcriptId, clearSelection, onAnnotationCreated])
 
