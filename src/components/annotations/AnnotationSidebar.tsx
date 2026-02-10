@@ -118,18 +118,18 @@ export function AnnotationSidebar({
         className="
           fixed right-4 top-24 z-40
           w-10 h-10 rounded-full
-          bg-white dark:bg-zinc-800
-          border border-zinc-200 dark:border-zinc-700
+          bg-white
+          border border-gray-200
           shadow-md
           flex items-center justify-center
-          hover:bg-zinc-50 dark:hover:bg-zinc-700
+          hover:bg-gray-50
           transition-colors
         "
         aria-label={isOpen ? 'Close annotations sidebar' : 'Open annotations sidebar'}
         title={`${annotations.length} annotation${annotations.length !== 1 ? 's' : ''}`}
       >
         <svg
-          className="w-5 h-5 text-zinc-600 dark:text-zinc-400"
+          className="w-5 h-5 text-gray-600"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -167,8 +167,8 @@ export function AnnotationSidebar({
       <div
         className={`
           fixed right-0 top-0 h-full w-80 z-30
-          bg-white dark:bg-zinc-900
-          border-l border-zinc-200 dark:border-zinc-700
+          bg-white
+          border-l border-gray-200
           shadow-xl
           transform transition-transform duration-200 ease-out
           ${isOpen ? 'translate-x-0' : 'translate-x-full'}
@@ -176,13 +176,13 @@ export function AnnotationSidebar({
       >
         {/* Header */}
         <div className="
-          px-4 py-3 border-b border-zinc-200 dark:border-zinc-700
+          px-4 py-3 border-b border-gray-200
           flex items-center justify-between
         ">
-          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+          <h2 className="text-lg font-semibold text-gray-900">
             Annotations
           </h2>
-          <span className="text-sm text-zinc-500 dark:text-zinc-400">
+          <span className="text-sm text-gray-500">
             {annotations.length} total
           </span>
         </div>
@@ -191,10 +191,10 @@ export function AnnotationSidebar({
         <div className="h-[calc(100%-56px)] overflow-y-auto">
           {sortedAnnotations.length === 0 ? (
             <div className="p-4 text-center">
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              <p className="text-sm text-gray-500">
                 No annotations yet
               </p>
-              <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">
+              <p className="text-xs text-gray-400 mt-1">
                 Select text to create highlights
               </p>
             </div>
@@ -209,11 +209,11 @@ export function AnnotationSidebar({
                       onClick={() => handleAnnotationClick(annotation)}
                       className={`
                         w-full text-left px-4 py-3
-                        hover:bg-zinc-50 dark:hover:bg-zinc-800
+                        hover:bg-gray-50
                         transition-colors
                         border-l-4
                         ${isVisible
-                          ? 'border-amber-400 bg-amber-50/50 dark:bg-amber-900/20'
+                          ? 'border-amber-400 bg-amber-50/50'
                           : 'border-transparent'
                         }
                       `}
@@ -225,21 +225,21 @@ export function AnnotationSidebar({
                             className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                             style={{ backgroundColor: annotation.module.color }}
                           />
-                          <span className="text-xs font-medium text-zinc-700 dark:text-zinc-300 truncate">
+                          <span className="text-xs font-medium text-gray-700 truncate">
                             {annotation.module.name}
                           </span>
                         </div>
                       ) : (
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-zinc-300 dark:bg-zinc-600" />
-                          <span className="text-xs font-medium text-zinc-400 dark:text-zinc-500">
+                          <span className="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gray-300" />
+                          <span className="text-xs font-medium text-gray-400">
                             Untagged
                           </span>
                         </div>
                       )}
 
                       {/* Text snippet */}
-                      <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-snug">
+                      <p className="text-sm text-gray-600 leading-snug">
                         {truncateText(annotation.highlighted_text)}
                       </p>
                     </button>
@@ -254,7 +254,7 @@ export function AnnotationSidebar({
       {/* Overlay when sidebar is open (optional, for focus) */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-20 bg-black/10 dark:bg-black/30"
+          className="fixed inset-0 z-20 bg-black/10"
           onClick={onToggle}
           aria-hidden="true"
         />
