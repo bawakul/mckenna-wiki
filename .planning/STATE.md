@@ -10,17 +10,17 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 5 of 6 (Analysis Views)
-Plan: 2 of 4 in phase 5
+Plan: 3 of 4 in phase 5
 Status: In progress
-Last activity: 2026-02-14 — Completed 05-02-PLAN.md
+Last activity: 2026-02-14 — Completed 05-03-PLAN.md
 
-Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 50%
+Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 75%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 21
-- Average duration: 3.8 min
+- Total plans completed: 22
+- Average duration: 3.6 min
 - Total execution time: 1.4 hours
 
 **By Phase:**
@@ -32,11 +32,11 @@ Progress: [███████████████████████
 | 02-module-system | 4 | 10 min | 2.5 min |
 | 03-reading-interface | 2 | 3 min | 1.5 min |
 | 04-annotation-engine | 7 | 29 min | 4.1 min |
-| 05-analysis-views | 2 | 4 min | 2.0 min |
+| 05-analysis-views | 3 | 6 min | 2.0 min |
 
 **Recent Trend:**
-- Last plan: 05-02 (2 min) — module trace page UI
-- Previous: 05-01 (2 min), 04-07 (15 min), 04-06 (2 min)
+- Last plan: 05-03 (2 min) — navigation entry points
+- Previous: 05-02 (2 min), 05-01 (2 min), 04-07 (15 min)
 
 *Updated after each plan completion*
 
@@ -168,6 +168,13 @@ Recent decisions affecting current work:
 - Expandable context deferred to future enhancement (v1 shows highlighted text only)
 - Dynamic routes with Promise<params> for Next.js 15 async params pattern
 
+**From Phase 5 Plan 3 (Navigation Entry Points):**
+- Simple dropdown implementation without Floating UI dependency for module switcher
+- Client-side count aggregation for passage counts (efficient for expected data scale)
+- Non-link ModuleCard with action links (Edit + View traces) instead of single clickable card
+- Backdrop pattern for dropdowns: fixed inset-0 z-10 layer with click-to-close
+- Parallel data fetching in modules page: modules + annotations together
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -225,6 +232,7 @@ None.
 **Phase 5 (Analysis Views):** IN PROGRESS
 - ✅ 05-01: module_traces view and TypeScript foundation created
 - ✅ 05-02: module trace page UI with useTransition filtering
+- ✅ 05-03: navigation entry points (ModuleSwitcher, passage counts on cards)
 - ⚠️ Manual migration required: 006_create_module_traces_view.sql must be applied via Supabase dashboard
 - Query performance profiling deferred until trace pages query with real data
 - Expandable context deferred (v1 shows highlighted text only)
@@ -232,15 +240,15 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-14
-Stopped at: Completed 05-02-PLAN.md (Module Trace Page UI)
+Stopped at: Completed 05-03-PLAN.md (Navigation Entry Points)
 
 **Current state:**
-- Phase 5 plans 1-2 complete (2/4 plans complete)
-- Module trace page at /analysis/modules/[id] implemented
-- TraceList with useTransition filtering
-- TraceCard with module color highlights
+- Phase 5 plans 1-3 complete (3/4 plans complete)
+- Module trace page at /analysis/modules/[id] with ModuleSwitcher dropdown
+- Module cards show passage counts and "View traces" links
+- Complete navigation flow: Modules → Trace → Different Trace
 - TypeScript compilation verified
 
 **Next steps:**
 1. Apply migration 006_create_module_traces_view.sql via Supabase dashboard (REQUIRED for trace pages to work)
-2. Continue Phase 5: Build analysis landing page (05-03)
+2. Continue Phase 5: Plan 05-04 (if exists) or move to Phase 6
