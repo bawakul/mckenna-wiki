@@ -5,22 +5,22 @@
 See: .planning/PROJECT.md (updated 2026-02-04)
 
 **Core value:** The ability to tag passages in McKenna transcripts with thematic modules and see how those modules appear across the corpus
-**Current focus:** Phase 4 - Annotation Engine (in progress)
+**Current focus:** Phase 5 - Analysis Views (in progress)
 
 ## Current Position
 
-Phase: 4 of 6 (Annotation Engine) - COMPLETE
-Plan: 7 of 7 in phase 4
-Status: Complete
-Last activity: 2026-02-10 — Completed 04-07-PLAN.md (Human Verification)
+Phase: 5 of 6 (Analysis Views)
+Plan: 1 of 4 in phase 5
+Status: In progress
+Last activity: 2026-02-14 — Completed 05-01-PLAN.md
 
-Progress: [██████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100%
+Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 25%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 19
-- Average duration: 4.0 min
+- Total plans completed: 20
+- Average duration: 3.9 min
 - Total execution time: 1.3 hours
 
 **By Phase:**
@@ -32,10 +32,11 @@ Progress: [███████████████████████
 | 02-module-system | 4 | 10 min | 2.5 min |
 | 03-reading-interface | 2 | 3 min | 1.5 min |
 | 04-annotation-engine | 7 | 29 min | 4.1 min |
+| 05-analysis-views | 1 | 2 min | 2.0 min |
 
 **Recent Trend:**
-- Last plan: 04-07 (15 min) — human verification with bug fixes
-- Previous: 04-06 (2 min), 04-05 (2 min), 04-04 (2 min)
+- Last plan: 05-01 (2 min) — database view and types foundation
+- Previous: 04-07 (15 min), 04-06 (2 min), 04-05 (2 min)
 
 *Updated after each plan completion*
 
@@ -152,6 +153,14 @@ Recent decisions affecting current work:
 - refreshAnnotations callback pattern for coordinating mutations across components
 - Sidebar width transition via CSS transition-all duration-200
 
+**From Phase 5 Plan 1 (Module Traces Foundation):**
+- INNER JOIN with transcripts filters orphaned annotations (deleted transcripts)
+- LEFT JOIN with modules supports untagged highlights (module_id can be null)
+- ORDER BY in view (t.date ASC NULLS LAST) for chronological sorting with consistent null handling
+- Regular view (not materialized) sufficient for 1000-row scale with existing indexes
+- View-based query abstraction pattern for complex joins
+- Server-side only query functions in lib/queries/ for data fetching
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -182,6 +191,11 @@ None.
 **UI Polish (defer to later):**
 - [ ] Reading area padding may need adjustment (currently px-8 py-8)
 - [ ] Timestamp gutter shows when no timestamps exist (unnecessary left padding)
+- [ ] Annotation sidebar toggle button placement not ideal
+
+**Security (address in Phase 5):**
+- [ ] RLS disabled on all tables (transcripts, transcript_paragraphs, modules, annotations)
+- [ ] Need to enable RLS and add permissive policies for personal tool access
 
 *These issues are logged but not blocking Phase 3 completion or Phase 4 start.*
 
@@ -201,22 +215,23 @@ None.
 - ✅ Full integration (VirtualizedReader, TranscriptReader, page)
 - ✅ Human verification passed (bugs fixed during verification)
 
-**Phase 5 (Analysis Views):**
-- Materialized views needed for <200ms query performance at 1000+ annotations (research recommendation)
+**Phase 5 (Analysis Views):** IN PROGRESS
+- ✅ 05-01: module_traces view and TypeScript foundation created
+- ⚠️ Manual migration required: 006_create_module_traces_view.sql must be applied via Supabase dashboard
+- Query performance profiling deferred until trace pages query with real data
+- Paragraph context fetching pattern (for expanded cards) not yet decided
 
 ## Session Continuity
 
-Last session: 2026-02-10
-Stopped at: Completed Phase 4 (Annotation Engine)
+Last session: 2026-02-14
+Stopped at: Completed 05-01-PLAN.md (Module Traces Foundation)
 
 **Current state:**
-- Phase 4 complete (7/7 plans complete)
-- Full annotation workflow verified working
-- Selection toolbar appears on text selection
-- Clicking Highlight creates annotation
-- Annotations display with module colors
-- Popover for editing/tagging/deleting
-- Sidebar navigation scrolls to highlights
+- Phase 5 plan 1 complete (1/4 plans complete)
+- module_traces view defined (migration file ready)
+- TypeScript types and query functions implemented
+- TypeScript compilation verified
 
 **Next steps:**
-1. Plan Phase 5: Analysis Views (module tracing across corpus)
+1. Apply migration 006_create_module_traces_view.sql via Supabase dashboard
+2. Continue Phase 5: Build trace page UI (05-02)
