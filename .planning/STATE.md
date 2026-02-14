@@ -193,7 +193,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None.
+1. **Guided lecture exploration - choose your own adventure** (planning) — Branching, curated reading experience where newcomers start with entry-point lectures and "double-click" into deeper topics across the corpus
 
 ### Known Issues (Non-blocking)
 
