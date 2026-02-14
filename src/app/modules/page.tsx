@@ -5,10 +5,22 @@ import type { Module } from '@/lib/types/module'
 
 export default async function ModulesPage() {
   const supabase = await createClient()
-  const { data: modules } = await supabase
-    .from('modules')
-    .select('*')
-    .order('created_at', { ascending: false })
+
+  // Fetch modules and annotation counts
+  const [modulesResult, countsResult] = await Promise.all([
+    supabase.from('modules').select('*').order('created_at', { ascending: false }),
+    supabase.from('annotations').select('module_id').not('module_id', 'is', null)
+  ])
+
+  const modules = modulesResult.data || []
+
+  // Count passages per module
+  const passageCounts: Record<string, number> = {}
+  for (const ann of countsResult.data || []) {
+    if (ann.module_id) {
+      passageCounts[ann.module_id] = (passageCounts[ann.module_id] || 0) + 1
+    }
+  }
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900">
@@ -30,10 +42,14 @@ export default async function ModulesPage() {
           </Link>
         </div>
 
-        {modules && modules.length > 0 ? (
+        {modules.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2">
             {modules.map((module: Module) => (
-              <ModuleCard key={module.id} module={module} />
+              <ModuleCard
+                key={module.id}
+                module={module}
+                passageCount={passageCounts[module.id] || 0}
+              />
             ))}
           </div>
         ) : (
