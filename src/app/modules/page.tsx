@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { ModuleCard } from '@/components/modules/ModuleCard'
+import { BulkExportButton } from '@/components/export/BulkExportButton'
 import Link from 'next/link'
 import type { Module } from '@/lib/types/module'
 
@@ -34,12 +35,16 @@ export default async function ModulesPage() {
               Thematic categories for tagging passages in McKenna lectures
             </p>
           </div>
-          <Link
-            href="/modules/new"
-            className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-          >
-            New Module
-          </Link>
+          <div className="flex items-center gap-2">
+            <BulkExportButton modules={modules} format="markdown" />
+            <BulkExportButton modules={modules} format="csv" />
+            <Link
+              href="/modules/new"
+              className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            >
+              New Module
+            </Link>
+          </div>
         </div>
 
         {modules.length > 0 ? (

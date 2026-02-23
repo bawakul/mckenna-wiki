@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getModuleTraces, getModuleWithCount } from '@/lib/queries/module-traces'
 import { TraceList } from '@/components/analysis/TraceList'
 import { ModuleSwitcher } from '@/components/analysis/ModuleSwitcher'
+import { ExportButtons } from '@/components/export/ExportButtons'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
@@ -50,6 +51,9 @@ export default async function ModuleTracePage({ params }: PageProps) {
                   {moduleWithCount.notes}
                 </p>
               )}
+              <div className="mt-4">
+                <ExportButtons moduleId={id} moduleName={moduleWithCount.name} />
+              </div>
             </div>
             <ModuleSwitcher
               currentModuleId={id}
