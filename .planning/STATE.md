@@ -10,17 +10,17 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 6 of 6 (Export)
-Plan: 1 of 2 in phase 6
-Status: In progress
-Last activity: 2026-02-23 — Completed 06-01-PLAN.md
+Plan: 2 of 2 in phase 6
+Status: Phase complete
+Last activity: 2026-02-23 — Completed 06-02-PLAN.md
 
-Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 50%
+Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 24
-- Average duration: 3.6 min
+- Total plans completed: 25
+- Average duration: 3.5 min
 - Total execution time: 1.5 hours
 
 **By Phase:**
@@ -33,11 +33,11 @@ Progress: [███████████████████████
 | 03-reading-interface | 2 | 3 min | 1.5 min |
 | 04-annotation-engine | 7 | 29 min | 4.1 min |
 | 05-analysis-views | 4 | 8 min | 2.0 min |
-| 06-export | 1 | 5 min | 5.0 min |
+| 06-export | 2 | 7 min | 3.5 min |
 
 **Recent Trend:**
-- Last plan: 06-01 (5 min) — export infrastructure
-- Previous: 05-04 (2 min), 05-03 (2 min), 05-02 (2 min)
+- Last plan: 06-02 (2 min) — export UI
+- Previous: 06-01 (5 min), 05-04 (2 min), 05-03 (2 min)
 
 *Updated after each plan completion*
 
@@ -259,27 +259,28 @@ Recent decisions affecting current work:
 - Core analysis value proposition delivered: view thematic patterns across corpus
 - Expandable context deferred (v1 shows highlighted text only)
 
-**Phase 6 (Export):** In progress
-- ✅ 06-01: Export infrastructure complete (markdown/CSV API endpoints)
+**Phase 6 (Export):** ✓ COMPLETE
+- ✅ 06-01: Export infrastructure (markdown/CSV API endpoints)
+- ✅ 06-02: Export UI (single and bulk export buttons)
 - Export utility functions: markdown (YAML + blockquotes), CSV (RFC 4180), filename sanitization
 - Route Handlers: GET /api/export/markdown/[moduleId] and GET /api/export/csv/[moduleId]
-- Content-Disposition headers for browser downloads
-- Next: 06-02 UI implementation (export buttons in module detail pages)
+- ExportButtons component on module trace pages (MD/CSV single export)
+- BulkExportButton component on modules page (ZIP/CSV bulk export)
+- Client-side download via URL.createObjectURL pattern
+- Phase complete - all export features delivered
 
 ## Session Continuity
 
 Last session: 2026-02-23
-Stopped at: Completed 06-01-PLAN.md — Export Infrastructure
+Stopped at: Completed 06-02-PLAN.md — Export UI
 
 **Current state:**
-- Phase 6 in progress (1/2 plans complete)
-- Export API endpoints functional and tested
-- markdown and CSV generation working with proper formatting
-- Filename sanitization with timestamp versioning
-- Ready for UI integration in Plan 02
+- Phase 6 complete (2/2 plans)
+- All 6 phases complete
+- Export feature fully functional (API + UI)
+- Single module exports from trace pages
+- Bulk exports from modules list page
+- Project v1 feature-complete
 
-**Next steps:**
-1. Complete Phase 6 Plan 02: Export UI
-2. Add export buttons to module detail pages
-3. Format dropdown (Markdown / CSV)
-4. Browser download integration
+**Project Status: COMPLETE**
+All planned phases delivered. Ready for production use.
