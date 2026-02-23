@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-04)
 
 **Core value:** The ability to tag passages in McKenna transcripts with thematic modules and see how those modules appear across the corpus
-**Current focus:** Phase 5 - Analysis Views (in progress)
+**Current focus:** Phase 6 - Export (in progress)
 
 ## Current Position
 
-Phase: 5 of 6 (Analysis Views)
-Plan: 4 of 4 in phase 5
-Status: Phase complete
-Last activity: 2026-02-23 — Completed 05-04-PLAN.md (Human verification)
+Phase: 6 of 6 (Export)
+Plan: 1 of 2 in phase 6
+Status: In progress
+Last activity: 2026-02-23 — Completed 06-01-PLAN.md
 
-Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100%
+Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 50%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 23
-- Average duration: 3.5 min
-- Total execution time: 1.4 hours
+- Total plans completed: 24
+- Average duration: 3.6 min
+- Total execution time: 1.5 hours
 
 **By Phase:**
 
@@ -33,10 +33,11 @@ Progress: [███████████████████████
 | 03-reading-interface | 2 | 3 min | 1.5 min |
 | 04-annotation-engine | 7 | 29 min | 4.1 min |
 | 05-analysis-views | 4 | 8 min | 2.0 min |
+| 06-export | 1 | 5 min | 5.0 min |
 
 **Recent Trend:**
-- Last plan: 05-04 (2 min) — human verification
-- Previous: 05-03 (2 min), 05-02 (2 min), 05-01 (2 min)
+- Last plan: 06-01 (5 min) — export infrastructure
+- Previous: 05-04 (2 min), 05-03 (2 min), 05-02 (2 min)
 
 *Updated after each plan completion*
 
@@ -181,6 +182,15 @@ Recent decisions affecting current work:
 - Migration 006_create_module_traces_view.sql applied via Supabase dashboard
 - All verification checks passed: entry, content, search, navigation, performance
 
+**From Phase 6 Plan 1 (Export Infrastructure):**
+- N/A placeholder for timestamps in exports (not stored in selector or module_traces view)
+- Blockquote passages in markdown for visual distinction from regular text
+- RFC 4180 CSV escaping with field quoting for commas/quotes/newlines
+- Timestamp in filename (YYYY-MM-DD) for version tracking of repeated exports
+- Content-Disposition with both filename and filename* for UTF-8 safety
+- Route Handler pattern: parallel fetch with Promise.all, generate content, return Response with download headers
+- client-zip (2.5.0) and sanitize-filename (1.6.3) for export functionality
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -249,19 +259,27 @@ Recent decisions affecting current work:
 - Core analysis value proposition delivered: view thematic patterns across corpus
 - Expandable context deferred (v1 shows highlighted text only)
 
+**Phase 6 (Export):** In progress
+- ✅ 06-01: Export infrastructure complete (markdown/CSV API endpoints)
+- Export utility functions: markdown (YAML + blockquotes), CSV (RFC 4180), filename sanitization
+- Route Handlers: GET /api/export/markdown/[moduleId] and GET /api/export/csv/[moduleId]
+- Content-Disposition headers for browser downloads
+- Next: 06-02 UI implementation (export buttons in module detail pages)
+
 ## Session Continuity
 
 Last session: 2026-02-23
-Stopped at: Completed 05-04-PLAN.md (Human Verification) — PHASE 5 COMPLETE
+Stopped at: Completed 06-01-PLAN.md — Export Infrastructure
 
 **Current state:**
-- Phase 5 complete (4/4 plans complete)
-- Module tracing feature fully implemented and verified
-- Migration 006_create_module_traces_view.sql applied
-- All verification checks passed
-- Core analysis value proposition delivered
+- Phase 6 in progress (1/2 plans complete)
+- Export API endpoints functional and tested
+- markdown and CSV generation working with proper formatting
+- Filename sanitization with timestamp versioning
+- Ready for UI integration in Plan 02
 
 **Next steps:**
-1. Begin Phase 6: Polish and Deploy
-2. Address RLS security requirements
-3. Final production readiness checks
+1. Complete Phase 6 Plan 02: Export UI
+2. Add export buttons to module detail pages
+3. Format dropdown (Markdown / CSV)
+4. Browser download integration
