@@ -10,17 +10,17 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 5 of 6 (Analysis Views)
-Plan: 3 of 4 in phase 5
-Status: In progress
-Last activity: 2026-02-14 — Completed 05-03-PLAN.md
+Plan: 4 of 4 in phase 5
+Status: Phase complete
+Last activity: 2026-02-23 — Completed 05-04-PLAN.md (Human verification)
 
-Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 75%
+Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 22
-- Average duration: 3.6 min
+- Total plans completed: 23
+- Average duration: 3.5 min
 - Total execution time: 1.4 hours
 
 **By Phase:**
@@ -32,11 +32,11 @@ Progress: [███████████████████████
 | 02-module-system | 4 | 10 min | 2.5 min |
 | 03-reading-interface | 2 | 3 min | 1.5 min |
 | 04-annotation-engine | 7 | 29 min | 4.1 min |
-| 05-analysis-views | 3 | 6 min | 2.0 min |
+| 05-analysis-views | 4 | 8 min | 2.0 min |
 
 **Recent Trend:**
-- Last plan: 05-03 (2 min) — navigation entry points
-- Previous: 05-02 (2 min), 05-01 (2 min), 04-07 (15 min)
+- Last plan: 05-04 (2 min) — human verification
+- Previous: 05-03 (2 min), 05-02 (2 min), 05-01 (2 min)
 
 *Updated after each plan completion*
 
@@ -175,6 +175,12 @@ Recent decisions affecting current work:
 - Backdrop pattern for dropdowns: fixed inset-0 z-10 layer with click-to-close
 - Parallel data fetching in modules page: modules + annotations together
 
+**From Phase 5 Plan 4 (Human Verification):**
+- Human verification confirms core analysis value proposition delivered
+- Module tracing performance acceptable for current data scale
+- Migration 006_create_module_traces_view.sql applied via Supabase dashboard
+- All verification checks passed: entry, content, search, navigation, performance
+
 ### Phase 1 Results
 
 **Corpus Statistics:**
@@ -193,9 +199,14 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-1. **Guided lecture exploration - choose your own adventure** (planning) — Branching, curated reading experience where newcomers start with entry-point lectures and "double-click" into deeper topics across the corpus
+1. **[HIGH] Full-text corpus search** — Search actual transcript content (not just metadata). DB function `search_corpus` exists but not exposed in UI. Returns paragraph-level results with transcript context. Could add as dedicated search page or enhance transcripts list.
+2. **[HIGH] Lecture favorites** — Bookmark/favorite lectures for quick access. Needs: favorites table, toggle UI on transcript cards and reader, filtered view for favorites only.
+3. **Guided lecture exploration - choose your own adventure** (planning) — Branching, curated reading experience where newcomers start with entry-point lectures and "double-click" into deeper topics across the corpus
 
 ### Known Issues (Non-blocking)
+
+**Annotation Bugs:**
+- [ ] **[HIGH] Highlight offset bug** — Selected text shifts a few characters forward when highlight is created. Likely issue in offset calculation or word boundary snapping (useTextSelection hook or selector creation).
 
 **Corpus/Scraper Issues (fix in future re-scrape):**
 - [ ] "Man and Woman at the End of History" paragraph 134 is abnormally long (paragraph breaks not detected)
@@ -229,26 +240,28 @@ Recent decisions affecting current work:
 - ✅ Full integration (VirtualizedReader, TranscriptReader, page)
 - ✅ Human verification passed (bugs fixed during verification)
 
-**Phase 5 (Analysis Views):** IN PROGRESS
+**Phase 5 (Analysis Views):** ✓ COMPLETE
 - ✅ 05-01: module_traces view and TypeScript foundation created
 - ✅ 05-02: module trace page UI with useTransition filtering
 - ✅ 05-03: navigation entry points (ModuleSwitcher, passage counts on cards)
-- ⚠️ Manual migration required: 006_create_module_traces_view.sql must be applied via Supabase dashboard
-- Query performance profiling deferred until trace pages query with real data
+- ✅ 05-04: human verification passed (all checks successful)
+- ✅ Migration 006_create_module_traces_view.sql applied via Supabase dashboard
+- Core analysis value proposition delivered: view thematic patterns across corpus
 - Expandable context deferred (v1 shows highlighted text only)
 
 ## Session Continuity
 
-Last session: 2026-02-14
-Stopped at: Completed 05-03-PLAN.md (Navigation Entry Points)
+Last session: 2026-02-23
+Stopped at: Completed 05-04-PLAN.md (Human Verification) — PHASE 5 COMPLETE
 
 **Current state:**
-- Phase 5 plans 1-3 complete (3/4 plans complete)
-- Module trace page at /analysis/modules/[id] with ModuleSwitcher dropdown
-- Module cards show passage counts and "View traces" links
-- Complete navigation flow: Modules → Trace → Different Trace
-- TypeScript compilation verified
+- Phase 5 complete (4/4 plans complete)
+- Module tracing feature fully implemented and verified
+- Migration 006_create_module_traces_view.sql applied
+- All verification checks passed
+- Core analysis value proposition delivered
 
 **Next steps:**
-1. Apply migration 006_create_module_traces_view.sql via Supabase dashboard (REQUIRED for trace pages to work)
-2. Continue Phase 5: Plan 05-04 (if exists) or move to Phase 6
+1. Begin Phase 6: Polish and Deploy
+2. Address RLS security requirements
+3. Final production readiness checks
