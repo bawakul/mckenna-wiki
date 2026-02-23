@@ -21,10 +21,12 @@
     "@tanstack/react-virtual": "^3.13.18",
     "axios": "^1.13.4",
     "cheerio": "^1.2.0",
+    "client-zip": "^2.5.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-highlight-words": "^0.21.0"
+    "react-highlight-words": "^0.21.0",
+    "sanitize-filename": "^1.6.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -32,6 +34,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-highlight-words": "^0.20.1",
+    "@types/sanitize-filename": "^1.1.28",
     "dotenv": "^17.2.4",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
