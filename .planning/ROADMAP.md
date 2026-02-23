@@ -17,8 +17,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Module System** - Create and manage thematic module taxonomy
 - [x] **Phase 3: Reading Interface** - Clean transcript reading with navigation and search
 - [x] **Phase 4: Annotation Engine** - Highlight passages and tag with modules
-- [ ] **Phase 5: Analysis Views** - Module tracing across corpus
-- [ ] **Phase 6: Export & Polish** - Export tagged passages and refinements
+- [x] **Phase 5: Analysis Views** - Module tracing across corpus
+- [ ] **Phase 6: Export** - Export tagged passages as markdown and CSV
 
 ## Phase Details
 
@@ -126,17 +126,18 @@ Plans:
 - [x] 05-03-PLAN.md -- Module navigation (switcher dropdown, module card updates)
 - [x] 05-04-PLAN.md -- Human verification of module tracing workflow
 
-### Phase 6: Export & Polish
-**Goal**: Export capabilities and refinements for production use
+### Phase 6: Export
+**Goal**: Export tagged passages as markdown and CSV
 **Depends on**: Phase 5 (core workflow complete)
 **Requirements**: EXPO-01
 **Success Criteria** (what must be TRUE):
   1. User can export all tagged passages as markdown, organized by module
   2. User can export tagged passages as CSV with columns for module, passage text, lecture title, date, timestamp
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 06-01: TBD during planning
+- [ ] 06-01-PLAN.md -- Export infrastructure (utilities, Route Handlers)
+- [ ] 06-02-PLAN.md -- Export UI (trace page buttons, bulk export on modules page)
 
 ## Progress
 
@@ -151,4 +152,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Reading Interface | 4/4 | ✓ Complete | 2026-02-08 |
 | 4. Annotation Engine | 7/7 | ✓ Complete | 2026-02-10 |
 | 5. Analysis Views | 4/4 | ✓ Complete | 2026-02-23 |
-| 6. Export & Polish | 0/TBD | Not started | - |
+| 6. Export | 0/2 | Not started | - |
