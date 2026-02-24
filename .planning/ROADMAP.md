@@ -139,10 +139,25 @@ Plans:
 - [x] 06-01-PLAN.md -- Export infrastructure (utilities, Route Handlers)
 - [x] 06-02-PLAN.md -- Export UI (trace page buttons, bulk export on modules page)
 
+### Phase 7: Polish & Fixes
+**Goal**: Bug fixes, missing data, and enhancements for production readiness
+**Depends on**: Phase 6 (export complete)
+**Requirements**: N/A (quality/polish)
+**Success Criteria** (what must be TRUE):
+  1. RLS enabled with permissive policies on all tables
+  2. Highlight offset bug fixed — selected text matches stored highlight
+  3. Missing audience transcripts captured (e.g., Global Perspectives and Psychedelic Poetics)
+  4. Highlights can span multiple paragraphs
+  5. Transcript reader supports dark mode (toggle or system preference)
+**Plans**: TBD
+
+Plans:
+- [ ] 07-01-PLAN.md -- TBD during planning
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -153,3 +168,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 4. Annotation Engine | 7/7 | ✓ Complete | 2026-02-10 |
 | 5. Analysis Views | 4/4 | ✓ Complete | 2026-02-23 |
 | 6. Export | 2/2 | ✓ Complete | 2026-02-24 |
+| 7. Polish & Fixes | 0/TBD | Not started | - |
