@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Reading Interface** - Clean transcript reading with navigation and search
 - [x] **Phase 4: Annotation Engine** - Highlight passages and tag with modules
 - [x] **Phase 5: Analysis Views** - Module tracing across corpus
-- [ ] **Phase 6: Export** - Export tagged passages as markdown and CSV
+- [x] **Phase 6: Export** - Export tagged passages as markdown and CSV
 
 ## Phase Details
 
@@ -136,8 +136,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 06-01-PLAN.md -- Export infrastructure (utilities, Route Handlers)
-- [ ] 06-02-PLAN.md -- Export UI (trace page buttons, bulk export on modules page)
+- [x] 06-01-PLAN.md -- Export infrastructure (utilities, Route Handlers)
+- [x] 06-02-PLAN.md -- Export UI (trace page buttons, bulk export on modules page)
 
 ## Progress
 
@@ -152,4 +152,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Reading Interface | 4/4 | ✓ Complete | 2026-02-08 |
 | 4. Annotation Engine | 7/7 | ✓ Complete | 2026-02-10 |
 | 5. Analysis Views | 4/4 | ✓ Complete | 2026-02-23 |
-| 6. Export | 0/2 | Not started | - |
+| 6. Export | 2/2 | ✓ Complete | 2026-02-24 |
