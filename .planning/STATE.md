@@ -275,18 +275,22 @@ Recent decisions affecting current work:
 - Client-side download via URL.createObjectURL pattern
 - Phase complete - all export features delivered
 
+**Phase 7 (Polish & Fixes):** In progress
+- ✅ 07-01: RLS migration + highlight offset fix (1 of 8 plans complete)
+- RLS enabled on all four tables with permissive anon policies
+- Highlight offset bug fixed: getOffsetInParagraph now scopes to `<p>` element
+
 ## Session Continuity
 
-Last session: 2026-02-23
-Stopped at: Completed 06-02-PLAN.md — Export UI
+Last session: 2026-02-25
+Stopped at: Completed 07-01-PLAN.md — RLS migration + highlight offset fix
 
 **Current state:**
-- Phase 6 complete (2/2 plans)
-- All 6 phases complete
-- Export feature fully functional (API + UI)
-- Single module exports from trace pages
-- Bulk exports from modules list page
-- Project v1 feature-complete
+- Phase 7 in progress (1/8 plans complete)
+- All prior phases (1–6) complete
+- RLS migration file ready to apply via Supabase dashboard
+- Highlight offset bug fixed for new annotations
+- Next: 07-02-PLAN.md
 
-**Project Status: COMPLETE**
-All planned phases delivered. Ready for production use.
+**Project Status: IN PROGRESS (Phase 7)**
+Core v1 features complete. Phase 7 addresses polish and fixes.
