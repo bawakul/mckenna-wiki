@@ -221,6 +221,7 @@ Recent decisions affecting current work:
 1. **[HIGH] Full-text corpus search** — Search actual transcript content (not just metadata). DB function `search_corpus` exists but not exposed in UI. Returns paragraph-level results with transcript context. Could add as dedicated search page or enhance transcripts list.
 2. **[HIGH] Lecture favorites** — Bookmark/favorite lectures for quick access. Needs: favorites table, toggle UI on transcript cards and reader, filtered view for favorites only.
 3. **Guided lecture exploration - choose your own adventure** (planning) — Branching, curated reading experience where newcomers start with entry-point lectures and "double-click" into deeper topics across the corpus
+4. **Re-seed database with updated corpus parser** (database) — Parser fix for talk-secondary sections committed in 07-02. 77/92 transcripts likely affected. CASCADE warning: re-seeding deletes annotations. Annotations exported 2026-02-25.
 
 ### Known Issues (Non-blocking)
 
