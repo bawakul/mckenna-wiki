@@ -42,6 +42,7 @@ Progress: [███████████████████████
 
 *Updated after each plan completion*
 | Phase 07-polish-fixes P02 | 3 | 3 tasks | 2 files |
+| Phase 07-polish-fixes P04a | 5 | 2 tasks | 10 files |
 | Phase 07-polish-fixes P05 | 2 | 2 tasks | 5 files |
 | Phase 07-polish-fixes P04b | 2 | 2 tasks | 3 files |
 
@@ -206,6 +207,7 @@ Recent decisions affecting current work:
 - [Phase 07-polish-fixes]: getAllParagraphsBetween uses sibling-walk fast path with TreeWalker fallback for virtualized DOM
 - [Phase 07-polish-fixes]: Middle paragraph fallback in getHighlightForParagraph supports legacy multi-paragraph annotations without explicit middle anchors
 - [Phase 07-polish-fixes]: CSS variable fallback pattern in inline styles: var(--untagged-highlight, #e5e7eb) and var(--highlight-opacity, 0.35) for theme-aware highlight rendering without JS
+- [Phase 07-polish-fixes]: Analysis/export components (zinc palette) already had complete dark: variants from Phase 5/6 implementation — no changes needed for TraceCard, TraceList, ModuleSwitcher, BulkExportButton, ExportButtons
 
 ### Phase 1 Results
 
@@ -290,6 +292,7 @@ Recent decisions affecting current work:
 - ✅ 07-01: RLS migration + highlight offset fix
 - ✅ 07-02: Audience transcript recovery — parser updated, re-scrape done, re-seeding deferred
 - ✅ 07-03: Dark mode infrastructure — CSS variables, toggle, layout
+- ✅ 07-04a: Dark mode for transcript pages and reader — all 10 transcript components updated with dark: variants
 - ✅ 07-05: Multi-paragraph highlights — selection validation, ParagraphAnchors for all spans, middle paragraph rendering
 - RLS enabled on all four tables with permissive anon policies
 - Highlight offset bug fixed: getOffsetInParagraph now scopes to `<p>` element
