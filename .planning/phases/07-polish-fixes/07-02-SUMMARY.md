@@ -57,8 +57,8 @@ completed: 2026-02-25
 
 - **Duration:** ~3 min
 - **Started:** 2026-02-25T07:14:23Z
-- **Completed:** 2026-02-25T07:17:00Z
-- **Tasks:** 2 of 3 (Task 3 is human-verify checkpoint)
+- **Completed:** 2026-02-25T10:13:00Z
+- **Tasks:** 3 of 3 (Task 3 checkpoint resolved by user)
 - **Files modified:** 2
 
 ## Accomplishments
@@ -75,8 +75,9 @@ Each task was committed atomically:
 
 1. **Task 1: Update parser to process talk-secondary sections** - `ad80cf8` (feat)
 2. **Task 2: Re-scrape affected transcript and spot-check corpus** - `146dadc` (feat)
+3. **Task 3: Verify audience transcript recovery (checkpoint)** - Resolved by user 2026-02-25; deferred re-seeding captured as todo in `b69229a`
 
-**Plan metadata (checkpoint pre-state):** Committed with task 2 above.
+**Plan metadata:** `2c753bd` (docs: complete plan)
 
 ## Files Created/Modified
 
@@ -132,30 +133,25 @@ All 8 sampled transcripts had missing secondary speaker content:
 
 **Recommendation:** Full corpus re-scrape with updated parser. User should decide on annotation preservation strategy before re-seeding.
 
+## Checkpoint Resolution (Task 3)
+
+**User decision (2026-02-25):**
+- Parser output approved — audience paragraphs correctly recovered
+- Annotations exported via bulk export UI before any re-seeding
+- Re-seeding deferred to a todo item (not done during this plan)
+
+**Todo created:** "Re-seed database with updated corpus parser" — captures CASCADE warning and annotations-exported status. See `.planning/phases/07-polish-fixes/todos/re-seed-database-with-updated-corpus-parser.md` (committed `b69229a`).
+
 ## User Setup Required
 
-**Checkpoint required before database changes.**
-
-After reviewing the corpus JSON files and deciding to proceed with re-seeding:
-
-1. Check if any annotations exist on affected transcripts before re-seeding:
-   ```sql
-   SELECT transcript_id, COUNT(*) as annotation_count
-   FROM annotations a
-   JOIN transcript_paragraphs tp ON a.paragraph_id = tp.id
-   GROUP BY transcript_id
-   ORDER BY annotation_count DESC;
-   ```
-2. If annotations exist, decide: export them first or accept loss (CASCADE deletes on re-import)
-3. Run full corpus re-scrape: `npx tsx scripts/scrape/scraper.ts --output corpus/transcripts`
-4. Then re-seed with import-corpus script
+None required for this plan. Re-seeding is deferred to user's discretion via the todo item.
 
 ## Next Phase Readiness
 
-- Parser fix is complete and ready for full corpus re-scrape
-- Task 3 (human-verify checkpoint) requires user to review corpus JSON and approve re-seeding scope
-- No blocking issues for other plans in Phase 7
+- Parser fix is complete and committed — ready for full corpus re-scrape when user decides
+- Annotations backed up (exported 2026-02-25) — re-seeding can proceed when ready
+- No blocking issues for remaining Phase 7 plans
 
 ---
 *Phase: 07-polish-fixes*
-*Completed: 2026-02-25 (Tasks 1-2; Task 3 is human checkpoint)*
+*Completed: 2026-02-25*

@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 7 of 7 (Polish & Fixes)
-Plan: 3 of 8 in phase 7 (completed, 07-02 checkpoint awaiting human-verify)
+Plan: 4 of 8 in phase 7 (07-02 complete, ready for 07-04a)
 Status: In progress
-Last activity: 2026-02-25 — Completed 07-02-PLAN.md tasks 1-2; awaiting checkpoint at Task 3
+Last activity: 2026-02-25 — Completed 07-02-PLAN.md (checkpoint resolved: parser approved, re-seeding deferred)
 
-Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 100% | Phase 7: 13%
+Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 100% | Phase 7: 38%
 
 ## Performance Metrics
 
@@ -41,7 +41,7 @@ Progress: [███████████████████████
 - Previous: 06-02 (2 min), 06-01 (5 min), 05-04 (2 min)
 
 *Updated after each plan completion*
-| Phase 07-polish-fixes P02 | 3 | 2 tasks | 2 files |
+| Phase 07-polish-fixes P02 | 3 | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -199,6 +199,7 @@ Recent decisions affecting current work:
 - [Phase 07-polish-fixes]: CSS variables --highlight-opacity (0.35 light / 0.5 dark) and --untagged-highlight added as infrastructure for Plan 04 HighlightRenderer dark mode update
 - [Phase 07-polish-fixes]: Corpus parser:  combined selector processes both section types in document order; speaker extracted from .talk-meta .talk-name; falls back to authorName
 - [Phase 07-polish-fixes]: Full corpus re-scrape recommended after spot-check showed 8/8 tested transcripts have missing secondary speaker content; database re-seeding deferred to user decision (annotation cascade implications)
+- [Phase 07-polish-fixes]: Checkpoint 07-02 resolved 2026-02-25 — user approved parser output, exported annotations via bulk export UI, deferred re-seeding to todo item
 
 ### Phase 1 Results
 
@@ -280,21 +281,24 @@ Recent decisions affecting current work:
 - Phase complete - all export features delivered
 
 **Phase 7 (Polish & Fixes):** In progress
-- ✅ 07-01: RLS migration + highlight offset fix (1 of 8 plans complete)
+- ✅ 07-01: RLS migration + highlight offset fix
+- ✅ 07-02: Audience transcript recovery — parser updated, re-scrape done, re-seeding deferred
+- ✅ 07-03: Dark mode infrastructure — CSS variables, toggle, layout
 - RLS enabled on all four tables with permissive anon policies
 - Highlight offset bug fixed: getOffsetInParagraph now scopes to `<p>` element
+- Parser fix: combined selector for section.talk and section.talk-secondary; re-seeding deferred (annotations exported)
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 07-01-PLAN.md — RLS migration + highlight offset fix
+Stopped at: Completed 07-02-PLAN.md — Audience transcript recovery (checkpoint resolved)
 
 **Current state:**
-- Phase 7 in progress (1/8 plans complete)
+- Phase 7 in progress (3/8 plans complete: 07-01, 07-02, 07-03)
 - All prior phases (1–6) complete
-- RLS migration file ready to apply via Supabase dashboard
-- Highlight offset bug fixed for new annotations
-- Next: 07-02-PLAN.md
+- Parser fix committed; corpus re-scrape deferred (annotations exported, todo captured)
+- Dark mode infrastructure (07-03) also complete
+- Next: 07-04a-PLAN.md (dark mode application: reader and annotation components)
 
 **Project Status: IN PROGRESS (Phase 7)**
 Core v1 features complete. Phase 7 addresses polish and fixes.
