@@ -149,55 +149,32 @@ export function getTextAfter(range: Range, length: number): string {
  * Walks the DOM forward from startPara, collecting paragraphs strictly between
  * startPara and endPara (exclusive of both endpoints).
  *
- * Operates within the virtualized reader DOM. With overscan=5 and a cap of 15
- * paragraphs, all relevant elements are guaranteed to be in the DOM during selection.
+ * In the virtualized reader, each paragraph is wrapped in its own absolutely-positioned
+ * div (the virtualizer item wrapper). So paragraphs are NOT siblings — we must walk
+ * up to a shared ancestor (the virtualizer container) and search within it.
  */
 function getAllParagraphsBetween(startPara: Element, endPara: Element): Element[] {
+  // Find the virtualized container (or nearest common ancestor with all paragraphs)
+  const container = startPara.closest('[data-virtualized-container]')
+    ?? startPara.closest('[class*="max-w"]')?.parentElement
+  if (!container) return []
+
+  const startId = parseInt(startPara.getAttribute('data-paragraph-id') || '0', 10)
+  const endId = parseInt(endPara.getAttribute('data-paragraph-id') || '0', 10)
+
+  // Query all paragraph elements in document order within the container
+  const allParagraphs = container.querySelectorAll('[data-paragraph-id]')
   const result: Element[] = []
-  // Walk forward from startPara through the container's paragraph elements
-  let current: Element | null = startPara.nextElementSibling
-  while (current) {
-    if (current === endPara) break
-    if (current.hasAttribute('data-paragraph-id')) {
-      result.push(current)
-    } else {
-      // Also search within wrapper elements (virtualizer renders items inside wrapper divs)
-      const nested = current.querySelectorAll('[data-paragraph-id]')
-      nested.forEach((el) => result.push(el))
+  let inRange = false
+
+  for (const el of allParagraphs) {
+    const id = parseInt(el.getAttribute('data-paragraph-id') || '0', 10)
+    if (id === startId) {
+      inRange = true
+      continue
     }
-    current = current.nextElementSibling
-  }
-
-  // If the above walk found nothing (paragraphs aren't direct siblings),
-  // fall back to a document-order walk using the common ancestor
-  if (result.length === 0) {
-    const ancestor = startPara.parentElement
-    if (!ancestor) return result
-
-    let inRange = false
-    const walker = document.createTreeWalker(
-      ancestor,
-      NodeFilter.SHOW_ELEMENT,
-      {
-        acceptNode(node) {
-          return (node as Element).hasAttribute('data-paragraph-id')
-            ? NodeFilter.FILTER_ACCEPT
-            : NodeFilter.FILTER_SKIP
-        },
-      }
-    )
-
-    let node = walker.nextNode()
-    while (node) {
-      if (node === startPara) {
-        inRange = true
-        node = walker.nextNode()
-        continue
-      }
-      if (node === endPara) break
-      if (inRange) result.push(node as Element)
-      node = walker.nextNode()
-    }
+    if (id === endId) break
+    if (inRange) result.push(el)
   }
 
   return result
@@ -236,12 +213,31 @@ function getOffsetInParagraph(
   // Scope to <p> element to exclude timestamp and speaker label text from offsets
   const textElement = paragraph.querySelector('p') ?? paragraph
   const paragraphText = textElement.textContent || ''
+
+  // Check if the range's start and end containers are both in this paragraph
+  const startInParagraph = paragraph.contains(range.startContainer)
+  const endInParagraph = paragraph.contains(range.endContainer)
+
+  // For multi-paragraph selections, handle partial paragraphs:
+  // - Start paragraph: from selection start to end of paragraph text
+  // - End paragraph: from 0 to selection end
+  if (startInParagraph && !endInParagraph) {
+    // This is the START paragraph of a multi-paragraph selection
+    const startPos = getNodeOffsetInElement(range.startContainer, range.startOffset, textElement)
+    return { start: startPos, end: paragraphText.length }
+  }
+
+  if (!startInParagraph && endInParagraph) {
+    // This is the END paragraph of a multi-paragraph selection
+    const endPos = getNodeOffsetInElement(range.endContainer, range.endOffset, textElement)
+    return { start: 0, end: endPos }
+  }
+
+  // Single-paragraph selection: both start and end are in this paragraph
   const rangeText = range.toString()
 
-  // Find where the range text appears in the paragraph
-  // This handles the common case where selection is within a single paragraph
+  // Fast path: find where the range text appears in the paragraph
   const startOffset = paragraphText.indexOf(rangeText)
-
   if (startOffset >= 0) {
     return {
       start: startOffset,
@@ -250,7 +246,6 @@ function getOffsetInParagraph(
   }
 
   // Fallback: use TreeWalker for more precise calculation
-  // This handles edge cases with inline elements, marks, etc.
   const treeWalker = document.createTreeWalker(
     textElement,
     NodeFilter.SHOW_TEXT,
@@ -282,6 +277,42 @@ function getOffsetInParagraph(
   }
 
   return { start: startPos, end: endPos }
+}
+
+/**
+ * Calculate character offset of a node+offset within a root element's text content.
+ * Walks text nodes in the root until we find the target node.
+ */
+function getNodeOffsetInElement(node: Node, offset: number, root: Element): number {
+  const treeWalker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null)
+  let charCount = 0
+  let textNode = treeWalker.nextNode()
+
+  while (textNode) {
+    if (textNode === node) {
+      return charCount + offset
+    }
+    charCount += (textNode.textContent || '').length
+    textNode = treeWalker.nextNode()
+  }
+
+  // If the node is an element (not text), offset refers to child index
+  // Walk to find the character position
+  if (node.nodeType === Node.ELEMENT_NODE) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null)
+    let count = 0
+    let tn = walker.nextNode()
+    while (tn) {
+      if (node.contains(tn)) {
+        // Found a text node inside the target element
+        return count + Math.min(offset, (tn.textContent || '').length)
+      }
+      count += (tn.textContent || '').length
+      tn = walker.nextNode()
+    }
+  }
+
+  return offset
 }
 
 /**
