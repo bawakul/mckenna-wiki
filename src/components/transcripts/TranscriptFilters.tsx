@@ -63,7 +63,7 @@ export function TranscriptFilters({
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search transcripts..."
-            className="w-full rounded-lg border border-gray-200 dark:border-[#3d3d5a] bg-white dark:bg-[#16213e] text-gray-900 dark:text-[#e8e8f0] placeholder-gray-400 dark:placeholder-[#6a6a8a] px-4 py-2 pr-10 text-sm focus:border-gray-400 dark:focus:border-[#6a6a8a] focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-[#2d2d4a]"
+            className="w-full rounded-lg border border-gray-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 placeholder-gray-400 dark:placeholder-zinc-500 px-4 py-2 pr-10 text-sm focus:border-gray-400 dark:focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-zinc-700"
           />
           {searchInput && (
             <button
@@ -72,7 +72,7 @@ export function TranscriptFilters({
                 setSearchInput('')
                 updateParams({ q: null })
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#6a6a8a] hover:text-gray-600 dark:hover:text-[#9090b0]"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-400"
               aria-label="Clear search"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +83,7 @@ export function TranscriptFilters({
         </div>
         <button
           type="submit"
-          className="rounded-lg bg-gray-900 dark:bg-[#2d2d4a] px-4 py-2 text-sm font-medium text-white dark:text-[#e8e8f0] hover:bg-gray-800 dark:hover:bg-[#3d3d5a]"
+          className="rounded-lg bg-gray-900 dark:bg-zinc-700 px-4 py-2 text-sm font-medium text-white dark:text-zinc-100 hover:bg-gray-800 dark:hover:bg-zinc-600"
         >
           Search
         </button>
@@ -99,8 +99,8 @@ export function TranscriptFilters({
               className={`
                 rounded-full px-3 py-1 text-xs font-medium transition-colors
                 ${currentTag === tag
-                  ? 'bg-gray-900 dark:bg-[#2d2d4a] text-white dark:text-[#e8e8f0]'
-                  : 'bg-gray-100 dark:bg-[#16213e] text-gray-700 dark:text-[#c0c0d0] hover:bg-gray-200 dark:hover:bg-[#2d2d4a]'
+                  ? 'bg-gray-900 dark:bg-zinc-700 text-white dark:text-zinc-100'
+                  : 'bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-zinc-700'
                 }
               `}
             >
@@ -114,7 +114,7 @@ export function TranscriptFilters({
       {hasFilters && (
         <button
           onClick={clearFilters}
-          className="text-sm text-gray-500 dark:text-[#9090b0] underline hover:text-gray-700 dark:hover:text-[#c0c0d0]"
+          className="text-sm text-gray-500 dark:text-zinc-400 underline hover:text-gray-700 dark:hover:text-zinc-300"
         >
           Clear all filters
         </button>

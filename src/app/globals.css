@@ -16,15 +16,15 @@
 }
 
 .dark {
-  --background: #1a1a2e;
-  --foreground: #e8e8f0;
-  --border: #2d2d4a;
-  --muted: #16213e;
-  --muted-foreground: #9090b0;
-  --card: #16213e;
-  --card-foreground: #e8e8f0;
+  --background: #18181b;
+  --foreground: #f4f4f5;
+  --border: #3f3f46;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --card: #27272a;
+  --card-foreground: #f4f4f5;
   --highlight-opacity: 0.5;
-  --untagged-highlight: #4a4a6a;
+  --untagged-highlight: #3f3f46;
   color-scheme: dark;
 }
 

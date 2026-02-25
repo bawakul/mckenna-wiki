@@ -37,14 +37,14 @@ export function SearchSidebar({
   const totalMatches = results.reduce((sum, r) => sum + r.matchCount, 0)
 
   return (
-    <div className="fixed right-0 top-0 h-full w-80 bg-white dark:bg-[#1a1a2e] border-l border-gray-200 dark:border-[#2d2d4a] shadow-lg z-50 flex flex-col">
+    <div className="fixed right-0 top-0 h-full w-80 bg-white dark:bg-zinc-900 border-l border-gray-200 dark:border-zinc-700 shadow-lg z-50 flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-gray-100 dark:border-[#2d2d4a]">
+      <div className="p-4 border-b border-gray-100 dark:border-zinc-700">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="font-medium text-gray-900 dark:text-[#e8e8f0]">Search in transcript</h3>
+          <h3 className="font-medium text-gray-900 dark:text-zinc-100">Search in transcript</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 dark:text-[#6a6a8a] hover:text-gray-600 dark:hover:text-[#9090b0] p-1"
+            className="text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-400 p-1"
             aria-label="Close search"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,11 +59,11 @@ export function SearchSidebar({
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
           placeholder="Search text..."
-          className="w-full rounded-lg border border-gray-200 dark:border-[#3d3d5a] bg-white dark:bg-[#16213e] text-gray-900 dark:text-[#e8e8f0] placeholder-gray-400 dark:placeholder-[#6a6a8a] px-3 py-2 text-sm focus:border-gray-400 dark:focus:border-[#6a6a8a] focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-[#2d2d4a]"
+          className="w-full rounded-lg border border-gray-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 placeholder-gray-400 dark:placeholder-zinc-500 px-3 py-2 text-sm focus:border-gray-400 dark:focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-zinc-700"
         />
 
         {query.length >= 2 && (
-          <p className="mt-2 text-xs text-gray-500 dark:text-[#9090b0]">
+          <p className="mt-2 text-xs text-gray-500 dark:text-zinc-400">
             {results.length === 0
               ? 'No matches found'
               : `${totalMatches} match${totalMatches === 1 ? '' : 'es'} in ${results.length} paragraph${results.length === 1 ? '' : 's'}`
@@ -79,15 +79,15 @@ export function SearchSidebar({
             key={result.paragraph.id}
             onClick={() => onResultClick(result.paragraphIndex)}
             className={`
-              w-full text-left p-4 border-b border-gray-50 dark:border-[#2d2d4a] hover:bg-gray-50 dark:hover:bg-[#16213e] transition-colors
+              w-full text-left p-4 border-b border-gray-50 dark:border-zinc-700 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors
               ${currentResultIndex === index ? 'bg-yellow-50 dark:bg-yellow-900/30' : ''}
             `}
           >
-            <div className="text-xs text-gray-400 dark:text-[#6a6a8a] mb-1">
+            <div className="text-xs text-gray-400 dark:text-zinc-500 mb-1">
               Paragraph {result.paragraph.position + 1}
               {result.matchCount > 1 && ` (${result.matchCount} matches)`}
             </div>
-            <p className="text-sm text-gray-700 dark:text-[#c0c0d0] line-clamp-3">
+            <p className="text-sm text-gray-700 dark:text-zinc-300 line-clamp-3">
               <Highlighter
                 searchWords={[query]}
                 autoEscape={true}

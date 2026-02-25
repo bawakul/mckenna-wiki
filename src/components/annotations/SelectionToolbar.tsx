@@ -69,7 +69,7 @@ export function SelectionToolbar({
         data-selection-toolbar
         className="
           fixed top-4 left-1/2 -translate-x-1/2
-          z-50 bg-white dark:bg-[#1a1a2e] rounded-lg shadow-lg border border-amber-200 dark:border-amber-700
+          z-50 bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-amber-200 dark:border-amber-700
           px-4 py-2
           animate-in fade-in-0 zoom-in-95 duration-100
         "
@@ -95,7 +95,7 @@ export function SelectionToolbar({
         e.preventDefault()
       }}
       className="
-        z-50 bg-white dark:bg-[#1a1a2e] rounded-lg shadow-lg border border-gray-200 dark:border-[#2d2d4a]
+        z-50 bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-gray-200 dark:border-zinc-700
         px-2 py-1.5 flex items-center gap-2
         animate-in fade-in-0 zoom-in-95 duration-100
       "

@@ -118,18 +118,18 @@ export function AnnotationSidebar({
         className="
           fixed right-4 top-24 z-40
           w-10 h-10 rounded-full
-          bg-white dark:bg-[#1a1a2e]
-          border border-gray-200 dark:border-[#2d2d4a]
+          bg-white dark:bg-zinc-900
+          border border-gray-200 dark:border-zinc-700
           shadow-md
           flex items-center justify-center
-          hover:bg-gray-50 dark:hover:bg-[#16213e]
+          hover:bg-gray-50 dark:hover:bg-zinc-800
           transition-colors
         "
         aria-label={isOpen ? 'Close annotations sidebar' : 'Open annotations sidebar'}
         title={`${annotations.length} annotation${annotations.length !== 1 ? 's' : ''}`}
       >
         <svg
-          className="w-5 h-5 text-gray-600 dark:text-[#9090b0]"
+          className="w-5 h-5 text-gray-600 dark:text-zinc-400"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -167,8 +167,8 @@ export function AnnotationSidebar({
       <div
         className={`
           fixed right-0 top-0 h-full w-80 z-30
-          bg-white dark:bg-[#1a1a2e]
-          border-l border-gray-200 dark:border-[#2d2d4a]
+          bg-white dark:bg-zinc-900
+          border-l border-gray-200 dark:border-zinc-700
           shadow-xl
           transform transition-transform duration-200 ease-out
           ${isOpen ? 'translate-x-0' : 'translate-x-full'}
@@ -176,13 +176,13 @@ export function AnnotationSidebar({
       >
         {/* Header */}
         <div className="
-          px-4 py-3 border-b border-gray-200 dark:border-[#2d2d4a]
+          px-4 py-3 border-b border-gray-200 dark:border-zinc-700
           flex items-center justify-between
         ">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-[#e8e8f0]">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-zinc-100">
             Annotations
           </h2>
-          <span className="text-sm text-gray-500 dark:text-[#9090b0]">
+          <span className="text-sm text-gray-500 dark:text-zinc-400">
             {annotations.length} total
           </span>
         </div>
@@ -191,10 +191,10 @@ export function AnnotationSidebar({
         <div className="h-[calc(100%-56px)] overflow-y-auto">
           {sortedAnnotations.length === 0 ? (
             <div className="p-4 text-center">
-              <p className="text-sm text-gray-500 dark:text-[#9090b0]">
+              <p className="text-sm text-gray-500 dark:text-zinc-400">
                 No annotations yet
               </p>
-              <p className="text-xs text-gray-400 dark:text-[#9090b0] mt-1">
+              <p className="text-xs text-gray-400 dark:text-zinc-400 mt-1">
                 Select text to create highlights
               </p>
             </div>
@@ -209,7 +209,7 @@ export function AnnotationSidebar({
                       onClick={() => handleAnnotationClick(annotation)}
                       className={`
                         w-full text-left px-4 py-3
-                        hover:bg-gray-50 dark:hover:bg-[#16213e]
+                        hover:bg-gray-50 dark:hover:bg-zinc-800
                         transition-colors
                         border-l-4
                         ${isVisible
@@ -225,21 +225,21 @@ export function AnnotationSidebar({
                             className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                             style={{ backgroundColor: annotation.module.color }}
                           />
-                          <span className="text-xs font-medium text-gray-700 dark:text-[#c0c0d0] truncate">
+                          <span className="text-xs font-medium text-gray-700 dark:text-zinc-300 truncate">
                             {annotation.module.name}
                           </span>
                         </div>
                       ) : (
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gray-300 dark:bg-[#3d3d5a]" />
-                          <span className="text-xs font-medium text-gray-400 dark:text-[#9090b0]">
+                          <span className="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-gray-300 dark:bg-zinc-600" />
+                          <span className="text-xs font-medium text-gray-400 dark:text-zinc-400">
                             Untagged
                           </span>
                         </div>
                       )}
 
                       {/* Text snippet */}
-                      <p className="text-sm text-gray-600 dark:text-[#9090b0] leading-snug">
+                      <p className="text-sm text-gray-600 dark:text-zinc-400 leading-snug">
                         {truncateText(annotation.highlighted_text)}
                       </p>
                     </button>

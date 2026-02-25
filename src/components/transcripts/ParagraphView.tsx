@@ -44,14 +44,14 @@ export function ParagraphView({
     >
       {/* Timestamp in left gutter */}
       {formattedTimestamp && (
-        <span className="absolute left-0 top-2 w-16 text-right text-xs text-gray-400 dark:text-[#6a6a8a] font-mono select-none">
+        <span className="absolute left-0 top-2 w-16 text-right text-xs text-gray-400 dark:text-zinc-500 font-mono select-none">
           {formattedTimestamp}
         </span>
       )}
 
       {/* Speaker label (conditional) */}
       {showSpeaker && paragraph.speaker && (
-        <div className="mb-1 text-sm font-semibold text-gray-700 dark:text-[#c0c0d0]">
+        <div className="mb-1 text-sm font-semibold text-gray-700 dark:text-zinc-300">
           {paragraph.speaker}
         </div>
       )}
@@ -60,7 +60,7 @@ export function ParagraphView({
       {/* Priority: 1. Search highlighting (temporary navigation mode) */}
       {/*           2. Annotation highlights (persistent markup) */}
       {/*           3. Plain text */}
-      <p className="text-base leading-relaxed text-gray-900 dark:text-[#e8e8f0]">
+      <p className="text-base leading-relaxed text-gray-900 dark:text-zinc-100">
         {searchQuery ? (
           <Highlighter
             searchWords={[searchQuery]}
