@@ -126,42 +126,58 @@ export function parseTranscriptPage(
 
   // Extract paragraphs with timestamps
   const paragraphs: Paragraph[] = [];
-  const talkSection = $('section.talk');
 
-  // Process each paragraph in order
-  talkSection.children('p').each((index, pEl) => {
-    const $p = $(pEl);
+  // Process ALL talk sections in document order (both primary and secondary speakers)
+  // section.talk — McKenna's content
+  // section.talk-secondary — Audience questions / other speakers
+  const allTalkSections = $('section.talk, section.talk-secondary');
 
-    // Skip timestamp paragraphs
-    if ($p.hasClass('talk-timestamp')) return;
+  allTalkSections.each((_, sectionEl) => {
+    const $section = $(sectionEl);
 
-    // Extract paragraph text (preserving structure but removing inline markup)
-    const text = $p.text().trim();
-
-    // Skip empty paragraphs
-    if (!text) return;
-
-    // Find preceding timestamp
-    // Pattern: <div class="talk-meta"><p class="talk-timestamp">MM:SS</p></div><p>...</p>
-    let timestamp: string | null = null;
-    const $prev = $p.prev();
-    if ($prev.is('div.talk-meta')) {
-      const timestampText = $prev.find('p.talk-timestamp').text().trim();
-      timestamp = timestampText || null;
+    // Extract speaker from talk-name if present (for talk-secondary sections)
+    // Structure: <div class="talk-meta"><p class="talk-name">Audience</p>...</div>
+    let sectionSpeaker: string | null = null;
+    const talkName = $section.find('.talk-meta .talk-name').text().trim();
+    if (talkName) {
+      sectionSpeaker = talkName;
     }
 
-    // Speaker: default to McKenna (monologue format)
-    const speaker = authorName;
+    // Process paragraphs in this section
+    $section.children('p').each((_, pEl) => {
+      const $p = $(pEl);
 
-    // Compute content hash
-    const contentHash = hashParagraph(text);
+      // Skip timestamp paragraphs and talk-name paragraphs
+      if ($p.hasClass('talk-timestamp') || $p.hasClass('talk-name')) return;
 
-    paragraphs.push({
-      position: paragraphs.length, // Zero-indexed sequential position
-      speaker,
-      timestamp,
-      text,
-      contentHash,
+      // Extract paragraph text (preserving structure but removing inline markup)
+      const text = $p.text().trim();
+
+      // Skip empty paragraphs
+      if (!text) return;
+
+      // Find preceding timestamp
+      // Pattern: <div class="talk-meta"><p class="talk-timestamp">MM:SS</p></div><p>...</p>
+      let timestamp: string | null = null;
+      const $prev = $p.prev();
+      if ($prev.is('div.talk-meta')) {
+        const timestampText = $prev.find('p.talk-timestamp').text().trim();
+        timestamp = timestampText || null;
+      }
+
+      // Use section speaker if available, otherwise default to authorName
+      const speaker = sectionSpeaker || authorName;
+
+      // Compute content hash
+      const contentHash = hashParagraph(text);
+
+      paragraphs.push({
+        position: paragraphs.length, // Zero-indexed sequential position
+        speaker,
+        timestamp,
+        text,
+        contentHash,
+      });
     });
   });
 
