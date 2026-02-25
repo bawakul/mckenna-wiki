@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 7 of 7 (Polish & Fixes)
-Plan: 3 of 8 in phase 7 (completed)
+Plan: 3 of 8 in phase 7 (completed, 07-02 checkpoint awaiting human-verify)
 Status: In progress
-Last activity: 2026-02-25 — Completed 07-03-PLAN.md
+Last activity: 2026-02-25 — Completed 07-02-PLAN.md tasks 1-2; awaiting checkpoint at Task 3
 
 Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 100% | Phase 7: 13%
 
@@ -41,6 +41,7 @@ Progress: [███████████████████████
 - Previous: 06-02 (2 min), 06-01 (5 min), 05-04 (2 min)
 
 *Updated after each plan completion*
+| Phase 07-polish-fixes P02 | 3 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -196,6 +197,8 @@ Recent decisions affecting current work:
 - [Phase 07-polish-fixes]: Fixed positioning (top-4 right-4 z-50) for DarkModeToggle — app has no shared NavBar, adding one would be structural refactor beyond plan scope
 - [Phase 07-polish-fixes]: useState(false) with useEffect sync for dark mode toggle — avoids Next.js hydration mismatch; brief wrong-icon flash acceptable
 - [Phase 07-polish-fixes]: CSS variables --highlight-opacity (0.35 light / 0.5 dark) and --untagged-highlight added as infrastructure for Plan 04 HighlightRenderer dark mode update
+- [Phase 07-polish-fixes]: Corpus parser:  combined selector processes both section types in document order; speaker extracted from .talk-meta .talk-name; falls back to authorName
+- [Phase 07-polish-fixes]: Full corpus re-scrape recommended after spot-check showed 8/8 tested transcripts have missing secondary speaker content; database re-seeding deferred to user decision (annotation cascade implications)
 
 ### Phase 1 Results
 
