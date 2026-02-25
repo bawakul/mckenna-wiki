@@ -43,6 +43,7 @@ Progress: [███████████████████████
 *Updated after each plan completion*
 | Phase 07-polish-fixes P02 | 3 | 3 tasks | 2 files |
 | Phase 07-polish-fixes P05 | 2 | 2 tasks | 5 files |
+| Phase 07-polish-fixes P04b | 2 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -204,6 +205,7 @@ Recent decisions affecting current work:
 - [Phase 07-polish-fixes]: endOffset=999999 for middle paragraph highlights is safe because splitIntoSegments clamps via Math.min(endOffset, text.length)
 - [Phase 07-polish-fixes]: getAllParagraphsBetween uses sibling-walk fast path with TreeWalker fallback for virtualized DOM
 - [Phase 07-polish-fixes]: Middle paragraph fallback in getHighlightForParagraph supports legacy multi-paragraph annotations without explicit middle anchors
+- [Phase 07-polish-fixes]: CSS variable fallback pattern in inline styles: var(--untagged-highlight, #e5e7eb) and var(--highlight-opacity, 0.35) for theme-aware highlight rendering without JS
 
 ### Phase 1 Results
 
