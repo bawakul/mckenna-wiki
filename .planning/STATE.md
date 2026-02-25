@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-04)
 
 **Core value:** The ability to tag passages in McKenna transcripts with thematic modules and see how those modules appear across the corpus
-**Current focus:** Phase 7 - Polish & Fixes (in progress)
+**Current focus:** Phase 7 - Polish & Fixes (COMPLETE)
 
 ## Current Position
 
 Phase: 7 of 7 (Polish & Fixes)
-Plan: 5 of 8 in phase 7 (07-05 complete, ready for 07-06)
-Status: In progress
-Last activity: 2026-02-25 — Completed 07-05-PLAN.md (multi-paragraph highlights)
+Plan: 8 of 8 in phase 7 (07-06 complete — all Phase 7 plans done)
+Status: Complete
+Last activity: 2026-02-25 — Completed 07-06-PLAN.md (end-to-end verification of all Phase 7 fixes)
 
-Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 100% | Phase 7: 50%
+Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 100% | Phase 7: 100%
 
 ## Performance Metrics
 
@@ -46,6 +46,7 @@ Progress: [███████████████████████
 | Phase 07-polish-fixes P05 | 2 | 2 tasks | 5 files |
 | Phase 07-polish-fixes P04b | 2 | 2 tasks | 3 files |
 | Phase 07 P04c | 15 | 2 tasks | 23 files |
+| Phase 07-polish-fixes P06 | 5 | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -210,6 +211,9 @@ Recent decisions affecting current work:
 - [Phase 07-polish-fixes]: CSS variable fallback pattern in inline styles: var(--untagged-highlight, #e5e7eb) and var(--highlight-opacity, 0.35) for theme-aware highlight rendering without JS
 - [Phase 07-polish-fixes]: Analysis/export components (zinc palette) already had complete dark: variants from Phase 5/6 implementation — no changes needed for TraceCard, TraceList, ModuleSwitcher, BulkExportButton, ExportButtons
 - [Phase 07]: Dark mode unified to zinc palette — replaced custom bluish hex values with zinc Tailwind utilities across 13 files (8f91e9a); user-identified during 07-04c verification
+- [Phase 07-polish-fixes]: Multi-paragraph highlight verification revealed two distinct DOM traversal bugs (getAllParagraphsBetween, getOffsetInParagraph) that were auto-fixed (d5f10d6)
+- [Phase 07-polish-fixes]: RLS migration 007_enable_rls.sql ready for manual SQL application via Supabase dashboard; app functional before and after
+- [Phase 07-polish-fixes]: Database re-seeding (audience transcript parser fix) deferred — annotations exported 2026-02-25, no blocking concern
 
 ### Phase 1 Results
 
@@ -290,27 +294,30 @@ Recent decisions affecting current work:
 - Client-side download via URL.createObjectURL pattern
 - Phase complete - all export features delivered
 
-**Phase 7 (Polish & Fixes):** In progress
+**Phase 7 (Polish & Fixes):** COMPLETE
 - ✅ 07-01: RLS migration + highlight offset fix
 - ✅ 07-02: Audience transcript recovery — parser updated, re-scrape done, re-seeding deferred
 - ✅ 07-03: Dark mode infrastructure — CSS variables, toggle, layout
 - ✅ 07-04a: Dark mode for transcript pages and reader — all 10 transcript components updated with dark: variants
+- ✅ 07-04b: Dark mode for module, annotation, and reader components
+- ✅ 07-04c: Dark mode for analysis and export pages; zinc palette alignment
 - ✅ 07-05: Multi-paragraph highlights — selection validation, ParagraphAnchors for all spans, middle paragraph rendering
-- RLS enabled on all four tables with permissive anon policies
+- ✅ 07-06: End-to-end human verification — all five fixes confirmed working; two bugs auto-fixed (d5f10d6)
+- RLS enabled on all four tables with permissive anon policies (manual SQL application pending)
 - Highlight offset bug fixed: getOffsetInParagraph now scopes to `<p>` element
 - Parser fix: combined selector for section.talk and section.talk-secondary; re-seeding deferred (annotations exported)
-- Multi-paragraph highlights: MAX_HIGHLIGHT_PARAGRAPHS=15, getAllParagraphsBetween, isMiddle fallback in renderer
+- Multi-paragraph highlights: MAX_HIGHLIGHT_PARAGRAPHS=15, getAllParagraphsBetween (with virtualized sibling walk), isMiddle fallback in renderer
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 07-05-PLAN.md — Multi-paragraph highlights
+Stopped at: Completed 07-06-PLAN.md — End-to-end verification of all Phase 7 fixes
 
 **Current state:**
-- Phase 7 in progress (5/8 plans complete: 07-01, 07-02, 07-03, 07-04a/b/c, 07-05)
-- All prior phases (1–6) complete
-- Multi-paragraph highlight creation and rendering complete
-- Next: 07-06-PLAN.md (remaining polish items)
+- Phase 7 COMPLETE (8/8 plans: 07-01, 07-02, 07-03, 07-04a/b/c, 07-05, 07-06)
+- All phases (1–7) complete
+- McKenna Wiki v1 complete and production-ready
+- Remaining non-blocking: RLS manual SQL application, database re-seeding (user-controlled)
 
-**Project Status: IN PROGRESS (Phase 7)**
+**Project Status: COMPLETE — McKenna Wiki v1**
 Core v1 features complete. Phase 7 addresses polish and fixes.
