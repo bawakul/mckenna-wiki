@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A personal web app for qualitative analysis of Terence McKenna's lectures. Import transcripts from organism.earth, read through them, highlight passages, tag them with recurring thematic "modules" (core ideas McKenna remixes across lectures), and see patterns across the corpus over time. The tool is personal; the insights and analysis are published publicly.
+A personal web app for qualitative analysis of Terence McKenna's lectures. Scrape transcripts from organism.earth, read through them in a clean interface with virtualized scrolling, highlight passages, tag them with recurring thematic "modules" (core ideas McKenna remixes across lectures), trace module patterns across the corpus chronologically, and export tagged passages as markdown or CSV. The tool is personal; the insights and analysis are published publicly.
 
 ## Core Value
 
@@ -12,68 +12,75 @@ A personal web app for qualitative analysis of Terence McKenna's lectures. Impor
 
 ### Validated
 
-(None yet — ship to validate)
+- ✓ Scrape and store ~90 transcripts from organism.earth with full metadata — v1.0 (92 transcripts, 1.36M words)
+- ✓ Read transcripts in a clean web interface with paragraph-level navigation — v1.0
+- ✓ Create and manage a module taxonomy (name + description + color) — v1.0
+- ✓ Highlight/select passages and assign a single module tag per passage — v1.0
+- ✓ Store annotations linked to specific text ranges within transcripts (W3C selectors) — v1.0
+- ✓ Module tracing view — browse all passages tagged with a module across all lectures, sorted chronologically — v1.0
+- ✓ Export tagged passages as markdown or CSV, organized by module — v1.0
+- ✓ Smooth scrolling on transcripts up to 87K words via TanStack Virtual — v1.0
+- ✓ In-transcript search with reading position memory — v1.0
+- ✓ Dark mode with system/manual toggle — v1.0
+- ✓ Multi-paragraph highlight support — v1.0
 
 ### Active
 
-- [ ] Scrape and store ~90 transcripts from organism.earth with full metadata (timestamps, speaker ID, dates, tags)
-- [ ] Read transcripts in a clean web interface with paragraph-level navigation
-- [ ] Create and manage a module taxonomy (name + description, starting with ~8 known modules)
-- [ ] Highlight/select passages and assign a single module tag per passage
-- [ ] Store annotations linked to specific text ranges within transcripts
-- [ ] View module frequency across the corpus (which modules appear in which lectures, how often)
-- [ ] View patterns over time (module presence by lecture date)
 - [ ] LLM-assisted pre-tagging: suggest module tags for passages that the user accepts/rejects/refines
+- [ ] Module frequency dashboard showing which modules appear most across the corpus
+- [ ] Timeline view showing module presence by lecture date
+- [ ] Passage context display — surrounding paragraphs when viewing tagged passage in trace view
+- [ ] Module co-occurrence analytics — which modules appear together frequently
+- [ ] Full-text corpus search exposed in UI (DB function exists, not surfaced)
+- [ ] Lecture favorites/bookmarks for quick access
+- [ ] Guided lecture exploration — curated branching reading paths for newcomers
 
 ### Out of Scope
 
-- Multi-module tagging per passage — keep it one module per passage for v1 clarity
+- Multi-module tagging per passage — keep it one module per passage for clarity
 - Sub-module hierarchy or structured module relationships — start simple, add structure when patterns demand it
 - Public-facing tool (anyone browsing the annotated corpus) — personal tool, public insights
-- Audio playback integration — text-only analysis for v1
+- Audio playback integration — text-only analysis
 - Ingestion from sources beyond organism.earth — 90 transcripts is sufficient to start
 - Real-time collaboration or multi-user — single-user tool
 - Mobile-optimized interface — desktop-first research tool
-- Evolution tracking (how a module's expression changes over time) — v2 after enough data is tagged
+- Evolution tracking (how a module's expression changes over time) — after enough data is tagged
 
 ## Context
 
-**The corpus:** Organism.earth hosts ~90 transcribed McKenna lectures totaling ~1.3M words. HTML is well-structured with paragraph-level timestamps, speaker identification, rich metadata (title, subtitle, date, location, duration, word count, topic tags, referenced authors, summary). Transcript lengths range from ~1,400 to ~87,000 words.
+**Shipped v1.0** on 2026-02-25 with 7,214 LOC TypeScript.
+**Tech stack:** Next.js 15, React 19, Supabase, TanStack Virtual, Floating UI, Tailwind CSS.
+**Corpus:** 92 transcripts, 10,734 paragraphs, 1,357,234 words from organism.earth.
+**Features:** Transcript list with search/filter, virtualized reader, text selection and highlighting, module tagging with floating selector, annotation sidebar, module tracing across corpus, markdown/CSV export, dark mode, multi-paragraph highlights.
 
-**The "module" concept:** McKenna works with a finite set of 20-40 core ideas (novelty theory, the archaic revival, psychedelics as catalysts, culture as operating system, etc.) that he recombines and evolves across lectures. No one has done computational or systematic analysis of this recombination. This is novel work.
-
-**Usage patterns:** Two primary workflows — (1) linear reading: read one lecture start-to-finish, tagging as you go; (2) module tracing: pick a module and trace it across lectures chronologically. Both are first-class.
-
-**LLM role:** Convenience, not discovery. The user is the expert analyst. LLM saves time on obvious module instances. Human-in-the-loop: LLM suggests, user accepts/rejects/refines. Research shows ~78% agreement at detailed levels, ~96% at broader theme levels, ~81% time reduction.
-
-**Data ethics:** Organism.earth scraping terms need to be verified before building the scraper. Transcripts stored locally for personal analysis, not redistributed.
-
-**Broader landscape:** No structured downloadable dataset of McKenna transcripts exists. Total McKenna corpus estimated at ~500 hours / ~4.5M words across organism.earth (~90 talks), AskTMK/Uutter (108), Psychedelic Salon (320 episodes), Internet Archive (500+ hours), TerenceTranscribed.com.
-
-**Prior art studied (not forked):**
-- EduCoder — closest conceptual match (web-based transcript annotation with LLM pre-annotation)
-- QualCoder — best AI integration patterns (multiple LLM providers, customizable prompts)
-- LLMCode — good prompting patterns for thematic coding, hallucination detection
-- Taguette — UX reference for the core highlight-and-tag interaction loop
+**Known debt:**
+- RLS migration SQL ready but requires manual application via Supabase dashboard
+- Database re-seeding needed for audience transcript parser fix (77/92 transcripts affected, annotations exported as backup)
+- Some parser edge cases: concatenated speaker labels, missing timestamps, abnormally long paragraphs
 
 ## Constraints
 
-- **Tech stack**: Next.js + React frontend, Supabase backend (transcripts, annotations, modules) — user preference
-- **Annotation library**: @recogito/react-text-annotator for text selection and range management — W3C-compliant, handles overlapping annotations
-- **LLM integration**: Anthropic/OpenAI APIs via Next.js API routes
-- **Data source**: Organism.earth only for v1 — verify scraping terms before building
-- **Single user**: No auth system needed for v1, personal tool
+- **Tech stack**: Next.js + React frontend, Supabase backend — user preference
+- **Single user**: No auth system, personal tool
+- **Data source**: Organism.earth only — verify scraping terms before expanding
+- **Desktop-first**: Annotation workflow optimized for mouse/keyboard
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| One module per passage | Keeps data model and UI simple; multi-tagging adds complexity without clear v1 value | — Pending |
-| Simple module model (name + description) | Let patterns emerge from use before imposing structure | — Pending |
-| Personal tool, public insights | Avoids redistribution issues with transcripts; tool serves the analyst, publications serve the audience | — Pending |
-| Organism.earth only for v1 | 90 transcripts / 1.3M words is sufficient corpus; other sources add complexity without proportional value | — Pending |
-| LLM as convenience, not discovery | User is the domain expert; LLM accelerates obvious tagging, doesn't replace judgment | — Pending |
-| Next.js + Supabase | User's preferred stack; good fit for text-heavy app with structured data | — Pending |
+| One module per passage | Keeps data model and UI simple; multi-tagging adds complexity without clear v1 value | ✓ Good — clean UX, no confusion |
+| Simple module model (name + description) | Let patterns emerge from use before imposing structure | ✓ Good — color added organically |
+| Personal tool, public insights | Avoids redistribution issues with transcripts | ✓ Good — no auth complexity |
+| Organism.earth only for v1 | 90 transcripts / 1.3M words is sufficient corpus | ✓ Good — 92 transcripts delivered |
+| LLM as convenience, not discovery | User is the domain expert | — Deferred to v2 |
+| Next.js + Supabase | User's preferred stack; good fit for text-heavy app | ✓ Good — fast development |
+| W3C selectors for annotations | Robust anchoring via paragraph ID + text quote + offset | ✓ Good — survives text changes |
+| TanStack Virtual for long transcripts | 87K word transcripts need virtualization | ✓ Good — smooth scrolling |
+| Floating UI for module selector | Positioned near selection, keyboard-navigable | ✓ Good — fast tagging flow |
+| CSS variables for dark mode | Theme-aware without JS re-renders | ✓ Good — clean implementation |
+| Module pre-seeding deferred | Organic creation during reading preferred | ✓ Good — emerged naturally |
+| Permissive RLS (anon policies) | Personal tool doesn't need auth complexity | ✓ Good — security without overhead |
 
 ---
-*Last updated: 2026-02-04 after initialization*
+*Last updated: 2026-02-25 after v1.0 milestone*
