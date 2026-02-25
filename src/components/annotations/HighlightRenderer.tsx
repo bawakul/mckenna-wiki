@@ -61,21 +61,21 @@ export function splitIntoSegments(
 
 /**
  * Get the background color class for a highlight
- * Untagged highlights: gray-200 (#e5e7eb)
- * Tagged highlights: use module color with transparency
+ * Untagged highlights: var(--untagged-highlight) — #e5e7eb in light, #4a4a6a in dark
+ * Tagged highlights: use module color with var(--highlight-opacity) — 0.35 light, 0.5 dark
  */
 function getHighlightStyle(color: string | null): React.CSSProperties {
   if (!color) {
-    // Untagged: neutral gray background
-    return { backgroundColor: '#e5e7eb' }
+    // Untagged: CSS variable adapts to dark mode automatically
+    return { backgroundColor: 'var(--untagged-highlight, #e5e7eb)' }
   }
-  // Tagged: module color with some transparency for readability
-  // Convert hex to rgba with 40% opacity
+  // Tagged: module color with CSS variable opacity for dark mode readability
+  // Convert hex to rgba using --highlight-opacity (0.35 light / 0.5 dark)
   const hex = color.replace('#', '')
   const r = parseInt(hex.slice(0, 2), 16)
   const g = parseInt(hex.slice(2, 4), 16)
   const b = parseInt(hex.slice(4, 6), 16)
-  return { backgroundColor: `rgba(${r}, ${g}, ${b}, 0.35)` }
+  return { backgroundColor: `rgba(${r}, ${g}, ${b}, var(--highlight-opacity, 0.35))` }
 }
 
 /**
