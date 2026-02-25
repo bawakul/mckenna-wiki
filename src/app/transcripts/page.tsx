@@ -73,16 +73,16 @@ export default async function TranscriptsPage({ searchParams }: TranscriptsPageP
   ])
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-[#1a1a2e]">
       <div className="mx-auto max-w-4xl px-4 py-12">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Transcripts</h1>
-          <p className="mt-2 text-gray-600">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-[#e8e8f0]">Transcripts</h1>
+          <p className="mt-2 text-gray-600 dark:text-[#9090b0]">
             Browse {transcripts.length > 0 ? `${transcripts.length} ` : ''}McKenna lectures chronologically
           </p>
         </div>
 
-        <Suspense fallback={<div className="animate-pulse h-20 bg-gray-100 rounded-lg" />}>
+        <Suspense fallback={<div className="animate-pulse h-20 bg-gray-100 dark:bg-[#2d2d4a] rounded-lg" />}>
           <TranscriptFilters
             availableTags={availableTags}
             currentTag={tag}
@@ -98,7 +98,7 @@ export default async function TranscriptsPage({ searchParams }: TranscriptsPageP
               tag={tag}
             />
           ) : (
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-gray-100 dark:divide-[#2d2d4a]">
               {transcripts.map((transcript) => (
                 <TranscriptListItem key={transcript.id} transcript={transcript} />
               ))}
