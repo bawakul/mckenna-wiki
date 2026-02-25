@@ -127,13 +127,12 @@ export function getHighlightForParagraph(
     return null
   }
 
-  // Find the ParagraphAnchor in refinedBy array
   const selector = annotation.selector
   if (!selector || selector.type !== 'RangeSelector' || !selector.refinedBy) {
     return null
   }
 
-  // Look for a ParagraphAnchor matching this paragraph
+  // First try: look for explicit ParagraphAnchor for this paragraph
   for (const refined of selector.refinedBy) {
     if (refined.type === 'ParagraphAnchor' && (refined as ParagraphAnchor).paragraphId === paragraphId) {
       const anchor = refined as ParagraphAnchor
@@ -144,6 +143,26 @@ export function getHighlightForParagraph(
         color: annotation.module?.color ?? null,
         moduleId: annotation.module_id,
       }
+    }
+  }
+
+  // Fallback for middle paragraphs without explicit ParagraphAnchor
+  // Supports both new annotations (with explicit middle anchors) and legacy
+  // multi-paragraph annotations created before this plan.
+  const isMiddle =
+    annotation.start_paragraph_id !== annotation.end_paragraph_id &&
+    paragraphId > annotation.start_paragraph_id &&
+    paragraphId < annotation.end_paragraph_id
+
+  if (isMiddle) {
+    // Full paragraph highlight — endOffset 999999 is safely clamped to
+    // text.length by splitIntoSegments: Math.min(highlight.endOffset, text.length)
+    return {
+      id: annotation.id,
+      startOffset: 0,
+      endOffset: 999999,
+      color: annotation.module?.color ?? null,
+      moduleId: annotation.module_id,
     }
   }
 
