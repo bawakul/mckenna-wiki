@@ -145,6 +145,65 @@ export function getTextAfter(range: Range, length: number): string {
 }
 
 /**
+ * Collect all paragraph elements (data-paragraph-id) between startPara and endPara
+ * Walks the DOM forward from startPara, collecting paragraphs strictly between
+ * startPara and endPara (exclusive of both endpoints).
+ *
+ * Operates within the virtualized reader DOM. With overscan=5 and a cap of 15
+ * paragraphs, all relevant elements are guaranteed to be in the DOM during selection.
+ */
+function getAllParagraphsBetween(startPara: Element, endPara: Element): Element[] {
+  const result: Element[] = []
+  // Walk forward from startPara through the container's paragraph elements
+  let current: Element | null = startPara.nextElementSibling
+  while (current) {
+    if (current === endPara) break
+    if (current.hasAttribute('data-paragraph-id')) {
+      result.push(current)
+    } else {
+      // Also search within wrapper elements (virtualizer renders items inside wrapper divs)
+      const nested = current.querySelectorAll('[data-paragraph-id]')
+      nested.forEach((el) => result.push(el))
+    }
+    current = current.nextElementSibling
+  }
+
+  // If the above walk found nothing (paragraphs aren't direct siblings),
+  // fall back to a document-order walk using the common ancestor
+  if (result.length === 0) {
+    const ancestor = startPara.parentElement
+    if (!ancestor) return result
+
+    let inRange = false
+    const walker = document.createTreeWalker(
+      ancestor,
+      NodeFilter.SHOW_ELEMENT,
+      {
+        acceptNode(node) {
+          return (node as Element).hasAttribute('data-paragraph-id')
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_SKIP
+        },
+      }
+    )
+
+    let node = walker.nextNode()
+    while (node) {
+      if (node === startPara) {
+        inRange = true
+        node = walker.nextNode()
+        continue
+      }
+      if (node === endPara) break
+      if (inRange) result.push(node as Element)
+      node = walker.nextNode()
+    }
+  }
+
+  return result
+}
+
+/**
  * Find paragraph element containing a node
  * Walks up the DOM tree looking for data-paragraph-id attribute
  */
@@ -316,6 +375,22 @@ export function createSelectorFromRange(
       startOffset: offsets.start,
       endOffset: offsets.end,
     })
+  }
+
+  // Add middle paragraph anchors (full-span) for multi-paragraph selections
+  if (endPara && endPara !== startPara && startPara) {
+    const middleParagraphs = getAllParagraphsBetween(startPara, endPara)
+    for (const middlePara of middleParagraphs) {
+      const middleId = parseInt(middlePara.getAttribute('data-paragraph-id') || '0', 10)
+      const textElement = middlePara.querySelector('p')
+      const textLength = textElement?.textContent?.length ?? middlePara.textContent?.length ?? 0
+      paragraphAnchors.push({
+        type: 'ParagraphAnchor',
+        paragraphId: middleId,
+        startOffset: 0,
+        endOffset: textLength,
+      })
+    }
   }
 
   // If selection spans multiple paragraphs, add end paragraph anchor

@@ -3,6 +3,52 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { snapToWordBoundaries } from '@/lib/annotations/selectors'
 
+/** Maximum number of paragraphs a single highlight may span */
+export const MAX_HIGHLIGHT_PARAGRAPHS = 15
+
+/**
+ * Count paragraph elements (data-paragraph-id) that intersect a Range
+ * Returns Math.max(1, count) — minimum 1
+ */
+function countParagraphsInRange(range: Range): number {
+  const ancestor = range.commonAncestorContainer
+  const root = ancestor.nodeType === Node.ELEMENT_NODE
+    ? (ancestor as Element)
+    : ancestor.parentElement
+
+  if (!root) return 1
+
+  const walker = document.createTreeWalker(
+    root,
+    NodeFilter.SHOW_ELEMENT,
+    {
+      acceptNode(node) {
+        return (node as Element).hasAttribute('data-paragraph-id')
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_SKIP
+      },
+    }
+  )
+
+  let count = 0
+  let node = walker.nextNode()
+  while (node) {
+    const el = node as Element
+    // Check if this element intersects the range
+    const nodeRange = document.createRange()
+    nodeRange.selectNodeContents(el)
+    if (
+      range.compareBoundaryPoints(Range.END_TO_START, nodeRange) <= 0 &&
+      range.compareBoundaryPoints(Range.START_TO_END, nodeRange) >= 0
+    ) {
+      count++
+    }
+    node = walker.nextNode()
+  }
+
+  return Math.max(1, count)
+}
+
 interface SelectionState {
   range: Range | null
   text: string
@@ -22,6 +68,7 @@ export function useTextSelection({ containerRef, onSelectionClear }: UseTextSele
     text: '',
     rect: null,
   })
+  const [exceedsLimit, setExceedsLimit] = useState(false)
 
   // Store selection in ref to avoid stale closure issues
   const selectionRef = useRef<SelectionState>(selection)
@@ -31,6 +78,10 @@ export function useTextSelection({ containerRef, onSelectionClear }: UseTextSele
     setSelection({ range: null, text: '', rect: null })
     onSelectionClear?.()
   }, [onSelectionClear])
+
+  const clearExceedsLimit = useCallback(() => {
+    setExceedsLimit(false)
+  }, [])
 
   useEffect(() => {
     const container = containerRef.current
@@ -75,6 +126,15 @@ export function useTextSelection({ containerRef, onSelectionClear }: UseTextSele
         const snappedRange = snapToWordBoundaries(range)
         const snappedText = snappedRange.toString()
 
+        // Validate paragraph count
+        const paragraphCount = countParagraphsInRange(snappedRange)
+        if (paragraphCount > MAX_HIGHLIGHT_PARAGRAPHS) {
+          setExceedsLimit(true)
+          clearSelection()
+          window.getSelection()?.removeAllRanges()
+          return
+        }
+
         // Get bounding rect for positioning toolbar
         const rect = snappedRange.getBoundingClientRect()
 
@@ -111,5 +171,7 @@ export function useTextSelection({ containerRef, onSelectionClear }: UseTextSele
     selection,
     clearSelection,
     hasSelection: selection.range !== null,
+    exceedsLimit,
+    clearExceedsLimit,
   }
 }

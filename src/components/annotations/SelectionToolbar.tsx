@@ -8,6 +8,7 @@ import {
   shift,
   autoUpdate,
 } from '@floating-ui/react'
+import { MAX_HIGHLIGHT_PARAGRAPHS } from './useTextSelection'
 
 interface SelectionToolbarProps {
   /** Bounding rect of the selection */
@@ -16,12 +17,18 @@ interface SelectionToolbarProps {
   onHighlight: () => void
   /** Whether to show the toolbar */
   isVisible: boolean
+  /** Whether the selection exceeds the paragraph limit */
+  exceedsLimit?: boolean
+  /** Called to clear the exceedsLimit state (after auto-dismiss) */
+  onClearExceedsLimit?: () => void
 }
 
 export function SelectionToolbar({
   selectionRect,
   onHighlight,
   isVisible,
+  exceedsLimit = false,
+  onClearExceedsLimit,
 }: SelectionToolbarProps) {
   // Create virtual element from selection rect
   const virtualElement = useMemo(() => ({
@@ -46,6 +53,34 @@ export function SelectionToolbar({
     }
   }, [isVisible, selectionRect, virtualElement, refs])
 
+  // Auto-dismiss the exceeds-limit warning after 3 seconds
+  useEffect(() => {
+    if (!exceedsLimit) return
+    const timer = setTimeout(() => {
+      onClearExceedsLimit?.()
+    }, 3000)
+    return () => clearTimeout(timer)
+  }, [exceedsLimit, onClearExceedsLimit])
+
+  // Show limit warning (no selection rect needed — fixed position below cursor)
+  if (exceedsLimit) {
+    return (
+      <div
+        data-selection-toolbar
+        className="
+          fixed top-4 left-1/2 -translate-x-1/2
+          z-50 bg-white dark:bg-[#1a1a2e] rounded-lg shadow-lg border border-amber-200 dark:border-amber-700
+          px-4 py-2
+          animate-in fade-in-0 zoom-in-95 duration-100
+        "
+      >
+        <p className="text-sm font-medium text-amber-700">
+          Selection too large (max {MAX_HIGHLIGHT_PARAGRAPHS} paragraphs)
+        </p>
+      </div>
+    )
+  }
+
   if (!isVisible || !selectionRect) {
     return null
   }
@@ -60,7 +95,7 @@ export function SelectionToolbar({
         e.preventDefault()
       }}
       className="
-        z-50 bg-white rounded-lg shadow-lg border border-gray-200
+        z-50 bg-white dark:bg-[#1a1a2e] rounded-lg shadow-lg border border-gray-200 dark:border-[#2d2d4a]
         px-2 py-1.5 flex items-center gap-2
         animate-in fade-in-0 zoom-in-95 duration-100
       "

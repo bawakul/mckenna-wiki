@@ -43,7 +43,7 @@ export function VirtualizedReader({
   const containerRef = useRef<HTMLDivElement>(null)
 
   // Selection handling
-  const { selection, hasSelection, clearSelection } = useTextSelection({
+  const { selection, hasSelection, clearSelection, exceedsLimit, clearExceedsLimit } = useTextSelection({
     containerRef,
   })
 
@@ -166,6 +166,8 @@ export function VirtualizedReader({
         selectionRect={selection.rect}
         onHighlight={handleCreateHighlight}
         isVisible={hasSelection}
+        exceedsLimit={exceedsLimit}
+        onClearExceedsLimit={clearExceedsLimit}
       />
 
       <div
