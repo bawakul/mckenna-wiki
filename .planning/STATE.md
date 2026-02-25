@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-04)
 
 **Core value:** The ability to tag passages in McKenna transcripts with thematic modules and see how those modules appear across the corpus
-**Current focus:** Phase 6 - Export (in progress)
+**Current focus:** Phase 7 - Polish & Fixes (in progress)
 
 ## Current Position
 
-Phase: 6 of 6 (Export)
-Plan: 2 of 2 in phase 6
-Status: Phase complete
-Last activity: 2026-02-23 — Completed 06-02-PLAN.md
+Phase: 7 of 7 (Polish & Fixes)
+Plan: 3 of 8 in phase 7 (completed)
+Status: In progress
+Last activity: 2026-02-25 — Completed 07-03-PLAN.md
 
-Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 100%
+Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 100% | Phase 7: 13%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 25
-- Average duration: 3.5 min
-- Total execution time: 1.5 hours
+- Total plans completed: 26
+- Average duration: 3.4 min
+- Total execution time: ~1.5 hours
 
 **By Phase:**
 
@@ -34,10 +34,11 @@ Progress: [███████████████████████
 | 04-annotation-engine | 7 | 29 min | 4.1 min |
 | 05-analysis-views | 4 | 8 min | 2.0 min |
 | 06-export | 2 | 7 min | 3.5 min |
+| 07-polish-fixes | 1 | 1 min | 1.0 min |
 
 **Recent Trend:**
-- Last plan: 06-02 (2 min) — export UI
-- Previous: 06-01 (5 min), 05-04 (2 min), 05-03 (2 min)
+- Last plan: 07-01 (1 min) — RLS migration + highlight offset fix
+- Previous: 06-02 (2 min), 06-01 (5 min), 05-04 (2 min)
 
 *Updated after each plan completion*
 
@@ -190,6 +191,11 @@ Recent decisions affecting current work:
 - Content-Disposition with both filename and filename* for UTF-8 safety
 - Route Handler pattern: parallel fetch with Promise.all, generate content, return Response with download headers
 - client-zip (2.5.0) and sanitize-filename (1.6.3) for export functionality
+- [Phase 07-polish-fixes]: Permissive anon policies sufficient for personal tool RLS — USING(true)/WITH CHECK(true) covers all anon client access
+- [Phase 07-polish-fixes]: getOffsetInParagraph scoped to <p> element via querySelector('p') to exclude timestamp/speaker text from highlight offset calculation
+- [Phase 07-polish-fixes]: Fixed positioning (top-4 right-4 z-50) for DarkModeToggle — app has no shared NavBar, adding one would be structural refactor beyond plan scope
+- [Phase 07-polish-fixes]: useState(false) with useEffect sync for dark mode toggle — avoids Next.js hydration mismatch; brief wrong-icon flash acceptable
+- [Phase 07-polish-fixes]: CSS variables --highlight-opacity (0.35 light / 0.5 dark) and --untagged-highlight added as infrastructure for Plan 04 HighlightRenderer dark mode update
 
 ### Phase 1 Results
 
