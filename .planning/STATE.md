@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-04)
 ## Current Position
 
 Phase: 7 of 7 (Polish & Fixes)
-Plan: 4 of 8 in phase 7 (07-02 complete, ready for 07-04a)
+Plan: 5 of 8 in phase 7 (07-05 complete, ready for 07-06)
 Status: In progress
-Last activity: 2026-02-25 — Completed 07-02-PLAN.md (checkpoint resolved: parser approved, re-seeding deferred)
+Last activity: 2026-02-25 — Completed 07-05-PLAN.md (multi-paragraph highlights)
 
-Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 100% | Phase 7: 38%
+Progress: [████████████████████████████████] Phase 1: 100% | Phase 1.1: 100% | Phase 2: 100% | Phase 3: 100% | Phase 4: 100% | Phase 5: 100% | Phase 6: 100% | Phase 7: 50%
 
 ## Performance Metrics
 
@@ -42,6 +42,7 @@ Progress: [███████████████████████
 
 *Updated after each plan completion*
 | Phase 07-polish-fixes P02 | 3 | 3 tasks | 2 files |
+| Phase 07-polish-fixes P05 | 2 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -200,6 +201,9 @@ Recent decisions affecting current work:
 - [Phase 07-polish-fixes]: Corpus parser:  combined selector processes both section types in document order; speaker extracted from .talk-meta .talk-name; falls back to authorName
 - [Phase 07-polish-fixes]: Full corpus re-scrape recommended after spot-check showed 8/8 tested transcripts have missing secondary speaker content; database re-seeding deferred to user decision (annotation cascade implications)
 - [Phase 07-polish-fixes]: Checkpoint 07-02 resolved 2026-02-25 — user approved parser output, exported annotations via bulk export UI, deferred re-seeding to todo item
+- [Phase 07-polish-fixes]: endOffset=999999 for middle paragraph highlights is safe because splitIntoSegments clamps via Math.min(endOffset, text.length)
+- [Phase 07-polish-fixes]: getAllParagraphsBetween uses sibling-walk fast path with TreeWalker fallback for virtualized DOM
+- [Phase 07-polish-fixes]: Middle paragraph fallback in getHighlightForParagraph supports legacy multi-paragraph annotations without explicit middle anchors
 
 ### Phase 1 Results
 
@@ -284,21 +288,22 @@ Recent decisions affecting current work:
 - ✅ 07-01: RLS migration + highlight offset fix
 - ✅ 07-02: Audience transcript recovery — parser updated, re-scrape done, re-seeding deferred
 - ✅ 07-03: Dark mode infrastructure — CSS variables, toggle, layout
+- ✅ 07-05: Multi-paragraph highlights — selection validation, ParagraphAnchors for all spans, middle paragraph rendering
 - RLS enabled on all four tables with permissive anon policies
 - Highlight offset bug fixed: getOffsetInParagraph now scopes to `<p>` element
 - Parser fix: combined selector for section.talk and section.talk-secondary; re-seeding deferred (annotations exported)
+- Multi-paragraph highlights: MAX_HIGHLIGHT_PARAGRAPHS=15, getAllParagraphsBetween, isMiddle fallback in renderer
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 07-02-PLAN.md — Audience transcript recovery (checkpoint resolved)
+Stopped at: Completed 07-05-PLAN.md — Multi-paragraph highlights
 
 **Current state:**
-- Phase 7 in progress (3/8 plans complete: 07-01, 07-02, 07-03)
+- Phase 7 in progress (5/8 plans complete: 07-01, 07-02, 07-03, 07-04a/b/c, 07-05)
 - All prior phases (1–6) complete
-- Parser fix committed; corpus re-scrape deferred (annotations exported, todo captured)
-- Dark mode infrastructure (07-03) also complete
-- Next: 07-04a-PLAN.md (dark mode application: reader and annotation components)
+- Multi-paragraph highlight creation and rendering complete
+- Next: 07-06-PLAN.md (remaining polish items)
 
 **Project Status: IN PROGRESS (Phase 7)**
 Core v1 features complete. Phase 7 addresses polish and fixes.
