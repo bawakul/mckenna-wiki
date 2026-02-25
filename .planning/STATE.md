@@ -45,6 +45,7 @@ Progress: [███████████████████████
 | Phase 07-polish-fixes P04a | 5 | 2 tasks | 10 files |
 | Phase 07-polish-fixes P05 | 2 | 2 tasks | 5 files |
 | Phase 07-polish-fixes P04b | 2 | 2 tasks | 3 files |
+| Phase 07 P04c | 15 | 2 tasks | 23 files |
 
 ## Accumulated Context
 
@@ -208,6 +209,7 @@ Recent decisions affecting current work:
 - [Phase 07-polish-fixes]: Middle paragraph fallback in getHighlightForParagraph supports legacy multi-paragraph annotations without explicit middle anchors
 - [Phase 07-polish-fixes]: CSS variable fallback pattern in inline styles: var(--untagged-highlight, #e5e7eb) and var(--highlight-opacity, 0.35) for theme-aware highlight rendering without JS
 - [Phase 07-polish-fixes]: Analysis/export components (zinc palette) already had complete dark: variants from Phase 5/6 implementation — no changes needed for TraceCard, TraceList, ModuleSwitcher, BulkExportButton, ExportButtons
+- [Phase 07]: Dark mode unified to zinc palette — replaced custom bluish hex values with zinc Tailwind utilities across 13 files (8f91e9a); user-identified during 07-04c verification
 
 ### Phase 1 Results
 

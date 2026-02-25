@@ -22,9 +22,10 @@ requires:
 provides:
   - Dark mode support for analysis/export components (verified complete)
   - Completed catchup commits for 07-04b: ParagraphView, TranscriptHeader, ResumePrompt, SearchSidebar
-  - Human verification checkpoint for full-app dark mode
+  - Human verification — user approved full-app dark mode
+  - Palette alignment: all custom hex values replaced with zinc Tailwind utilities for visual consistency
 affects:
-  - 07-04c human verification (Task 2 checkpoint — awaiting user)
+  - 07-06 (ready to proceed)
 
 # Tech tracking
 tech-stack:
@@ -50,6 +51,7 @@ key-files:
 key-decisions:
   - "Analysis and export components (zinc palette) already had complete dark mode from original implementation — no changes needed for TraceCard, TraceList, ModuleSwitcher, BulkExportButton, ExportButtons"
   - "Caught up uncommitted dark mode work from 07-04b execution: ParagraphView, TranscriptHeader, ResumePrompt, SearchSidebar — committed as part of 07-04c cleanup before checkpoint"
+  - "User flagged inconsistent dark backgrounds during verification — modules page used zinc, transcript pages used custom bluish hex (#1a1a2e etc.); fixed by replacing all custom hex values with zinc equivalents across 13 files and updating globals.css CSS variables"
 
 patterns-established:
   - "Zinc-palette components have dark mode from initial implementation — gray-palette components (transcripts, annotations) needed explicit dark: variants"
@@ -63,22 +65,22 @@ completed: 2026-02-25
 
 # Phase 7 Plan 04c: Analysis and Export Dark Mode Summary
 
-**Dark mode verified across analysis and export components; zinc-palette components were already complete from original implementation; catchup commits for remaining transcript reader dark mode components**
+**Full-app dark mode verified by user after palette alignment fix — replaced custom bluish hex values with zinc Tailwind utilities across 13 files for visual consistency**
 
 ## Performance
 
-- **Duration:** 8 min
+- **Duration:** ~15 min (includes checkpoint resolution and palette fix)
 - **Started:** 2026-02-25T09:18:00Z
-- **Completed:** 2026-02-25T09:26:00Z
-- **Tasks:** 1 of 2 complete (Task 2 is human verification checkpoint — pending)
-- **Files modified:** 10 (4 verified pre-existing, 4 catchup commits from 07-04b)
+- **Completed:** 2026-02-25T09:50:00Z
+- **Tasks:** 2 of 2 complete
+- **Files modified:** 23 (10 dark mode additions, 13 palette alignment fixes)
 
 ## Accomplishments
 
 - Verified all 6 analysis/export target files have complete dark mode (already present from Phase 5/6 implementation with zinc palette)
 - TypeScript compiles cleanly after all dark mode changes across the full app
 - Committed 4 missing dark mode components from 07-04b: ParagraphView, TranscriptHeader, ResumePrompt, SearchSidebar
-- Dark mode infrastructure is now complete across all components — ready for human verification
+- Dark mode infrastructure is now complete across all components — verified by user
 
 ## Task Commits
 
@@ -89,8 +91,12 @@ Task 1 (analysis/export dark mode verified + catchup commits):
 3. **feat(07-04b)** - `a9ea1fc` - HighlightRenderer CSS variables + TranscriptReader dark mode (prior session)
 4. **feat(07-04b)** - `ce0c887` - ParagraphView and TranscriptHeader dark mode (catchup)
 5. **feat(07-04b)** - `159dba7` - ResumePrompt and SearchSidebar dark mode (catchup)
+6. **Task 1 docs** - `c82864d` - Analysis and export dark mode plan complete (checkpoint)
 
-Task 2 (human verify): checkpoint — pending
+Task 2 (human verify — palette fix required):
+
+7. **fix(07)** - `8f91e9a` - Palette alignment: replaced custom hex with zinc across 13 files
+8. User approved — dark mode verified across all pages
 
 ## Files Created/Modified
 
@@ -103,15 +109,31 @@ Analysis/export (verified complete, no changes needed):
 - `src/components/export/ExportButtons.tsx` - Already had dark:border-zinc-700, dark:text-zinc-300, dark:hover:bg-zinc-800
 
 Catchup commits (missed in prior 07-04b execution):
-- `src/components/transcripts/ParagraphView.tsx` - dark:bg-yellow-900/30 for search match, dark:text-[#6a6a8a/c0c0d0/e8e8f0], dark:bg-yellow-700/50
-- `src/components/transcripts/TranscriptHeader.tsx` - dark:border-[#2d2d4a], dark:text-[#e8e8f0/9090b0/3d3d5a], dark:bg-[#16213e] for tags
-- `src/components/transcripts/ResumePrompt.tsx` - dark:bg-[#16213e] on popup, dark:bg-[#2d2d4a] on Continue button
-- `src/components/transcripts/SearchSidebar.tsx` - dark:bg-[#1a1a2e] panel, dark:bg-[#16213e] search input, dark:bg-yellow-900/30
+- `src/components/transcripts/ParagraphView.tsx` - dark:bg-yellow-900/30 for search match, dark:text-zinc-*/600, dark:bg-yellow-700/50
+- `src/components/transcripts/TranscriptHeader.tsx` - dark:border-zinc-800, dark:text-zinc-100/400/800, dark:bg-zinc-800 for tags
+- `src/components/transcripts/ResumePrompt.tsx` - dark:bg-zinc-800 on popup, dark:bg-zinc-700 on Continue button
+- `src/components/transcripts/SearchSidebar.tsx` - dark:bg-zinc-900 panel, dark:bg-zinc-800 search input, dark:bg-yellow-900/30
+
+Palette alignment fix (Task 2 — prompted by user verification feedback, commit `8f91e9a`):
+- `src/app/globals.css` - CSS variables updated: --background-dark → zinc-900, --card-dark → zinc-800/900, etc.
+- `src/app/transcripts/page.tsx` - custom hex → zinc utilities
+- `src/app/transcripts/[id]/loading.tsx` - custom hex → zinc utilities
+- `src/app/transcripts/loading.tsx` - custom hex → zinc utilities
+- `src/components/annotations/AnnotationSidebar.tsx` - custom hex → zinc utilities
+- `src/components/annotations/SelectionToolbar.tsx` - custom hex → zinc utilities
+- `src/components/transcripts/ParagraphView.tsx` - custom hex → zinc utilities
+- `src/components/transcripts/ResumePrompt.tsx` - custom hex → zinc utilities
+- `src/components/transcripts/SearchSidebar.tsx` - custom hex → zinc utilities
+- `src/components/transcripts/TranscriptFilters.tsx` - custom hex → zinc utilities
+- `src/components/transcripts/TranscriptHeader.tsx` - custom hex → zinc utilities
+- `src/components/transcripts/TranscriptListItem.tsx` - custom hex → zinc utilities
+- `src/components/transcripts/TranscriptReader.tsx` - custom hex → zinc utilities
 
 ## Decisions Made
 
 - Analysis and export components (Phases 5/6) were implemented with Tailwind's zinc color palette, which already had `dark:` variants from the start. No changes were required — the plan's gray-* mapping guide was for gray-palette components only.
 - Four transcript reader components (ParagraphView, TranscriptHeader, ResumePrompt, SearchSidebar) were missed in the 07-04b execution. Committed as part of 07-04c cleanup before reaching the human verification checkpoint.
+- User identified during verification that transcript pages used custom bluish hex (#1a1a2e, #16213e, #2d2d4a etc.) while modules page used zinc. Decision: replace all custom hex values with zinc equivalents across all components and update globals.css CSS variables. This creates a unified zinc-based dark palette throughout the app.
 
 ## Deviations from Plan
 
@@ -134,8 +156,18 @@ Catchup commits (missed in prior 07-04b execution):
 
 ---
 
-**Total deviations:** 2 (1 pre-completion observation, 1 auto-fix for outstanding work)
-**Impact on plan:** Analysis/export components were already done. Catchup commits were necessary to complete 07-04b's scope before the verification checkpoint.
+**3. [Rule 1 - Bug] Palette inconsistency: custom hex vs zinc — transcript pages had different dark backgrounds than modules page**
+- **Found during:** Task 2 (human verification)
+- **Issue:** Transcript pages used custom bluish hex palette (#1a1a2e → zinc-900 equivalent, #16213e → zinc-800, etc.) while modules page used Tailwind zinc utilities. This caused visible background color mismatch between pages.
+- **Fix:** Replaced all custom hex dark mode values with zinc Tailwind utilities across 13 files; updated globals.css CSS variables to zinc equivalents
+- **Files modified:** 13 files (src/app/globals.css, src/app/transcripts/*, src/components/annotations/*, src/components/transcripts/*)
+- **Verification:** User confirmed backgrounds now match between modules and transcript pages
+- **Committed in:** `8f91e9a`
+
+---
+
+**Total deviations:** 3 (1 pre-completion observation, 1 auto-fix for outstanding work, 1 user-identified palette fix)
+**Impact on plan:** Analysis/export components were already done. Catchup commits were necessary to complete 07-04b's scope. Palette fix was user-identified during verification — essential for visual consistency.
 
 ## Issues Encountered
 
@@ -147,17 +179,17 @@ None - no external service configuration required.
 
 ## Next Phase Readiness
 
-- Dark mode is fully implemented across the entire application
-- All components: transcripts list, transcript reader, annotation sidebar, search sidebar, module management, analysis trace pages, export buttons
-- Human verification (Task 2) is the final gate — user must test in browser
+- Dark mode is fully implemented and user-verified across the entire application
+- All components use unified zinc Tailwind palette for dark mode (zinc-900/800/700 backgrounds, zinc-100/400 text)
+- All pages confirmed: transcripts list, transcript reader, annotation sidebar, search sidebar, module management, analysis trace pages, export buttons
 - TypeScript compiles without errors
-- After verification, proceed to 07-06-PLAN.md
+- Proceed to 07-06-PLAN.md
 
 ---
 *Phase: 07-polish-fixes*
 *Completed: 2026-02-25*
 
-## Self-Check: PASSED
+## Self-Check: PASSED (Updated after checkpoint resolution)
 
 - FOUND: src/components/analysis/TraceCard.tsx
 - FOUND: src/components/analysis/TraceList.tsx
@@ -169,8 +201,13 @@ None - no external service configuration required.
 - FOUND: src/components/transcripts/TranscriptHeader.tsx
 - FOUND: src/components/transcripts/ResumePrompt.tsx
 - FOUND: src/components/transcripts/SearchSidebar.tsx
+- FOUND: src/app/globals.css
+- FOUND: src/app/transcripts/page.tsx
+- FOUND: src/components/annotations/AnnotationSidebar.tsx
 - FOUND commit 3a8ac3f (07-04a: transcripts list + loading)
 - FOUND commit f4c02e5 (07-04b: AnnotationSidebar)
 - FOUND commit a9ea1fc (07-04b: HighlightRenderer + TranscriptReader)
 - FOUND commit ce0c887 (07-04b catchup: ParagraphView + TranscriptHeader)
 - FOUND commit 159dba7 (07-04b catchup: ResumePrompt + SearchSidebar)
+- FOUND commit c82864d (07-04c: Task 1 docs commit)
+- FOUND commit 8f91e9a (palette alignment fix: zinc across 13 files)
