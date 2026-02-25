@@ -164,13 +164,19 @@ function findParagraphElement(node: Node): Element | null {
 
 /**
  * Calculate character offset within paragraph text
- * Returns start and end offsets relative to paragraph's full text content
+ * Returns start and end offsets relative to the <p> element's text content only.
+ *
+ * The wrapper div[data-paragraph-id] contains timestamp <span> and speaker <div>
+ * as siblings to <p>. Scoping to the <p> element excludes those from offset
+ * calculation, ensuring stored offsets match the user's selected text.
  */
 function getOffsetInParagraph(
   range: Range,
   paragraph: Element
 ): { start: number; end: number } {
-  const paragraphText = paragraph.textContent || ''
+  // Scope to <p> element to exclude timestamp and speaker label text from offsets
+  const textElement = paragraph.querySelector('p') ?? paragraph
+  const paragraphText = textElement.textContent || ''
   const rangeText = range.toString()
 
   // Find where the range text appears in the paragraph
@@ -187,7 +193,7 @@ function getOffsetInParagraph(
   // Fallback: use TreeWalker for more precise calculation
   // This handles edge cases with inline elements, marks, etc.
   const treeWalker = document.createTreeWalker(
-    paragraph,
+    textElement,
     NodeFilter.SHOW_TEXT,
     null
   )
