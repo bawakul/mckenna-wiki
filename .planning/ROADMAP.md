@@ -149,10 +149,15 @@ Plans:
   3. Missing audience transcripts captured (e.g., Global Perspectives and Psychedelic Poetics)
   4. Highlights can span multiple paragraphs
   5. Transcript reader supports dark mode (toggle or system preference)
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 07-01-PLAN.md -- TBD during planning
+- [ ] 07-01-PLAN.md -- RLS security and highlight offset bug fix
+- [ ] 07-02-PLAN.md -- Audience transcript recovery (parser update + re-scrape)
+- [ ] 07-03-PLAN.md -- Dark mode infrastructure (CSS variables, toggle, layout)
+- [ ] 07-04-PLAN.md -- Dark mode application (update all pages and components)
+- [ ] 07-05-PLAN.md -- Multi-paragraph highlights (selection, storage, rendering)
+- [ ] 07-06-PLAN.md -- Human verification of all Phase 7 fixes
 
 ## Progress
 
@@ -168,4 +173,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 4. Annotation Engine | 7/7 | ✓ Complete | 2026-02-10 |
 | 5. Analysis Views | 4/4 | ✓ Complete | 2026-02-23 |
 | 6. Export | 2/2 | ✓ Complete | 2026-02-24 |
-| 7. Polish & Fixes | 0/TBD | Not started | - |
+| 7. Polish & Fixes | 0/6 | Not started | - |
