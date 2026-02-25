@@ -37,21 +37,21 @@ export function ParagraphView({
     <div
       className={`
         relative py-3 ${hasTimestamps ? 'pl-20' : ''} transition-colors duration-200
-        ${isCurrentMatch ? 'bg-yellow-50 -mx-4 px-4 rounded-lg' : ''}
+        ${isCurrentMatch ? 'bg-yellow-50 dark:bg-yellow-900/30 -mx-4 px-4 rounded-lg' : ''}
       `}
       data-paragraph-id={paragraph.id}
       data-paragraph-position={paragraph.position}
     >
       {/* Timestamp in left gutter */}
       {formattedTimestamp && (
-        <span className="absolute left-0 top-2 w-16 text-right text-xs text-gray-400 font-mono select-none">
+        <span className="absolute left-0 top-2 w-16 text-right text-xs text-gray-400 dark:text-[#6a6a8a] font-mono select-none">
           {formattedTimestamp}
         </span>
       )}
 
       {/* Speaker label (conditional) */}
       {showSpeaker && paragraph.speaker && (
-        <div className="mb-1 text-sm font-semibold text-gray-700">
+        <div className="mb-1 text-sm font-semibold text-gray-700 dark:text-[#c0c0d0]">
           {paragraph.speaker}
         </div>
       )}
@@ -60,13 +60,13 @@ export function ParagraphView({
       {/* Priority: 1. Search highlighting (temporary navigation mode) */}
       {/*           2. Annotation highlights (persistent markup) */}
       {/*           3. Plain text */}
-      <p className="text-base leading-relaxed text-gray-900">
+      <p className="text-base leading-relaxed text-gray-900 dark:text-[#e8e8f0]">
         {searchQuery ? (
           <Highlighter
             searchWords={[searchQuery]}
             autoEscape={true}
             textToHighlight={paragraph.text}
-            highlightClassName="bg-yellow-200 rounded px-0.5"
+            highlightClassName="bg-yellow-200 dark:bg-yellow-700/50 rounded px-0.5"
             caseSensitive={false}
           />
         ) : highlights.length > 0 ? (
