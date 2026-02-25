@@ -34,7 +34,8 @@ Progress: [███████████████████████
 1. **[HIGH] Full-text corpus search** — Search actual transcript content (not just metadata). DB function `search_corpus` exists but not exposed in UI.
 2. **[HIGH] Lecture favorites** — Bookmark/favorite lectures for quick access.
 3. **[HIGH] Password gate** — Simple auth to protect write operations. Single password env var, cookie session, Next.js middleware. Reads stay public.
-4. **Guided lecture exploration - choose your own adventure** (planning) — Branching, curated reading experience where newcomers start with entry-point lectures.
+4. **[HIGH] Fix mobile responsive layout** — Transcript reader, nav bar, annotation UI need work at mobile screen sizes.
+5. **Guided lecture exploration - choose your own adventure** (planning) — Branching, curated reading experience where newcomers start with entry-point lectures.
 5. ~~**Re-seed database with updated corpus parser**~~ — Done 2026-02-25. 80/92 transcripts updated.
 
 ### Known Issues (Non-blocking)
